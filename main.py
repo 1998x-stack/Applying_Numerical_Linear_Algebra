@@ -1,6 +1,4 @@
 structure = {
-    "structure": [
-        {
             "1_Introduction": [
                 "1.1_Basic_Notation",
                 "1.2_Standard_Problems_of_Numerical_Linear_Algebra",
@@ -19,9 +17,7 @@ structure = {
                 "1.7_Vector_and_Matrix_Norms",
                 "1.8_References_and_Other_Topics_for_Chapter_1",
                 "1.9_Questions_for_Chapter_1"
-            ]
-        },
-        {
+            ],
             "2_Linear_Equation_Solving": [
                 "2.1_Introduction",
                 "2.2_Perturbation_Theory",
@@ -60,9 +56,7 @@ structure = {
                 },
                 "2.8_References_and_Other_Topics_for_Chapter_2",
                 "2.9_Questions_for_Chapter_2"
-            ]
-        },
-        {
+            ],
             "3_Linear_Least_Squares_Problems": [
                 "3.1_Introduction",
                 {
@@ -90,9 +84,7 @@ structure = {
                 "3.6_Performance_Comparison_of_Methods_for_Solving_Least_Squares_Problems",
                 "3.7_References_and_Other_Topics_for_Chapter_3",
                 "3.8_Questions_for_Chapter_3"
-            ]
-        },
-        {
+            ],
             "4_Nonsymmetric_Eigenvalue_Problems": [
                 "4.1_Introduction",
                 {
@@ -123,9 +115,7 @@ structure = {
                 "4.6_Summary",
                 "4.7_References_and_Other_Topics_for_Chapter_4",
                 "4.8_Questions_for_Chapter_4"
-            ]
-        },
-        {
+            ],
             "5_The_Symmetric_Eigenproblem_and_Singular_Value_Decomposition": [
                 "5.1_Introduction",
                 "5.2_Perturbation_Theory",
@@ -155,9 +145,7 @@ structure = {
                 },
                 "5.6_References_and_Other_Topics_for_Chapter_5",
                 "5.7_Questions_for_Chapter_5"
-            ]
-        },
-        {
+            ],
             "6_Iterative_Methods_for_Linear_Systems": [
                 "6.1_Introduction",
                 "6.2_On-line_Help_for_Iterative_Methods",
@@ -212,9 +200,7 @@ structure = {
                 },
                 "6.11_References_and_Other_Topics_for_Chapter_6",
                 "6.12_Questions_for_Chapter_6"
-            ]
-        },
-        {
+            ],
             "7_Iterative_Algorithms_for_Eigenvalue_Problems": [
                 "7.1_Introduction",
                 "7.2_The_Rayleigh–Ritz_Method",
@@ -226,10 +212,6 @@ structure = {
                 "7.8_References_and_Other_Topics_for_Chapter_7",
                 "7.9_Questions_for_Chapter_7"
             ]
-        },
-        "Bibliography",
-        "Index"
-    ]
 }
 
 
@@ -310,8 +292,8 @@ def create_directories_and_files(
                     file_name = item.replace(" ", "_").replace("/", "_").replace("-", "_") + ".m"
                     file_path = os.path.join(current_path, file_name)
                     with open(file_path, 'w', encoding='utf-8') as file:
-                        file.write(f"// {item}\n\n")
-                        file.write(f'/*\n\nLecture: {parent_path}/{key}\nContent: {item}\n\n*/\n')
+                        file.write(f"% {item}\n\n")
+                        file.write(f'%\n\n%Lecture: {parent_path}/{key}\n%Content: {item}\n\n%\n')
 
                     # 在README中添加文件链接
                     item_clean = item.replace(" ", "_").replace("/", "_").replace("-", "_")
@@ -347,8 +329,8 @@ def create_directories_and_files(
             file_name = key.replace(" ", "_").replace("/", "_").replace("-", "_") + ".m"
             file_path = os.path.join(current_path, file_name)
             with open(file_path, 'w', encoding='utf-8') as file:
-                file.write(f"// {key}\n\n")
-                file.write(f'/*\n\nLecture: {parent_path}/{key}\nContent: {key}\n\n*/\n')
+                file.write(f"% {key}\n\n")
+                file.write(f'%\n\n%Lecture: {parent_path}/{key}\n%Content: {key}\n\n%\n')
 
             # 在README中添加文件链接
             parent_clean = parent_path.replace(" ", "_").replace("/", "_").replace("-", "_")

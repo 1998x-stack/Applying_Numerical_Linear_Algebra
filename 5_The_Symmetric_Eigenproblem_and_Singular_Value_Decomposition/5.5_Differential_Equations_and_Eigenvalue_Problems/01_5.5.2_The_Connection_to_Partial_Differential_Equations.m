@@ -1,8 +1,8 @@
-// 01_5.5.2_The_Connection_to_Partial_Differential_Equations
+% 01_5.5.2_The_Connection_to_Partial_Differential_Equations
 
-/*
+%
 
-Lecture: structure/5_The_Symmetric_Eigenproblem_and_Singular_Value_Decomposition/5.5_Differential_Equations_and_Eigenvalue_Problems
-Content: 01_5.5.2_The_Connection_to_Partial_Differential_Equations
+%Lecture: 5_The_Symmetric_Eigenproblem_and_Singular_Value_Decomposition/5.5_Differential_Equations_and_Eigenvalue_Problems
+%Content: 01_5.5.2_The_Connection_to_Partial_Differential_Equations
 
-*/
+%
