@@ -13,4 +13,4 @@
 - Risk & rollback: Callers relying on silent invalid-bracket results will now receive ValueError, an intentional correctness contract change. Revert PR/commit before merge to restore old behavior.
 - Follow-up: Run python -m unittest discover -s tests -p 'test_polynomial_bisection.py' on full checkout, then fix polynomial_condition_number coefficient ordering with independent tests.
 - Commit: a64c74968587536f0892e70c0a4ae2b98412b2a9; a9684103d316951c8069690bf5dc1fbe1994e6cb
-- PR: pending
+- PR: https://github.com/1998x-stack/Applying_Numerical_Linear_Algebra/pull/1
