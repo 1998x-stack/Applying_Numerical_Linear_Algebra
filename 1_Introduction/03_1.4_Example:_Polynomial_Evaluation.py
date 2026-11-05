@@ -63,17 +63,30 @@ def polynomial_root_bisection(coefficients: list, low: float, high: float, tol: 
     :param tol: 收敛阈值
     :return: 零点
     """
+    if not (tol > 0):
+        raise ValueError("tol must be positive")
+    if not low < high:
+        raise ValueError("low must be less than high")
+
+    f_low = horner_method(coefficients, low)
+    f_high = horner_method(coefficients, high)
+    if f_low == 0:
+        return low
+    if f_high == 0:
+        return high
+    if f_low * f_high > 0:
+        raise ValueError("interval endpoints must bracket a root")
+
     while (high - low) / 2 > tol:
-        mid = (low + high) / 2
-        f_low = horner_method(coefficients, low)
+        mid = low + (high - low) / 2
         f_mid = horner_method(coefficients, mid)
         if f_mid == 0:
             return mid
-        elif f_low * f_mid < 0:
+        if f_low * f_mid < 0:
             high = mid
         else:
-            low = mid
-    return (low + high) / 2
+            low, f_low = mid, f_mid
+    return low + (high - low) / 2
 
 root = polynomial_root_bisection(coefficients, 0, 3)
 print(f"多项式的零点: {root}")
