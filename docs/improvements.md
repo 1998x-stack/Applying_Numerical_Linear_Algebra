@@ -20,3 +20,5 @@
 
 - CI first attempt: workflow run 44982406159 failed because the static validator incorrectly required MathML on the course homepage. The homepage intentionally has no mathematical formula. Validator scope corrected; rerun pending.
 - QR least-squares explanation clarified: distinguish full QR from economy QR and include the orthogonal-complement residual term Q₂* b.
+
+- CI second attempt: static validation passed; one Python test exposed an API keyword mismatch (`np.linalg.cond` accepts `p`, not `ord`). Updated the wrapper to use `p=ord`; rerun pending.

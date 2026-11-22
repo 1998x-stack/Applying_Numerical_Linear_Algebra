@@ -3,7 +3,7 @@ import numpy as np
 
 def matrix_condition_number(A, ord=2):
     A = np.asarray(A, dtype=float)
-    return float(np.linalg.cond(A, ord=ord))
+    return float(np.linalg.cond(A, p=ord))
 
 def first_order_relative_bound(kappa, relative_A_perturbation, relative_b_perturbation):
     """A standard normwise bound; valid only when kappa*rel_A < 1."""
