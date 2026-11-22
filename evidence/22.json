@@ -1,0 +1,31 @@
+{
+  "title": "Roofline 与并行瓶颈：FLOPs 很多也可能跑不快",
+  "chapter": "2.6.4",
+  "claims": [
+    {
+      "id": "c2-22-0",
+      "topic": "Roofline 与并行瓶颈：FLOPs 很多也可能跑不快",
+      "locator": "Demmel, Applied Numerical Linear Algebra, Chapter 2",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "claim_category": "foundational textbook",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-22-1",
+      "topic": "Roofline 与并行瓶颈：FLOPs 很多也可能跑不快",
+      "locator": "Williams, Waterman, Patterson: Roofline (2009)",
+      "url": "https://escholarship.org/uc/item/5tz795vq",
+      "claim_category": "reference documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-22-2",
+      "topic": "Roofline 与并行瓶颈：FLOPs 很多也可能跑不快",
+      "locator": "Cornell numerical performance notes",
+      "url": "https://www.cs.cornell.edu/~bindel/nmds/00-Background/02-Performance.html",
+      "claim_category": "reference documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    }
+  ],
+  "experimental_note": "Illustrative visual models are not measured benchmarks. Numerical script claims depend on execution results."
+}

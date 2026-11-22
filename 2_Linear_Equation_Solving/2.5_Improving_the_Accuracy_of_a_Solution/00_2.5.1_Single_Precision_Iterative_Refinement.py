@@ -1,50 +1,42 @@
-# 00_2.5.1_Single_Precision_Iterative_Refinement
+"""Mixed-precision IR: float32 linear solves, float64 residuals.
 
+Educational implementation recomputes the factorization on every correction.
+Production solvers should reuse LU factors and handle error bounds carefully.
 """
-Lecture: 2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution
-Content: 00_2.5.1_Single_Precision_Iterative_Refinement
-"""
-
+from __future__ import annotations
 import numpy as np
 
-def single_precision_iterative_refinement(A, b, tol=1e-6, max_iter=10):
-    """
-    单精度迭代改进求解线性方程组 Ax = b
-    :param A: 系数矩阵 (n x n)
-    :param b: 常数向量 (n x 1)
-    :param tol: 误差容限
-    :param max_iter: 最大迭代次数
-    :return: 精确解向量 (n x 1)
-    """
-    # 将矩阵和向量转换为单精度
-    A_single = A.astype(np.float32)
-    b_single = b.astype(np.float32)
-    
-    # 初始解（单精度）
-    x = np.linalg.solve(A_single, b_single).astype(np.float64)
-    
-    for k in range(max_iter):
-        # 计算残差（双精度）
-        r = b - np.dot(A, x)
-        
-        # 求解修正方程（单精度）
-        d = np.linalg.solve(A_single, r.astype(np.float32)).astype(np.float64)
-        
-        # 更新解（双精度）
-        x += d
-        
-        # 检查收敛性
-        if np.linalg.norm(r, np.inf) < tol:
+def refine_mixed_precision(A, b, iterations=5):
+    A = np.asarray(A, dtype=np.float64)
+    b = np.asarray(b, dtype=np.float64)
+    if A.ndim != 2 or A.shape[0] != A.shape[1] or b.shape != (A.shape[0],):
+        raise ValueError("expected square A and matching b")
+    if not np.isfinite(A).all() or not np.isfinite(b).all() or iterations < 0:
+        raise ValueError("nonfinite inputs or negative iteration count")
+    A_low = A.astype(np.float32)
+    if not np.isfinite(A_low).all():
+        raise ValueError("float32 conversion overflow")
+    b_low = b.astype(np.float32)
+    if not np.isfinite(b_low).all():
+        raise ValueError("float32 right-hand-side overflow")
+    x = np.linalg.solve(A_low, b_low).astype(np.float64)
+    def backward(z):
+        r = b - A @ z
+        denom = np.linalg.norm(A, ord=np.inf) * np.linalg.norm(z, ord=np.inf) + np.linalg.norm(b, ord=np.inf)
+        return float(np.linalg.norm(r, ord=np.inf) / denom) if denom else float(np.linalg.norm(r, ord=np.inf))
+    history = [backward(x)]
+    for _ in range(iterations):
+        residual = b - A @ x  # higher precision than the correction solve
+        correction = np.linalg.solve(A_low, residual.astype(np.float32)).astype(np.float64)
+        x = x + correction  # keep accumulated x in float64
+        history.append(backward(x))
+        if history[-1] <= 10*np.finfo(np.float64).eps:
             break
-    
-    return x
+    return {"x": x, "backward_errors": history, "float32_condition_product": float(np.linalg.cond(A)*np.finfo(np.float32).eps)}
 
-# 测试单精度迭代改进
-A = np.array([[2, -1, 1], [3, 3, 9], [3, 3, 5]], dtype=np.float64)
-b = np.array([2, -1, 4], dtype=np.float64)
-tol = 1e-6
-max_iter = 10
-
-x = single_precision_iterative_refinement(A, b, tol, max_iter)
-print('精确解向量 x:')
-print(x)
+if __name__ == "__main__":
+    A = np.array([[1.,1.],[1.,1.001]])
+    b = A @ np.ones(2)
+    result = refine_mixed_precision(A, b)
+    print("initial / final backward error", result["backward_errors"][0], result["backward_errors"][-1])
+    print("solution", result["x"])

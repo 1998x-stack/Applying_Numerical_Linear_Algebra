@@ -1,8 +1,9 @@
-% 03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues
-
-%
-
-%Lecture: 2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance
-%Content: 03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues
-
-%
+% Hypothetical roofline and Amdahl, not measured hardware speed.
+peak=200; beta=50; densities=[1 2 4 8];
+ceilings=min(peak,beta*densities);
+fprintf('I=%.1f, predicted upper bound GFLOP/s=%.1f\n',[densities;ceilings]);
+assert(all(ceilings==[50 100 200 200]));
+f=0.2; processors=[1 2 4 16];
+speedup=1./(f+(1-f)./processors);
+assert(abs(speedup(1)-1)<1e-12);
+assert(all(speedup<1/f));

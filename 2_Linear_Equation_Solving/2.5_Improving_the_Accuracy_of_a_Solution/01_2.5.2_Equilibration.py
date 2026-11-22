@@ -1,111 +1,38 @@
-# 01_2.5.2_Equilibration
-
-"""
-Lecture: 2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution
-Content: 01_2.5.2_Equilibration
-"""
-
+"""Row/column max equilibration, including the transformed right-hand side."""
+from __future__ import annotations
 import numpy as np
-from typing import Tuple
 
-class Equilibration:
-    """Class for matrix equilibration to improve the accuracy of linear system solutions.
-    
-    This class provides methods to equilibrate a given matrix by scaling its rows
-    and columns to reduce its condition number, thereby improving the stability and
-    accuracy of solutions to the linear system.
-    
-    Attributes:
-        matrix (np.ndarray): The original matrix to be equilibrated.
-    """
-    
-    def __init__(self, matrix: np.ndarray):
-        """
-        Initialize the Equilibration class with a matrix.
-        
-        Args:
-            matrix (np.ndarray): The matrix to be equilibrated.
-        """
-        self.matrix = matrix
-    
-    def row_scale_factors(self) -> np.ndarray:
-        """
-        Compute the row scaling factors for equilibration.
-        
-        Returns:
-            np.ndarray: A 1D array containing the scaling factors for each row.
-        """
-        row_norms = np.linalg.norm(self.matrix, axis=1)
-        return 1.0 / row_norms
-    
-    def column_scale_factors(self) -> np.ndarray:
-        """
-        Compute the column scaling factors for equilibration.
-        
-        Returns:
-            np.ndarray: A 1D array containing the scaling factors for each column.
-        """
-        column_norms = np.linalg.norm(self.matrix, axis=0)
-        return 1.0 / column_norms
-    
-    def equilibrate(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """
-        Apply row and column scaling to equilibrate the matrix.
-        
-        Returns:
-            Tuple[np.ndarray, np.ndarray, np.ndarray]: The row scaling factors, column scaling factors,
-                                                      and the equilibrated matrix.
-        """
-        row_factors = self.row_scale_factors()
-        col_factors = self.column_scale_factors()
-        
-        D_row = np.diag(row_factors)
-        D_col = np.diag(col_factors)
-        
-        equilibrated_matrix = D_row @ self.matrix @ D_col
-        
-        return row_factors, col_factors, equilibrated_matrix
-    
-    def validate_equilibration(self, row_factors: np.ndarray, col_factors: np.ndarray) -> bool:
-        """
-        Validate the equilibration by checking the norms of the rows and columns of the equilibrated matrix.
-        
-        Args:
-            row_factors (np.ndarray): The row scaling factors used for equilibration.
-            col_factors (np.ndarray): The column scaling factors used for equilibration.
-        
-        Returns:
-            bool: True if equilibration is successful, False otherwise.
-        """
-        D_row = np.diag(row_factors)
-        D_col = np.diag(col_factors)
-        equilibrated_matrix = D_row @ self.matrix @ D_col
-        
-        row_norms = np.linalg.norm(equilibrated_matrix, axis=1)
-        col_norms = np.linalg.norm(equilibrated_matrix, axis=0)
-        
-        return np.allclose(row_norms, 1) and np.allclose(col_norms, 1)
-    
-def main():
-    # 示例矩阵
-    A = np.array([[4, 1, 2],
-                  [3, 6, 1],
-                  [2, 1, 3]], dtype=float)
-    
-    # 初始化均衡化类
-    equilibration = Equilibration(A)
-    
-    # 进行均衡化
-    row_factors, col_factors, equilibrated_matrix = equilibration.equilibrate()
-    
-    # 打印结果
-    print("Row Scaling Factors:\n", row_factors)
-    print("Column Scaling Factors:\n", col_factors)
-    print("Equilibrated Matrix:\n", equilibrated_matrix)
-    
-    # 验证均衡化结果
-    is_valid = equilibration.validate_equilibration(row_factors, col_factors)
-    print("Is equilibration valid?", is_valid)
+def equilibrate_and_solve(A, b):
+    A=np.asarray(A,dtype=np.float64)
+    b=np.asarray(b,dtype=np.float64)
+    if A.ndim!=2 or A.shape[0]!=A.shape[1] or b.shape!=(A.shape[0],):
+        raise ValueError("square A and matching b required")
+    if not np.isfinite(A).all() or not np.isfinite(b).all():
+        raise ValueError("finite matrix and rhs required")
+    row_max=np.max(np.abs(A),axis=1)
+    if np.any(row_max==0):
+        raise np.linalg.LinAlgError("zero row; cannot equilibrate")
+    R=1./row_max
+    B=R[:,None]*A
+    col_max=np.max(np.abs(B),axis=0)
+    if np.any(col_max==0):
+        raise np.linalg.LinAlgError("zero column; cannot equilibrate")
+    C=1./col_max
+    B=B*C[None,:]
+    if not all(np.isfinite(x).all() for x in (R,C,B)):
+        raise ValueError("scaling overflow")
+    y=np.linalg.solve(B,R*b)
+    x=C*y
+    return {"R":R,"C":C,"scaled_A":B,"x":x,
+            "condition_original":float(np.linalg.cond(A)),
+            "condition_scaled":float(np.linalg.cond(B)),
+            "original_residual":float(np.linalg.norm(A@x-b,ord=np.inf))}
 
-if __name__ == "__main__":
-    main()
+if __name__=="__main__":
+    A=np.diag([1e6,1.])
+    b=A@np.ones(2)
+    print(equilibrate_and_solve(A,b))
+    near=np.array([[1.,1.],[1.,1.+1e-8]])
+    print("nearly dependent: original and scaled condition",
+          equilibrate_and_solve(near,near@np.ones(2))["condition_original"],
+          equilibrate_and_solve(near,near@np.ones(2))["condition_scaled"])

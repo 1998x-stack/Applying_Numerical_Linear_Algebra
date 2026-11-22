@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static checks for the first sixteen Chapter 1/2 lessons and the course portal."""
+"""Static checks for 24 Chapter 1/2 lessons and the course portal."""
 from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
@@ -24,6 +24,14 @@ PAGES = [
 "2_Linear_Equation_Solving/2.4_Error_Analysis/01_2.4.2_Formal_Error_Analysis_of_Gaussian_Elimination.html",
 "2_Linear_Equation_Solving/2.4_Error_Analysis/02_2.4.3_Estimating_Condition_Numbers.html",
 "2_Linear_Equation_Solving/2.4_Error_Analysis/03_2.4.4_Practical_Error_Bounds.html",
+"2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/00_2.5.1_Single_Precision_Iterative_Refinement.html",
+"2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/01_2.5.2_Equilibration.html",
+"2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/00_2.6.1_Basic_Linear_Algebra_Subroutines_(BLAS).html",
+"2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/01_2.6.2_How_to_Optimize_Matrix_Multiplication.html",
+"2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/02_2.6.3_Reorganizing_Gaussian_Elimination_to_use_Level_3_BLAS.html",
+"2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues.html",
+"2_Linear_Equation_Solving/2.7_Special_Linear_Systems/00_2.7.1_Real_Symmetric_Positive_Definite_Matrices.html",
+"2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices.html",
 ]
 
 class Audit(HTMLParser):
@@ -76,7 +84,7 @@ def check_lesson_sources(html_path: Path) -> list[str]:
     md = md_path.read_text(encoding="utf-8")
     html = html_path.read_text(encoding="utf-8")
     headings = [h.strip() for h in re.findall(r"^## (.+)$", md, flags=re.M)
-                if h.strip() not in {"学习目标", "动手检查", "参考资料", "可交互的判断题", "最小可复现实验", "参考来源"}]
+                if h.strip() not in {"学习目标", "动手检查", "参考资料", "可交互的判断题", "最小可复现实验", "参考来源", "可调数值模型", "复现实验与反例", "复现实验与边界检查"}]
     for heading in headings:
         if f"<h2>{heading}</h2>" not in html:
             errors.append(f"{html_path.name}: Markdown heading missing in HTML: {heading}")
@@ -92,7 +100,7 @@ def main() -> int:
             example = page.with_suffix(suffix)
             if not example.exists():
                 errors.append(f"missing example: {example.relative_to(ROOT)}")
-    for i in range(1, 17):
+    for i in range(1, 25):
         if not (ROOT / "evidence" / f"{i:02d}.json").exists():
             errors.append(f"missing evidence ledger: evidence/{i:02d}.json")
     if errors:

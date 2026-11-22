@@ -1,0 +1,23 @@
+{
+  "title": "矩阵均衡化：缩放能修复量级，却不会自动治好病态",
+  "chapter": "2.5.2",
+  "claims": [
+    {
+      "id": "c2-18-0",
+      "topic": "Equilibration",
+      "locator": "Demmel, Applied Numerical Linear Algebra, Chapter 2",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "claim_category": "foundational textbook",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-18-1",
+      "topic": "Equilibration",
+      "locator": "LAPACK DGEEQU: row/column scaling",
+      "url": "https://netlib.org/lapack/explore-html/d5/d8a/group__geequ_ga7238812c5c26fc2fbe8bbbc22b6ee885.html",
+      "claim_category": "primary documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    }
+  ],
+  "experimental_note": "Visual numeric models are didactic; real Python and MATLAB outputs require explicit execution and checks."
+}

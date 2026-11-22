@@ -1,0 +1,31 @@
+{
+  "title": "对称但不定：为何 LDLᵀ 分解必须允许 2×2 主元块",
+  "chapter": "2.7.2",
+  "claims": [
+    {
+      "id": "c2-24-0",
+      "topic": "对称但不定：为何 LDLᵀ 分解必须允许 2×2 主元块",
+      "locator": "Demmel, Applied Numerical Linear Algebra, Chapter 2",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "claim_category": "foundational textbook",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-24-1",
+      "topic": "对称但不定：为何 LDLᵀ 分解必须允许 2×2 主元块",
+      "locator": "LAPACK DSYTRF: Bunch–Kaufman diagonal pivoting",
+      "url": "https://www.netlib.org/lapack/explore-html/dd/df4/dsytrf_8f_source.html",
+      "claim_category": "reference documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-24-2",
+      "topic": "对称但不定：为何 LDLᵀ 分解必须允许 2×2 主元块",
+      "locator": "LAPACK symmetric indefinite pivot block documentation",
+      "url": "https://web.mit.edu/r/current/lib/R/library/Matrix/html/BunchKaufman-methods.html",
+      "claim_category": "reference documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    }
+  ],
+  "experimental_note": "Illustrative visual models are not measured benchmarks. Numerical script claims depend on execution results."
+}

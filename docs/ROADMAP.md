@@ -76,3 +76,17 @@
 - **6.6.4** CG 的 A-范数误差界：独立 HTML / MD / Python / MATLAB / evidence
 
 对所有模块按“独立问题 → 公式推导 → 具体算例 → 解释图 → 原生交互 → 限制 → 证据”组织；保留原有文件路径与章节顺序。新增 `tests/test_chapter6_batch4.py` 与既有 `scripts/browser_check.py` 16 篇验收。第六章深化进度 16 篇，全站累计 32 篇；CI 和 Pages 的 S4/S5 状态需根据实际远端结果标注。
+
+
+## 第五批：第二章 2.5–2.7 八篇进阶精讲
+
+- 2.5.1 迭代改进：低精度分解与高精度残差：HTML / MD / Python / MATLAB / SVG 与 evidence/17.json，路径 2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/00_2.5.1_Single_Precision_Iterative_Refinement
+- 2.5.2 矩阵均衡化：量级变化与真实病态：HTML / MD / Python / MATLAB / SVG 与 evidence/18.json，路径 2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/01_2.5.2_Equilibration
+- 2.6.1 BLAS 三级与数据复用：HTML / MD / Python / MATLAB / SVG 与 evidence/19.json，路径 2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/00_2.6.1_Basic_Linear_Algebra_Subroutines_(BLAS)
+- 2.6.2 分块矩阵乘法与缓存工作集：HTML / MD / Python / MATLAB / SVG 与 evidence/20.json，路径 2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/01_2.6.2_How_to_Optimize_Matrix_Multiplication
+- 2.6.3 分块 LU 与 Schur 补：HTML / MD / Python / MATLAB / SVG 与 evidence/21.json，路径 2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/02_2.6.3_Reorganizing_Gaussian_Elimination_to_use_Level_3_BLAS
+- 2.6.4 Roofline、Amdahl 与并行瓶颈：HTML / MD / Python / MATLAB / SVG 与 evidence/22.json，路径 2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues
+- 2.7.1 Cholesky：对称正定与 LLᵀ：HTML / MD / Python / MATLAB / SVG 与 evidence/23.json，路径 2_Linear_Equation_Solving/2.7_Special_Linear_Systems/00_2.7.1_Real_Symmetric_Positive_Definite_Matrices
+- 2.7.2 对称不定：LDLᵀ 与 2×2 主元：HTML / MD / Python / MATLAB / SVG 与 evidence/24.json，路径 2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices
+
+本批深度门禁：每篇对照数学假设、可调可视化和代码测试；新增 tests/test_chapter2_advanced.py（18 项）。原 Chapter 6 的 16 篇深化成果保留。合并后的课程合计 40 篇深度文章。Pages/CI 须按对应 SHA 的结果记录。
