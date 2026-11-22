@@ -7,7 +7,7 @@ import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB_SUFFIXES = {".html", ".css", ".js", ".svg", ".json", ".md", ".png", ".jpg", ".jpeg", ".webp", ".ico", ".txt"}
-EXCLUDED_DIRS = {".git", ".github", ".venv", "__pycache__", "tests", "scripts", "evidence", "dist"}
+EXCLUDED_DIRS = {".git", ".github", ".venv", "__pycache__", "tests", "scripts", "evidence", "dist", "reports"}
 
 def build(output: Path) -> int:
     output = output.resolve()

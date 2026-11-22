@@ -61,3 +61,11 @@
 4. 检查 Git diff、提交 SHA、Actions 状态。
 5. Pages workflow 成功并访问实际 URL 后，才可标注为已发布。
 6. 未执行的检查必须标为 `not verified`，不得推定通过。
+
+
+## 8. Olah-style 教学方法的使用边界
+
+- 采用问题张力 → 最小机制 → 逐步图解 → 公式与维度 → 可执行小实验 → 来源与局限的叙事顺序。
+- 借鉴 Christopher Olah 的渐进图解方法和 Harvard NLP Annotated Transformer 的代码—机制对应方法；不复制其文字、图形、代码、品牌或 CSS。
+- 对数值线性代数，图中的矩阵维度、正交补、误差路径和数据流必须与公式一致；交互是渐进增强，静态图也必须能独立理解。
+- 浏览器 QA 应记录截图和机器可读报告；HTML 解析通过不能代替真实浏览器中的 MathML 和 SVG 检查。

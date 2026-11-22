@@ -1,29 +1,32 @@
 #!/usr/bin/env python3
-"""Chromium smoke checks for the homepage and first eight lessons."""
+"""Responsive, offline-first Chromium QA for the homepage and first eight lessons."""
 from __future__ import annotations
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from threading import Thread
-import contextlib
+from datetime import datetime, timezone
+import json
 import os
-import time
+import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
+REPORT_DIR = ROOT / "reports" / "browser-qa"
 PAGES = [
-"index.html",
-"1_Introduction/00_1.1_Basic_Notation.html",
-"1_Introduction/01_1.2_Standard_Problems_of_Numerical_Linear_Algebra.html",
-"1_Introduction/1.3_General_Techniques/00_1.3.1_Matrix_Factorizations.html",
-"1_Introduction/1.3_General_Techniques/01_1.3.2_Perturbation_Theory_and_Condition_Numbers.html",
-"1_Introduction/1.3_General_Techniques/02_1.3.3_Effects_of_Roundoff_Error_on_Algorithms.html",
-"1_Introduction/1.3_General_Techniques/03_1.3.4_Analyzing_the_Speed_of_Algorithms.html",
-"1_Introduction/1.3_General_Techniques/04_1.3.5_Engineering_Numerical_Software.html",
-"1_Introduction/03_1.4_Example:_Polynomial_Evaluation.html",
+    ("home", "index.html"),
+    ("01", "1_Introduction/00_1.1_Basic_Notation.html"),
+    ("02", "1_Introduction/01_1.2_Standard_Problems_of_Numerical_Linear_Algebra.html"),
+    ("03", "1_Introduction/1.3_General_Techniques/00_1.3.1_Matrix_Factorizations.html"),
+    ("04", "1_Introduction/1.3_General_Techniques/01_1.3.2_Perturbation_Theory_and_Condition_Numbers.html"),
+    ("05", "1_Introduction/1.3_General_Techniques/02_1.3.3_Effects_of_Roundoff_Error_on_Algorithms.html"),
+    ("06", "1_Introduction/1.3_General_Techniques/03_1.3.4_Analyzing_the_Speed_of_Algorithms.html"),
+    ("07", "1_Introduction/1.3_General_Techniques/04_1.3.5_Engineering_Numerical_Software.html"),
+    ("08", "1_Introduction/03_1.4_Example:_Polynomial_Evaluation.html"),
 ]
-VIEWPORTS = [(1440,900),(768,1024),(390,844),(360,800)]
+VIEWPORTS = [(1440, 900), (768, 1024), (390, 844), (360, 800)]
 
 class QuietHandler(SimpleHTTPRequestHandler):
-    def log_message(self, *_args): pass
+    def log_message(self, *_args):
+        pass
 
 def main() -> int:
     try:
@@ -31,44 +34,154 @@ def main() -> int:
     except ImportError:
         print("Playwright is not installed; browser QA not verified.")
         return 2
+
+    if REPORT_DIR.exists():
+        shutil.rmtree(REPORT_DIR)
+    REPORT_DIR.mkdir(parents=True)
     os.chdir(ROOT)
     server = ThreadingHTTPServer(("127.0.0.1", 0), QuietHandler)
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
     base = f"http://127.0.0.1:{server.server_port}/"
     failures = []
+    external_requests = []
+    screenshots = []
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch()
-            for rel in PAGES:
-                for width,height in VIEWPORTS:
-                    page = browser.new_page(viewport={"width":width,"height":height})
+            for label, rel in PAGES:
+                for width, height in VIEWPORTS:
+                    page = browser.new_page(viewport={"width": width, "height": height})
                     page_errors = []
+                    console_errors = []
+                    bad_responses = []
                     page.on("pageerror", lambda exc: page_errors.append(str(exc)))
-                    page.goto(base + rel, wait_until="networkidle")
-                    page.wait_for_timeout(80)
-                    overflow = page.evaluate("document.documentElement.scrollWidth > window.innerWidth")
-                    if overflow: failures.append(f"{rel} @ {width}: document overflow")
-                    if page_errors: failures.append(f"{rel} @ {width}: JS errors {page_errors}")
-                    if rel != "index.html":
-                        controls = page.locator("[data-demo-control]")
-                        if controls.count() < 2: failures.append(f"{rel}: missing interactive controls")
+                    page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+                    page.on("response", lambda response: bad_responses.append(f"{response.status} {response.url}") if response.status >= 400 else None)
+
+                    def offline_route(route):
+                        url = route.request.url
+                        if url.startswith(base) or url.startswith("data:") or url.startswith("blob:"):
+                            route.continue_()
                         else:
-                            before = page.locator("[data-output]").inner_text()
-                            controls.nth(1).click()
-                            after = page.locator("[data-output]").inner_text()
-                            if before == after: failures.append(f"{rel}: demo did not change output")
-                    page.emulate_media(media="print")
-                    if page.locator("h1").count() != 1: failures.append(f"{rel}: print H1 count mismatch")
-                    page.close()
+                            external_requests.append(f"{rel}: blocked external request {url}")
+                            route.abort()
+                    page.route("**/*", offline_route)
+
+                    try:
+                        response = page.goto(base + rel, wait_until="networkidle", timeout=30000)
+                        if response is None or response.status >= 400:
+                            failures.append(f"{rel} @ {width}: page response missing/failed")
+                        page.wait_for_timeout(80)
+
+                        metrics = page.evaluate("""() => ({
+                          viewport: window.innerWidth,
+                          documentWidth: document.documentElement.scrollWidth,
+                          h1Count: document.querySelectorAll('h1').length,
+                          images: [...document.images].map(img => ({src: img.getAttribute('src'), loaded: img.complete && img.naturalWidth > 0})),
+                          math: [...document.querySelectorAll('math')].map(el => {
+                            const r = el.getBoundingClientRect();
+                            return {namespace: el.namespaceURI, width: r.width, height: r.height};
+                          }),
+                          fractions: [...document.querySelectorAll('mfrac')].map(el => {
+                            const c = [...el.children];
+                            if (c.length !== 2) return {arity: c.length, valid: false};
+                            const n = c[0].getBoundingClientRect(), d = c[1].getBoundingClientRect();
+                            return {arity: c.length, valid: n.width > 0 && d.width > 0 && n.top < d.top};
+                          }),
+                          mathInsideSvg: !!document.querySelector('svg math'),
+                          overflowNodes: [...document.querySelectorAll('body *')].map(el => {
+                            const r = el.getBoundingClientRect();
+                            return {tag: el.tagName, cls: typeof el.className === 'string' ? el.className : '', right: r.right, width: r.width};
+                          }).filter(x => x.right > window.innerWidth + 1).slice(0, 8)
+                        })""")
+
+                        if metrics["documentWidth"] > width:
+                            failures.append(f"{rel} @ {width}: document overflow {metrics['documentWidth']}px; offenders={metrics['overflowNodes']}")
+                        if metrics["h1Count"] != 1:
+                            failures.append(f"{rel} @ {width}: expected one H1, got {metrics['h1Count']}")
+                        for img in metrics["images"]:
+                            if not img["loaded"]:
+                                failures.append(f"{rel} @ {width}: image failed {img['src']}")
+                        if rel != "index.html":
+                            if not metrics["math"]:
+                                failures.append(f"{rel} @ {width}: no MathML")
+                            for item in metrics["math"]:
+                                if item["namespace"] != "http://www.w3.org/1998/Math/MathML" or item["width"] <= 0 or item["height"] <= 0:
+                                    failures.append(f"{rel} @ {width}: MathML namespace/geometry failure {item}")
+                            if metrics["mathInsideSvg"]:
+                                failures.append(f"{rel} @ {width}: MathML nested inside SVG")
+                            if any(not item["valid"] for item in metrics["fractions"]):
+                                failures.append(f"{rel} @ {width}: malformed or invisible mfrac {metrics['fractions']}")
+
+                            controls = page.locator("[data-demo-control]")
+                            if controls.count() < 2:
+                                failures.append(f"{rel}: missing interactive controls")
+                            else:
+                                before = page.locator("[data-output]").inner_text()
+                                controls.nth(1).click()
+                                after = page.locator("[data-output]").inner_text()
+                                if before == after:
+                                    failures.append(f"{rel}: demo did not change meaningful output")
+
+                            # Keyboard focus must move through native controls.
+                            first = page.locator("[data-demo-control]").first
+                            first.focus()
+                            page.keyboard.press("Tab")
+                            if page.evaluate("document.activeElement === document.body"):
+                                failures.append(f"{rel}: keyboard focus was lost after Tab")
+
+                            # If a formula genuinely overflows its own region, ArrowRight must scroll it.
+                            for region in page.locator(".math-scroll").all():
+                                sizes = region.evaluate("(el) => ({client:el.clientWidth, scroll:el.scrollWidth})")
+                                if sizes["scroll"] > sizes["client"] + 1:
+                                    region.focus()
+                                    before_scroll = region.evaluate("(el) => el.scrollLeft")
+                                    page.keyboard.press("ArrowRight")
+                                    after_scroll = region.evaluate("(el) => el.scrollLeft")
+                                    if after_scroll <= before_scroll:
+                                        failures.append(f"{rel} @ {width}: keyboard cannot scroll wide formula")
+
+                        if page_errors:
+                            failures.append(f"{rel} @ {width}: JS page errors {page_errors}")
+                        if console_errors:
+                            failures.append(f"{rel} @ {width}: console errors {console_errors}")
+                        if bad_responses:
+                            failures.append(f"{rel} @ {width}: failed responses {bad_responses}")
+
+                        shot = REPORT_DIR / f"{label}-{width}.png"
+                        page.screenshot(path=str(shot), full_page=True)
+                        screenshots.append(str(shot.relative_to(ROOT)))
+                        if width == 1440:
+                            page.emulate_media(media="print")
+                            print_shot = REPORT_DIR / f"{label}-print.png"
+                            page.screenshot(path=str(print_shot), full_page=True)
+                            screenshots.append(str(print_shot.relative_to(ROOT)))
+                    except Exception as exc:
+                        failures.append(f"{rel} @ {width}: browser exception {type(exc).__name__}: {exc}")
+                    finally:
+                        page.close()
             browser.close()
     finally:
         server.shutdown()
         server.server_close()
+
+    failures.extend(external_requests)
+    report = {
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "browser": "Chromium via Playwright",
+        "viewports": [{"width": w, "height": h} for w, h in VIEWPORTS],
+        "pages": [path for _, path in PAGES],
+        "checks": ["offline local-only requests", "page and console errors", "document overflow", "H1 count", "image load", "MathML namespace and geometry", "mfrac structure", "no MathML inside SVG", "interactive output", "keyboard focus", "formula keyboard scrolling when needed", "print screenshots"],
+        "screenshots": screenshots,
+        "failures": failures,
+        "status": "passed" if not failures else "failed",
+    }
+    (REPORT_DIR / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"Browser QA {report['status']}: {len(PAGES)} pages × {len(VIEWPORTS)} viewports; screenshots={len(screenshots)}; report={REPORT_DIR / 'report.json'}")
     if failures:
         print("\n".join(failures))
         return 1
-    print(f"Chromium smoke passed: {len(PAGES)} pages × {len(VIEWPORTS)} viewports, interactive demos checked.")
     return 0
 
 if __name__ == "__main__":

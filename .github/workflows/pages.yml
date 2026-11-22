@@ -39,3 +39,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: numerical-linear-algebra-pages-qa
+          path: reports/browser-qa/
+          if-no-files-found: ignore
