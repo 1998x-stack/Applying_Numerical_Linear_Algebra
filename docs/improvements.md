@@ -26,3 +26,13 @@
 - CI browser QA found a 390/360 px overflow caused by the responsive grid's automatic min-content track sizing. Changed the mobile track to minmax(0, 1fr), set grid children to min-width:0, and allowed TOC links to wrap. Also clarified MATLAB's conjugate-transpose vs non-conjugating-transpose notation.
 
 - CI browser QA: mobile page overflow fixed; wide MathML formula keyboard-scroll check initially failed with ArrowRight. QA now tests End-to-scroll-end first, then ArrowRight, and ignores sub-8px rounding differences.
+
+### 2026-11-22 — Second batch: Chapter 6 iterative solvers
+
+- Scope: eight standalone Chapter 6 lessons (6.1–6.5.2), Markdown/HTML/Python/MATLAB parity, independent original SVG, offline MathML and per-article evidence files.
+- Integration: preserve the concurrently completed eight Chapter 1 lessons, homepage layout, existing build/QA workflows, and public URLs. Append Chapter 6 to the canonical portal instead of replacing Chapter 1.
+- Numerical evidence: checked against Demmel Chapter 6 §§6.1–6.5 (including Table 6.1, Theorem 6.1 and Lemma 6.2) and SciPy CG/GMRES API references.
+- Cross-checks: two independently written 2D stencil vs Kronecker-sum kernels, one-dimensional Poisson sign and scaling, residual histories for Jacobi and Gauss–Seidel, solver preconditions, and content/evidence parity.
+- QA: unittest regression suite and Playwright multi-viewport audit are included; GitHub Actions run status determines actual pass/fail. No MATLAB execution is claimed.
+- Publishing: CI-gated GitHub Pages workflow is retained from the main branch. Public availability will be confirmed separately.
+- Work branch / PR: anla/iterative-methods-foundations, #3.

@@ -21,6 +21,8 @@ def build(output: Path) -> int:
         relative = source.relative_to(ROOT)
         if any(part in EXCLUDED_DIRS for part in relative.parts):
             continue
+        if source.name.endswith(".evidence.json"):
+            continue
         if source.suffix.lower() not in WEB_SUFFIXES and source.name != ".nojekyll":
             continue
         destination = output / relative

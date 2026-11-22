@@ -1,36 +1,17 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.3.1 Poisson’s Equation in One Dimension</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>00_6.3.1_Poisson’s_Equation_in_One_Dimension</h1>
-<pre><code>Lecture: 6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation
-Content: 00_6.3.1_Poisson’s_Equation_in_One_Dimension
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 00_6.3.1_Poisson’s_Equation_in_One_Dimension
-
-"""
-Lecture: 6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation
-Content: 00_6.3.1_Poisson’s_Equation_in_One_Dimension
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="从边界值问题出发，在内部网格点用中心差分近似二阶导数，就会得到一个稀疏、对称正定的三对角矩阵。网格越细，未知量越多，离散误差与代数求解误差必须分开管理。"><title>6.3.1 一维 Poisson 方程如何变成三对角系统？ · 应用数值线性代数</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="../../assets/js/course.js"></script></head>
+<body class="article-page"><a class="skip-link" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · ITERATIVE LINEAR SOLVERS</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../../index.html#curriculum">课程地图</a><a href="../../README.md">README</a></nav></header>
+<div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">CHAPTER 06 / 章节导航</p><nav class="sidebar-nav" aria-label="第六章模块"><a href="../00_6.1_Introduction.html"><span>6.1</span> 迭代法与停止准则</a>
+<a href="../01_6.2_On_line_Help_for_Iterative_Methods.html"><span>6.2</span> 求解器选择</a>
+<a href="00_6.3.1_Poisson’s_Equation_in_One_Dimension.html" aria-current="page"><span>6.3.1</span> 一维 Poisson</a>
+<a href="01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html"><span>6.3.2</span> 二维五点模板</a>
+<a href="02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html"><span>6.3.3</span> Kronecker 积</a>
+<a href="../03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html"><span>6.4</span> 算法比较</a>
+<a href="../6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html"><span>6.5.1</span> Jacobi</a>
+<a href="../6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html"><span>6.5.2</span> Gauss–Seidel</a></nav></aside><main id="main" class="article"><header class="article-header"><p class="eyebrow">第六章 · ITERATIVE METHODS FOR LINEAR SYSTEMS</p><h1>6.3.1 一维 Poisson 方程如何变成三对角系统？</h1><p class="article-lead">从边界值问题出发，在内部网格点用中心差分近似二阶导数，就会得到一个稀疏、对称正定的三对角矩阵。网格越细，未知量越多，离散误差与代数求解误差必须分开管理。</p><ul class="article-meta"><li>独立完整讲解</li><li>可视化推导</li><li>Python / MATLAB</li><li>证据清单随页附带</li></ul></header><div class="callout"><strong>从微分方程到矩阵：</strong>边界条件固定端点，中心差分只连接相邻内部点，因此得到三对角线性系统。</div>
+<section id="continuous"><h2>连续问题：未知的是一条函数曲线</h2><p>考虑 <span class="math-inline">−v″(x)=f(x)</span>，其中 <span class="math-inline">0&lt;x&lt;1</span>，并施加 <span class="math-inline">v(0)=v(1)=0</span>。右端 <span class="math-inline">f</span> 已知，目标是求出满足边界条件的函数 <span class="math-inline">v</span>。这里离散的是正算子 <span class="math-inline">−d²/dx²</span>，所以矩阵主对角元为正、相邻非对角元为负。</p>
+<figure class="figure-card"><svg viewBox="0 0 700 220" role="img" aria-labelledby="line-title line-desc"><title id="line-title">一维区间的均匀网格</title><desc id="line-desc">区间从零到一，两个端点为固定的零边界值，中间有五个等距内部未知节点。</desc><path d="M52 115H648" stroke="#547575" stroke-width="2"/><g stroke="#547575" stroke-width="1.4"><path d="M52 101V129M151 101V129M250 101V129M349 101V129M448 101V129M547 101V129M648 101V129"/></g><g fill="#fff" stroke="#477c79" stroke-width="2"><circle cx="151" cy="115" r="9"/><circle cx="250" cy="115" r="9"/><circle cx="349" cy="115" r="9"/><circle cx="448" cy="115" r="9"/><circle cx="547" cy="115" r="9"/></g><g fill="#c9917a"><circle cx="52" cy="115" r="8"/><circle cx="648" cy="115" r="8"/></g><g class="small" text-anchor="middle"><text x="52" y="158">x₀=0</text><text x="151" y="158">x₁</text><text x="250" y="158">x₂</text><text x="349" y="158">x₃</text><text x="448" y="158">x₄</text><text x="547" y="158">x₅</text><text x="648" y="158">xₙ₊₁=1</text></g><g class="tiny" text-anchor="middle"><text x="52" y="82">固定边界</text><text x="349" y="82">内部未知量</text><text x="648" y="82">固定边界</text></g><path d="M151 184H250M250 184H349M349 184H448" stroke="#b96e4f" stroke-width="1.5"/><text class="small" x="300" y="205" text-anchor="middle">每个内部点只与相邻点耦合</text></svg><figcaption>图 3：端点值由 Dirichlet 条件固定，真正需要求解的只有内部节点。</figcaption></figure></section>
+<section id="discretize"><h2>中心差分生成三对角矩阵</h2><p>取 <span class="math-inline">N</span> 个内部点，令 <span class="math-inline">h=1/(N+1)</span>、<span class="math-inline">xᵢ=ih</span>。中心差分近似为：</p><div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="一维 Poisson 中心差分公式"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mo>−</mo><msup><mi>v</mi><mo>″</mo></msup><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>≈</mo><mfrac><mrow><mn>2</mn><msub><mi>v</mi><mi>i</mi></msub><mo>−</mo><msub><mi>v</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>v</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><msup><mi>h</mi><mn>2</mn></msup></mfrac></mrow></math></div></div><p>截断误差为二阶 <span class="math-inline">O(h²)</span>。令边界值为零，内部方程组成 <span class="math-inline">T_Nv=h²f</span>，其中 <span class="math-inline">T_N</span> 的主对角线是 2、上下相邻对角线是 −1。若把 <span class="math-inline">h⁻²</span> 放进矩阵，则右端应为 <span class="math-inline">f</span>；两种缩放方式只能选一种。</p><div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="三个内部点时的三对角矩阵"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>T</mi><mn>3</mn></msub><mo>=</mo><mfenced open="[" close="]"><mtable><mtr><mtd><mn>2</mn></mtd><mtd><mo>−</mo><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mo>−</mo><mn>1</mn></mtd><mtd><mn>2</mn></mtd><mtd><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mo>−</mo><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr></mtable></mfenced></mrow></math></div></div><p>每行最多三个非零元，总数为 <span class="math-inline">3N−2</span>。而且 <span class="math-inline">zᵀT_Nz=z₁²+z_N²+Σ(zᵢ−zᵢ₊₁)²&gt;0</span>，因此矩阵对称正定。</p></section>
+<section id="grid"><h2>交互：网格加密后，存储如何增长？</h2><div class="interactive-panel" data-demo-panel data-demo-kind="grid1d"><h3>调整内部网格点数量</h3><div class="control-row"><label for="n1d">内部点 N：</label><input id="n1d" type="range" min="4" max="40" value="12" data-demo-control></div><p class="demo-output" data-demo-output aria-live="polite">网格信息将由脚本计算。</p></div><p>未知量随 <span class="math-inline">N</span> 线性增长，三对角结构也只需线性存储。若把矩阵误存成稠密矩阵，空间会从线性增长变为二次增长。</p></section>
+<section id="error"><h2>离散误差与代数误差要分开</h2><p>用制造解 <span class="math-inline">v(x)=sin(πx)</span>，对应 <span class="math-inline">f(x)=π²sin(πx)</span>。网格越细，中心差分离散误差按二阶下降；但离散线性系统还必须被求解到足够小的残差。若迭代过早停止，代数误差可能掩盖网格加密带来的精度收益。</p></section>
+<section id="references" class="references"><h2>参考来源</h2><ol><li>Demmel, <em>Applied Numerical Linear Algebra</em>, SIAM, 1997, §6.3.1, pp. 267–269. <a href="https://doi.org/10.1137/1.9781611971446">书目 DOI</a></li></ol></section><section class="callout warm"><strong>代码与页面：</strong>本页同名 Markdown、Python、MATLAB 和 evidence 文件位于当前目录。运行示例前请先阅读输入约束与边界条件。</section><footer class="article-footer"><a href="../01_6.2_On_line_Help_for_Iterative_Methods.html">← 6.2 求解器选择</a><a href="01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html">6.3.2 二维五点模板 →</a></footer></main></div></body></html>

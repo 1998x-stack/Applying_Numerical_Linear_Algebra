@@ -1,0 +1,32 @@
+{
+  "article": "6.5.2",
+  "claims": [
+    {
+      "id": "6.5.2-a",
+      "claim": "Gauss–Seidel 用新向量的下三角分量和旧向量的上三角分量更新。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.5.2, Algorithm 6.3",
+      "status": "verified",
+      "notes": "本页采用 A=D+L+U 记号。"
+    },
+    {
+      "id": "6.5.2-b",
+      "claim": "二维 Poisson 五点模板的红黑排序将网格划分为两个不相邻颜色类。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.5.2, Algorithm 6.4 and Example 6.8",
+      "status": "verified",
+      "notes": "每个颜色阶段可并行更新该颜色节点。"
+    },
+    {
+      "id": "6.5.2-c",
+      "claim": "对满足一致排序条件的模型，Gauss–Seidel 谱半径等于 Jacobi 谱半径平方。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.5.4, Corollary 6.1",
+      "status": "verified",
+      "notes": "仅在对应模型与排序假设下成立，不推广到任意矩阵。"
+    }
+  ]
+}

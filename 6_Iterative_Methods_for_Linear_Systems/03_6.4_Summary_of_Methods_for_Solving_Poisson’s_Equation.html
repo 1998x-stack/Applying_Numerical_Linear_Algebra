@@ -1,36 +1,19 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.4 Summary of Methods for Solving Poisson’s Equation</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation</h1>
-<pre><code>Lecture: /6_Iterative_Methods_for_Linear_Systems
-Content: 03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation
-
-"""
-Lecture: /6_Iterative_Methods_for_Linear_Systems
-Content: 03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="比较算法时必须固定问题、精度目标和硬件模型。对二维规则 Poisson 网格，Jacobi、Gauss–Seidel、CG、FFT 与多重网格的渐近代价不同；但专用方法的优势依赖模型假设。"><title>6.4 Poisson 方程求解方法如何比较？ · 应用数值线性代数</title><link rel="stylesheet" href="../assets/css/course.css"><script defer src="../assets/js/course.js"></script></head>
+<body class="article-page"><a class="skip-link" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · ITERATIVE LINEAR SOLVERS</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../index.html#curriculum">课程地图</a><a href="../README.md">README</a></nav></header>
+<div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">CHAPTER 06 / 章节导航</p><nav class="sidebar-nav" aria-label="第六章模块"><a href="00_6.1_Introduction.html"><span>6.1</span> 迭代法与停止准则</a>
+<a href="01_6.2_On_line_Help_for_Iterative_Methods.html"><span>6.2</span> 求解器选择</a>
+<a href="6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.html"><span>6.3.1</span> 一维 Poisson</a>
+<a href="6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html"><span>6.3.2</span> 二维五点模板</a>
+<a href="6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html"><span>6.3.3</span> Kronecker 积</a>
+<a href="03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html" aria-current="page"><span>6.4</span> 算法比较</a>
+<a href="6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html"><span>6.5.1</span> Jacobi</a>
+<a href="6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html"><span>6.5.2</span> Gauss–Seidel</a></nav></aside><main id="main" class="article"><header class="article-header"><p class="eyebrow">第六章 · ITERATIVE METHODS FOR LINEAR SYSTEMS</p><h1>6.4 Poisson 方程求解方法如何比较？</h1><p class="article-lead">比较算法时必须固定问题、精度目标和硬件模型。对二维规则 Poisson 网格，Jacobi、Gauss–Seidel、CG、FFT 与多重网格的渐近代价不同；但专用方法的优势依赖模型假设。</p><ul class="article-meta"><li>独立完整讲解</li><li>可视化推导</li><li>Python / MATLAB</li><li>证据清单随页附带</li></ul></header><div class="callout"><strong>先固定模型再比较：</strong>本页的复杂度表针对二维规则 Poisson 网格、串行计算和固定误差阈值，不是任意矩阵上的通用速度榜。</div>
+<section id="model"><h2>比较对象必须一致</h2><p>设二维矩形网格每个方向有 <span class="math-inline">N</span> 个内部点，未知量总数 <span class="math-inline">n=N²</span>。比较时固定边界条件、精度目标和计算模型。迭代法输出近似解，直接法输出数值分解解；若不固定残差阈值，低精度解可能显得不公平地便宜。</p></section>
+<section id="complexity"><h2>二维 Poisson 模型上的经典数量级</h2><div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="未知量总数定义"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>n</mi><mo>=</mo><msup><mi>N</mi><mn>2</mn></msup></mrow></math></div></div>
+<table><thead><tr><th>方法</th><th>时间阶</th><th>存储阶</th><th>适用前提</th></tr></thead><tbody><tr><td>Jacobi</td><td><span class="math-inline">O(n²)</span></td><td><span class="math-inline">O(n)</span></td><td>每轮简单、易并行；低频误差衰减慢</td></tr><tr><td>Gauss–Seidel</td><td><span class="math-inline">O(n²)</span></td><td><span class="math-inline">O(n)</span></td><td>复用新分量；顺序影响并行性</td></tr><tr><td>CG</td><td><span class="math-inline">O(n³ᐟ²)</span></td><td><span class="math-inline">O(n)</span></td><td>要求对称正定</td></tr><tr><td>SOR</td><td><span class="math-inline">O(n³ᐟ²)</span></td><td><span class="math-inline">O(n)</span></td><td>参数和排序要匹配模型</td></tr><tr><td>FFT</td><td><span class="math-inline">O(n log n)</span></td><td><span class="math-inline">O(n)</span></td><td>规则、可分离的矩形 Poisson 模型</td></tr><tr><td>Multigrid</td><td><span class="math-inline">O(n)</span></td><td><span class="math-inline">O(n)</span></td><td>需要合适的平滑、限制、延拓与粗网格求解</td></tr></tbody></table>
+<p class="article-note">复杂度阶来自 Demmel 对二维模型问题的经典分析（固定误差阈值、串行模型）。常数、硬件、通信、预条件器和实际停止条件都会影响真实时间。</p>
+<figure class="figure-card"><svg viewBox="0 0 700 270" role="img" aria-labelledby="cost-title cost-desc"><title id="cost-title">模型问题上的渐近复杂度阶示意</title><desc id="cost-desc">多重网格 O(n) 最低，FFT O(n log n) 次之，CG 和 SOR 为 O(n 的二分之三次方)，Jacobi 和 Gauss-Seidel 为 O(n²)。这是复杂度阶示意而非实测时间。</desc><text class="small" x="16" y="22">固定精度目标下的渐近工作量（示意）</text><g class="small"><text x="18" y="72">Multigrid</text><text x="18" y="112">FFT</text><text x="18" y="152">CG / SOR</text><text x="18" y="192">Jacobi / GS</text></g><g><rect x="160" y="50" width="120" height="24" rx="5" fill="#477c79"/><rect x="160" y="90" width="190" height="24" rx="5" fill="#789d92"/><rect x="160" y="130" width="275" height="24" rx="5" fill="#b6a17c"/><rect x="160" y="170" width="440" height="24" rx="5" fill="#bd8068"/></g><g class="label"><text x="295" y="68">O(n)</text><text x="365" y="108">O(n log n)</text><text x="450" y="148">O(n³ᐟ²)</text><text x="612" y="188">O(n²)</text></g><text class="tiny" x="350" y="238" text-anchor="middle">条形长度只用于表达增长阶次，不表示同一机器上的实测秒数</text></svg><figcaption>图 6：专用结构方法的渐近优势很明显，但只有当矩阵与方法的假设匹配时才成立。</figcaption></figure></section>
+<section id="choose"><h2>交互：方法适用前提</h2><div class="interactive-panel" data-demo-panel data-demo-kind="method"><h3>选择一种方法</h3><div class="control-row"><label for="method-choice">算法：</label><select id="method-choice" data-demo-control><option value="jacobi">Jacobi</option><option value="cg">CG</option><option value="fft">FFT</option><option value="multigrid">Multigrid</option><option value="direct">稀疏直接法</option></select></div><p class="demo-output" data-demo-output aria-live="polite">选择算法查看适用条件。</p></div><p>多重网格把误差从细网格转移到粗网格，在粗尺度消除平滑误差，再把修正插值回细网格。FFT 利用规则、可分离的算子；几何、系数或边界复杂时，不能直接套用同一变换公式。</p></section>
+<section id="measure"><h2>真实项目的比较清单</h2><ol><li>检查矩阵结构与算法前提。</li><li>统一残差阈值和离散精度要求。</li><li>计入预条件器构造、因子复用、内存与并行通信。</li><li>记录未知量、非零元、迭代次数、真实残差和运行时间。</li></ol></section>
+<section id="references" class="references"><h2>参考来源</h2><ol><li>Demmel, <em>Applied Numerical Linear Algebra</em>, SIAM, 1997, §6.4, pp. 277–279, Table 6.1. <a href="https://doi.org/10.1137/1.9781611971446">书目 DOI</a></li><li>SciPy, <a href="https://docs.scipy.org/doc/scipy/reference/sparse.linalg.html">Sparse linear algebra</a>.</li></ol></section><section class="callout warm"><strong>代码与页面：</strong>本页同名 Markdown、Python、MATLAB 和 evidence 文件位于当前目录。运行示例前请先阅读输入约束与边界条件。</section><footer class="article-footer"><a href="6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html">← 6.3.3 Kronecker 积</a><a href="6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html">6.5.1 Jacobi →</a></footer></main></div></body></html>

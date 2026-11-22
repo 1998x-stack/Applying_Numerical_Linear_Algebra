@@ -4,7 +4,7 @@
 
 **在线课程入口：** [打开课程首页](https://1998x-stack.github.io/Applying_Numerical_Linear_Algebra/)（发布状态以 GitHub Actions 和实际站点检查为准）。
 
-## 本轮课程建设
+## 第一批课程建设：第一章 8 篇
 
 首批 8 篇围绕 James W. Demmel《Applied Numerical Linear Algebra》第一章基础主题进行独立重写。每篇页面都从问题本身建立上下文，不要求读者先读上一页；包含推导、原创 SVG、交互演示、参考资料和 Python/MATLAB 对照实现。
 
@@ -19,9 +19,29 @@
 | 07 | 如何构建可信的数值计算软件 | [HTML](1_Introduction/1.3_General_Techniques/04_1.3.5_Engineering_Numerical_Software.html) | [MD](1_Introduction/1.3_General_Techniques/04_1.3.5_Engineering_Numerical_Software.md) | [PY](1_Introduction/1.3_General_Techniques/04_1.3.5_Engineering_Numerical_Software.py) | [M](1_Introduction/1.3_General_Techniques/04_1.3.5_Engineering_Numerical_Software.m) |
 | 08 | 多项式求值：Horner 方法与数值稳定性 | [HTML](1_Introduction/03_1.4_Example:_Polynomial_Evaluation.html) | [MD](1_Introduction/03_1.4_Example:_Polynomial_Evaluation.md) | [PY](1_Introduction/03_1.4_Example:_Polynomial_Evaluation.py) | [M](1_Introduction/03_1.4_Example:_Polynomial_Evaluation.m) |
 
+
+## 第二批课程建设：第六章 8 篇
+
+第六章的前八个关键基础主题已按独立教学单元精细化。所有页面都明确变量和维度、边界条件、算子符号、算法适用范围；配有原生 MathML、独立原创 SVG、交互解释、Python / MATLAB 对照示例和同名 `.evidence.json` 主张—来源台账。
+
+| 章节 | 主题 | HTML | Markdown | Python | MATLAB |
+|---|---|---|---|---|---|
+| 6.1 | 迭代法、残差与停止准则 | [HTML](6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html) | [MD](6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.md) | [PY](6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.py) | [M](6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.m) |
+| 6.2 | 如何选择迭代求解器 | [HTML](6_Iterative_Methods_for_Linear_Systems/01_6.2_On_line_Help_for_Iterative_Methods.html) | [MD](6_Iterative_Methods_for_Linear_Systems/01_6.2_On_line_Help_for_Iterative_Methods.md) | [PY](6_Iterative_Methods_for_Linear_Systems/01_6.2_On_line_Help_for_Iterative_Methods.py) | [M](6_Iterative_Methods_for_Linear_Systems/01_6.2_On_line_Help_for_Iterative_Methods.m) |
+| 6.3.1 | 一维 Poisson：三对角离散 | [HTML](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.html) | [MD](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.md) | [PY](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.py) | [M](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.m) |
+| 6.3.2 | 二维 Poisson：五点模板 | [HTML](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html) | [MD](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.md) | [PY](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.py) | [M](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.m) |
+| 6.3.3 | Kronecker 积与向量化 | [HTML](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html) | [MD](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.md) | [PY](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.py) | [M](6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.m) |
+| 6.4 | Poisson 求解器的复杂度比较 | [HTML](6_Iterative_Methods_for_Linear_Systems/03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html) | [MD](6_Iterative_Methods_for_Linear_Systems/03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.md) | [PY](6_Iterative_Methods_for_Linear_Systems/03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.py) | [M](6_Iterative_Methods_for_Linear_Systems/03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.m) |
+| 6.5.1 | Jacobi：同步更新 | [HTML](6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html) | [MD](6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.md) | [PY](6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.py) | [M](6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.m) |
+| 6.5.2 | Gauss–Seidel：新旧分量复用 | [HTML](6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html) | [MD](6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.md) | [PY](6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.py) | [M](6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.m) |
+
+建议顺序：**残差与停止准则 → 软件选型 → 一维/二维 Poisson → Kronecker 和 → 复杂度比较 → Jacobi → Gauss–Seidel**。不要求先读上一页才能理解当前页。已有旧章文件路径全部保留。
+
 ## 学习路线
 
-问题类型 → 矩阵分解 → 条件数 → 浮点误差与稳定性 → 性能分析 → 数值软件 → 多项式求值案例。
+第一批：问题类型 → 矩阵分解 → 条件数 → 浮点误差与稳定性 → 性能分析 → 数值软件 → 多项式求值案例。
+
+第二批：线性系统残差 → 矩阵结构与软件选型 → Poisson 有限差分 → Kronecker 和 → 迭代收敛。
 
 ## 仓库结构
 
@@ -31,7 +51,7 @@
 ├── README.md / README.html
 ├── AGENTS.md                  # 数学、内容、代码和发布规范
 ├── courses.json               # 课程元数据
-├── assets/                    # CSS、JS、原创 SVG
+├── assets/                    # 第一批与第六章两套共享样式、JS、原创 SVG
 ├── 1_Introduction/             # 第一章原有路径保持稳定
 ├── 2_Linear_Equation_Solving/
 ├── 3_Linear_Least_Squares_Problems/
@@ -63,6 +83,7 @@ python -m http.server 8000
 python -m pip install -r requirements-dev.txt
 python -m playwright install chromium
 python scripts/browser_qa.py
+python scripts/browser_check.py
 ```
 
 ## 数值验证原则

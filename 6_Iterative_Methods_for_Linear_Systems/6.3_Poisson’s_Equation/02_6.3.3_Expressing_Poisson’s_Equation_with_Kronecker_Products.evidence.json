@@ -1,0 +1,32 @@
+{
+  "article": "6.3.3",
+  "claims": [
+    {
+      "id": "6.3.3-a",
+      "claim": "vec(AX)=(I⊗A)vec(X)，vec(XB)=(B^T⊗I)vec(X)。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.3.3, Lemma 6.2",
+      "status": "verified",
+      "notes": "本页明确采用按列堆叠的 vec 约定。"
+    },
+    {
+      "id": "6.3.3-b",
+      "claim": "二维离散算子可写为 I_y⊗T_x/h_x² + T_y⊗I_x/h_y²。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.3.3, equation 6.17",
+      "status": "verified",
+      "notes": "T_y 对称时 T_y^T=T_y。"
+    },
+    {
+      "id": "6.3.3-c",
+      "claim": "Kronecker 表示可以通过分别沿两个坐标方向应用一维差分实现，而不显式存储大矩阵。",
+      "kind": "implementation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.3.3 operator identity; matrix-free implementation derived",
+      "status": "derived",
+      "notes": "Python 示例与独立五点模板逐元素交叉验证。"
+    }
+  ]
+}

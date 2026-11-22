@@ -37,7 +37,8 @@
       "id": 6,
       "title": "Iterative Methods for Linear Systems",
       "path": "6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html",
-      "status": "legacy"
+      "status": "in-progress",
+      "deepened": 8
     },
     {
       "id": 7,
@@ -94,6 +95,56 @@
       "title": "多项式求值：Horner 方法与数值稳定性",
       "path": "1_Introduction/03_1.4_Example:_Polynomial_Evaluation.html",
       "figure": "assets/diagrams/08-horner.svg"
+    }
+  ],
+  "chapter6_modules": [
+    {
+      "id": "6.1",
+      "title": "迭代法、残差与停止准则",
+      "path": "6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.2",
+      "title": "如何选择迭代求解器",
+      "path": "6_Iterative_Methods_for_Linear_Systems/01_6.2_On_line_Help_for_Iterative_Methods.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.3.1",
+      "title": "一维 Poisson：三对角离散",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.3.2",
+      "title": "二维 Poisson：五点模板",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.3.3",
+      "title": "Kronecker 积与向量化",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.4",
+      "title": "Poisson 求解器的复杂度比较",
+      "path": "6_Iterative_Methods_for_Linear_Systems/03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.5.1",
+      "title": "Jacobi：同步更新",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.5.2",
+      "title": "Gauss–Seidel：新旧分量复用",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html",
+      "status": "enhanced"
     }
   ]
 }

@@ -23,7 +23,7 @@
 
 ## 3. 证据
 
-- 每篇文章维护 `evidence/NN.json`。
+- 第一批第一章文章维护 `evidence/NN.json`；第二批第六章文章维护与模块同名的 `<stem>.evidence.json`，防止同一目录多个文章覆盖同一个台账。
 - 关键事实就近引用原始教材、论文、标准、官方软件文档。
 - 记录来源 URL、章节/表格/定理定位、状态（verified / derived / illustrative / unverified）。
 - 教材章节作为内容定位，不复制受版权保护的段落、插图或代码。
