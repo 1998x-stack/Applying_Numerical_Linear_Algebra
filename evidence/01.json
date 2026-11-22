@@ -1,0 +1,11 @@
+[
+  {
+    "id": "notation-1",
+    "claim": "矩阵维度决定矩阵乘法的合法形状；复数矩阵使用共轭转置定义 Hermitian 内积。",
+    "kind": "theory",
+    "source_url": "https://doi.org/10.1137/1.9781611971446",
+    "locator": "Chapter 1 §1.1",
+    "status": "verified",
+    "notes": "依据教材章节定位；本页表述为独立定义与示例。"
+  }
+]

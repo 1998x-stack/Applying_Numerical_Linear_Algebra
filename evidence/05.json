@@ -1,0 +1,20 @@
+[
+  {
+    "id": "round-1",
+    "claim": "IEEE 754-2019 规定浮点格式、算术方法和异常条件。",
+    "kind": "standard",
+    "source_url": "https://standards.ieee.org/ieee/754/6210/",
+    "locator": "IEEE 754-2019 standard overview",
+    "status": "verified",
+    "notes": "标准状态和范围以 IEEE SA 页面为准。"
+  },
+  {
+    "id": "round-2",
+    "claim": "浮点舍入、消去和运算顺序会影响计算结果。",
+    "kind": "research",
+    "source_url": "https://doi.org/10.1145/103162.103163",
+    "locator": "Goldberg (1991), ACM Computing Surveys 23(1), pp. 5–48",
+    "status": "verified",
+    "notes": "经典浮点数教程。"
+  }
+]

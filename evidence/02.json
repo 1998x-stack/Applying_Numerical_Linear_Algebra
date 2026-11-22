@@ -1,0 +1,20 @@
+[
+  {
+    "id": "problems-1",
+    "claim": "线性系统、最小二乘、特征值和奇异值问题是课程的标准问题族。",
+    "kind": "theory",
+    "source_url": "https://doi.org/10.1137/1.9781611971446",
+    "locator": "Chapter 1 §1.2",
+    "status": "verified",
+    "notes": "问题分类由教材目录和课程结构交叉确认。"
+  },
+  {
+    "id": "svd-1",
+    "claim": "奇异值是 A*A 特征值的非负平方根。",
+    "kind": "theory",
+    "source_url": "https://netlib.org/lapack/",
+    "locator": "LAPACK overview: singular value problems",
+    "status": "verified",
+    "notes": "数值库支持范围用于核对问题类型。"
+  }
+]

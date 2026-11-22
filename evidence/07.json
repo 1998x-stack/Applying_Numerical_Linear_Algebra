@@ -1,0 +1,29 @@
+[
+  {
+    "id": "software-1",
+    "claim": "LAPACK 提供线性系统、最小二乘、特征值、奇异值问题及相关矩阵分解。",
+    "kind": "implementation",
+    "source_url": "https://netlib.org/lapack/",
+    "locator": "LAPACK project overview",
+    "status": "verified",
+    "notes": "官方项目概述。"
+  },
+  {
+    "id": "software-2",
+    "claim": "NumPy 线性代数函数依赖 BLAS/LAPACK 实现底层标准算法。",
+    "kind": "implementation",
+    "source_url": "https://numpy.org/doc/stable/reference/routines.linalg.html",
+    "locator": "NumPy linear algebra documentation",
+    "status": "verified",
+    "notes": "官方文档。"
+  },
+  {
+    "id": "software-3",
+    "claim": "MATLAB A\\\\b 求解 Ax=b，并按矩阵形状处理方阵或矩形系统。",
+    "kind": "implementation",
+    "source_url": "https://www.mathworks.com/help/matlab/math/systems-of-linear-equations.html",
+    "locator": "Systems of Linear Equations",
+    "status": "verified",
+    "notes": "官方 MathWorks 文档。"
+  }
+]

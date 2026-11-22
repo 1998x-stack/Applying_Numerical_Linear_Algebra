@@ -1,0 +1,20 @@
+[
+  {
+    "id": "horner-1",
+    "claim": "Horner 递推将 n 次多项式求值组织为 n 次乘加。",
+    "kind": "derived",
+    "source_url": "https://doi.org/10.1137/1.9781611971446",
+    "locator": "Chapter 1 §1.4",
+    "status": "derived",
+    "notes": "递推由多项式嵌套形式代数推导；代码与直接求值在固定例子上交叉检查。"
+  },
+  {
+    "id": "horner-2",
+    "claim": "多项式求值条件数为 Σ|a_k||x|^k/|p(x)|，系数幂次需与排列顺序一致。",
+    "kind": "theory",
+    "source_url": "https://doi.org/10.1137/1.9780898718027",
+    "locator": "Higham, Accuracy and Stability of Numerical Algorithms, 2nd ed.",
+    "status": "verified",
+    "notes": "Python 回归测试覆盖降幂系数顺序。"
+  }
+]
