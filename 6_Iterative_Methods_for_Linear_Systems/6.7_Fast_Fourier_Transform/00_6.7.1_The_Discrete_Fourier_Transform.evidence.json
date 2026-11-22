@@ -1,0 +1,33 @@
+{
+  "article": "6.7.1",
+  "article_title": "6.7.1 DFT：把离散信号拆成互相正交的旋转模态",
+  "claims": [
+    {
+      "id": "6.7.1-theory",
+      "claim": "定义 ω=exp(−2πi/N)，X_j=Σ_{k=0}^{N−1}x_k ω^{jk}，j=0,…,N−1。逆变换 x_k=(1/N)Σ_j X_j exp(+2πijk/N)。若 F 的第 (j,k) 项是 ω^{jk}，则 F*F=NI，因此 (1/√N)F 才是酉矩阵；在 NumPy 默认 norm='backward' 约定下正变换不缩放，逆变换除以 N。Parseval 恒等式为 Σ|x_k|²=(1/N)Σ|X_j|²。周期边界是 DFT 的默认结构，不适合未经修改就套在零 Dirichlet 边界上。",
+      "kind": "textbook",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.7.1, Definition 6.17 and Lemma 6.9",
+      "notes": "限定原书陈述的假设，文章为独立中文叙事"
+    },
+    {
+      "id": "6.7.1-demo",
+      "claim": "对 N=4、x=(1,2,0,0)ᵀ，X₀=3，X₁=1−2i，X₂=−1，X₃=1+2i。频率 1 与频率 3 互为共轭，反映输入是实数。能量检查：时域 1²+2²=5；频域模方和为 9+5+1+5=20，再除以 N=4 正好得到 5。",
+      "kind": "derived",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.7.1, Definition 6.17 and Lemma 6.9",
+      "notes": "独立可复算微型例子，同名 Python/MATLAB 附有断言"
+    },
+    {
+      "id": "6.7.1-limits",
+      "claim": "DFT 不是连续 Fourier 变换；样本的有限长度与周期延拓决定频谱解释。实信号满足共轭对称，但一般复信号不满足。归一化约定各软件不同：讲公式、比较能量与调用 API 时必须统一 norm。FFT 是计算 DFT 的快速算法，不是另一种数学变换。",
+      "kind": "scope",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.7.1, Definition 6.17 and Lemma 6.9",
+      "notes": "不把理论收敛/复杂度冒充真实硬件测量"
+    }
+  ]
+}

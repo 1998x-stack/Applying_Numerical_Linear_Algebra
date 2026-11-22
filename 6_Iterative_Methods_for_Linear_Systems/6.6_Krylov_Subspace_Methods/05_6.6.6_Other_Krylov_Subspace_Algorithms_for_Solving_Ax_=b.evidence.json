@@ -1,0 +1,33 @@
+{
+  "article": "6.6.6",
+  "article_title": "6.6.6 GMRES：非对称系统如何在子空间中压低残差",
+  "claims": [
+    {
+      "id": "6.6.6-theory",
+      "claim": "Arnoldi 正交化从 v₁=r₀/β 出发，β=||r₀||₂。每次计算 w=Avⱼ，并对之前的 vᵢ 做投影消去，得到 Vₖ₊₁ 的正交列和 (k+1)×k 上 Hessenberg 矩阵 H̄ₖ，满足 AVₖ=Vₖ₊₁ H̄ₖ。令 xₖ=x₀+Vₖy，则 ||rₖ||₂=||βe₁−H̄ₖy||₂（当 Vₖ₊₁ 正交且含残差所在子空间）。所以原高维问题被转化为一个小型最小二乘问题。GMRES(m) 重启可限制内存，代价是丢掉旧 Krylov 信息并可能停滞。",
+      "kind": "textbook",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.6.6, GMRES and restarted GMRES(k)",
+      "notes": "限定原书陈述的假设，文章为独立中文叙事"
+    },
+    {
+      "id": "6.6.6-demo",
+      "claim": "取上三角非对称 A=[[3,1,0],[0,2,1],[0,0,1]]，b=(1,2,3)ᵀ，从 x₀=0 出发。第 1 步空间只有 span(b)，故只能沿 b 选一个残差最小的标量；第 2、3 步空间逐渐扩大，到第 3 步（精确算术且 Krylov 维数为 3）可恢复精确解。每步都使用真正的 ||b−Axₖ||₂ 验证，不能把 Hessenberg 最小二乘内部的残差在有限精度下无条件等同于真实残差。",
+      "kind": "derived",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.6.6, GMRES and restarted GMRES(k)",
+      "notes": "独立可复算微型例子，同名 Python/MATLAB 附有断言"
+    },
+    {
+      "id": "6.6.6-limits",
+      "claim": "GMRES 最小化的是给定 Krylov 空间内的 2-范数残差，而 CG 最小化的是 SPD 情形下的 A-范数误差。Arnoldi 会因浮点舍入失去正交性；对极大问题需要再正交化、重启或预条件。SciPy 当前 gmres 返回 info 状态，默认采用左预条件内部范数，但最终收敛依据未预条件的真实残差阈值；文中仅对照概念，不把实现细节冒充 Demmel 1997 年的历史版本。",
+      "kind": "scope",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.6.6, GMRES and restarted GMRES(k)",
+      "notes": "不把理论收敛/复杂度冒充真实硬件测量"
+    }
+  ]
+}
