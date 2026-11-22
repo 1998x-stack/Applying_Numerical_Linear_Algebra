@@ -1,0 +1,31 @@
+{
+  "title": "迭代改进：为什么低精度分解配合高精度残差仍能修正解",
+  "chapter": "2.5.1",
+  "claims": [
+    {
+      "id": "c2-17-0",
+      "topic": "Single Precision Iterative Refinement",
+      "locator": "Demmel, Applied Numerical Linear Algebra, Chapter 2",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "claim_category": "foundational textbook",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-17-1",
+      "topic": "Single Precision Iterative Refinement",
+      "locator": "LAPACK Working Note 165: Error Bounds from Extra Precise Iterative Refinement",
+      "url": "https://www.netlib.org/lapack/lawnspdf/lawn165.pdf",
+      "claim_category": "primary documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-17-2",
+      "topic": "Single Precision Iterative Refinement",
+      "locator": "LAPACK xGESVXX iterative refinement",
+      "url": "https://github.com/Reference-LAPACK/lapack/blob/master/SRC/dgesvxx.f",
+      "claim_category": "primary documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    }
+  ],
+  "experimental_note": "Visual numeric models are didactic; real Python and MATLAB outputs require explicit execution and checks."
+}

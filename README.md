@@ -91,6 +91,24 @@
 - 基向量解算逆范数为教学参考，不冒充高效条件数估计器；FERR/BERR/RCOND 使用官方 LAPACK 语义。
 - 浏览器质量门禁覆盖第一章和第二章；第六章保留自己的浏览器验收脚本。
 
+
+## 第五批：第二章 2.5–2.7 深度精讲（新增 8 篇）
+
+这一批沿着“残差校正 → 矩阵缩放 → 运算密度 → GEMM 分块 → LU 的 Schur 补 → 并行屋顶 → SPD / 不定系统分解”的因果链推进。每篇包含完整独立的数学分析、原创建模图解、可调的数学可视化、代码与反例，不只是章节摘要。之前第六章 Krylov/CG 的 8 篇增量完整保留。
+
+| 节次 | 文章主题 | HTML | Markdown | Python | MATLAB |
+|---|---|---|---|---|---|
+| 2.5.1 | 迭代改进：低精度分解与高精度残差 | [阅读](2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/00_2.5.1_Single_Precision_Iterative_Refinement.html) | [正文](2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/00_2.5.1_Single_Precision_Iterative_Refinement.md) | [代码](2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/00_2.5.1_Single_Precision_Iterative_Refinement.py) | [代码](2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/00_2.5.1_Single_Precision_Iterative_Refinement.m) |
+| 2.5.2 | 矩阵均衡化：量级变化与真实病态 | [阅读](2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/01_2.5.2_Equilibration.html) | [正文](2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/01_2.5.2_Equilibration.md) | [代码](2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/01_2.5.2_Equilibration.py) | [代码](2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/01_2.5.2_Equilibration.m) |
+| 2.6.1 | BLAS 三级与数据复用 | [阅读](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/00_2.6.1_Basic_Linear_Algebra_Subroutines_(BLAS).html) | [正文](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/00_2.6.1_Basic_Linear_Algebra_Subroutines_(BLAS).md) | [代码](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/00_2.6.1_Basic_Linear_Algebra_Subroutines_(BLAS).py) | [代码](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/00_2.6.1_Basic_Linear_Algebra_Subroutines_(BLAS).m) |
+| 2.6.2 | 分块矩阵乘法与缓存工作集 | [阅读](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/01_2.6.2_How_to_Optimize_Matrix_Multiplication.html) | [正文](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/01_2.6.2_How_to_Optimize_Matrix_Multiplication.md) | [代码](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/01_2.6.2_How_to_Optimize_Matrix_Multiplication.py) | [代码](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/01_2.6.2_How_to_Optimize_Matrix_Multiplication.m) |
+| 2.6.3 | 分块 LU 与 Schur 补 | [阅读](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/02_2.6.3_Reorganizing_Gaussian_Elimination_to_use_Level_3_BLAS.html) | [正文](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/02_2.6.3_Reorganizing_Gaussian_Elimination_to_use_Level_3_BLAS.md) | [代码](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/02_2.6.3_Reorganizing_Gaussian_Elimination_to_use_Level_3_BLAS.py) | [代码](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/02_2.6.3_Reorganizing_Gaussian_Elimination_to_use_Level_3_BLAS.m) |
+| 2.6.4 | Roofline、Amdahl 与并行瓶颈 | [阅读](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues.html) | [正文](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues.md) | [代码](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues.py) | [代码](2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues.m) |
+| 2.7.1 | Cholesky：对称正定与 LLᵀ | [阅读](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/00_2.7.1_Real_Symmetric_Positive_Definite_Matrices.html) | [正文](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/00_2.7.1_Real_Symmetric_Positive_Definite_Matrices.md) | [代码](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/00_2.7.1_Real_Symmetric_Positive_Definite_Matrices.py) | [代码](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/00_2.7.1_Real_Symmetric_Positive_Definite_Matrices.m) |
+| 2.7.2 | 对称不定：LDLᵀ 与 2×2 主元 | [阅读](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices.html) | [正文](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices.md) | [代码](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices.py) | [代码](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices.m) |
+
+**关键事实**：混合精度迭代改进不保证收敛；均衡化改变坐标不必然改变原问题敏感性；C←AB+C 的理想读写流量模型计入 A、B、C 的读取及 C 写回共 32n² 字节；Schur 教学示例未实现 DGETRF 的主元交换；Roofline 使用假设的硬件峰值而不是性能实测；对称不定系统与 Cholesky 的 SPD 假设不可混同。新增 18 项 Python 单元测试与浏览器滑块断言，MATLAB 未实机验证时不声明通过。
+
 ## 本地运行
 
 需要 Python 3.10+。核心数值示例使用 NumPy；浏览器验收额外需要 Playwright 和 Chromium。

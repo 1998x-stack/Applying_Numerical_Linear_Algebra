@@ -1,0 +1,23 @@
+{
+  "title": "分块 LU：把逐列消去重排成矩阵乘法",
+  "chapter": "2.6.3",
+  "claims": [
+    {
+      "id": "c2-21-0",
+      "topic": "分块 LU：把逐列消去重排成矩阵乘法",
+      "locator": "Demmel, Applied Numerical Linear Algebra, Chapter 2",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "claim_category": "foundational textbook",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-21-1",
+      "topic": "分块 LU：把逐列消去重排成矩阵乘法",
+      "locator": "LAPACK DGETRF: right-looking Level 3 BLAS",
+      "url": "https://www.netlib.org/lapack/explore-html/db/d04/group__getrf_gaea332d65e208d833716b405ea2a1ab69.html",
+      "claim_category": "reference documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    }
+  ],
+  "experimental_note": "Illustrative visual models are not measured benchmarks. Numerical script claims depend on execution results."
+}

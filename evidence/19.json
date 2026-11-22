@@ -1,0 +1,31 @@
+{
+  "title": "BLAS 三级为何代表三种完全不同的数据复用方式",
+  "chapter": "2.6.1",
+  "claims": [
+    {
+      "id": "c2-19-0",
+      "topic": "BLAS levels",
+      "locator": "Demmel, Applied Numerical Linear Algebra, Chapter 2",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "claim_category": "foundational textbook",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-19-1",
+      "topic": "BLAS levels",
+      "locator": "Netlib BLAS: Level 1/2/3 definitions",
+      "url": "https://www.netlib.org/blas/faq.html",
+      "claim_category": "primary documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-19-2",
+      "topic": "BLAS levels",
+      "locator": "Cornell: roofline / arithmetic intensity explanation",
+      "url": "https://www.cs.cornell.edu/~bindel/nmds/00-Background/02-Performance.html",
+      "claim_category": "primary documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    }
+  ],
+  "experimental_note": "Visual numeric models are didactic; real Python and MATLAB outputs require explicit execution and checks."
+}

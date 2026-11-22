@@ -1,0 +1,25 @@
+
+/* Deep-dive numeric labs: explicit models, accessible by mouse/touch/keyboard. */
+.numeric-lab{margin-top:24px;padding:22px;background:#fff;border:1px solid #cbded8;border-radius:16px;min-width:0}
+.numeric-lab label{display:block;font-weight:750;color:#23474b;margin-bottom:14px;line-height:1.6}
+.numeric-lab input[type=range]{width:100%;max-width:620px;display:block;accent-color:#237e78;cursor:pointer;margin:12px 0 16px}
+.numeric-lab input[type=range]:focus-visible{outline:3px solid #bf7750;outline-offset:4px}
+.numeric-lab output{display:block;line-height:1.85;font-size:.9rem;font-variant-numeric:tabular-nums;color:#305963;overflow-wrap:anywhere}
+.model-bars{display:flex;flex-direction:column;gap:10px;margin-top:20px;margin-bottom:14px;min-width:0}
+.model-bars .model-row{display:grid;grid-template-columns:minmax(90px,170px) minmax(0,1fr) minmax(78px,124px);align-items:center;gap:10px;min-width:0}
+.model-bars .model-label,.model-bars .model-value{font-size:.78rem;line-height:1.4;overflow-wrap:anywhere}
+.model-bars .model-value{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.model-bars .model-track{height:18px;background:#eef2f2;overflow:hidden;border-radius:5px;min-width:0}
+.model-bars .model-fill{height:100%;width:0;border-radius:5px;background:#318a83;transition:width .15s ease}
+.model-bars .model-fill.warm{background:#c87758}.model-bars .model-fill.blue{background:#5084ad}
+.numeric-lab .source-note{margin-top:12px;margin-bottom:0;font-size:.78rem;color:#5f7278}
+@media(max-width:600px){.numeric-lab{padding:14px}.model-bars .model-row{grid-template-columns:minmax(75px,100px) minmax(0,1fr) minmax(70px,91px);gap:6px}.model-bars .model-label,.model-bars .model-value{font-size:.67rem}.model-bars .model-track{height:14px}}
+@media(max-width:380px){.model-bars .model-row{grid-template-columns:minmax(0,90px) minmax(0,1fr) minmax(0,74px)}}
+@media(prefers-reduced-motion:reduce){.model-bars .model-fill{transition:none}}
+@media print{.numeric-lab{break-inside:avoid}}
+
+/* A live matrix partition / performance roof / spectral-axis plot. */
+.model-detail{background:white;border:1px solid #e0eae7;border-radius:14px;padding:10px;margin:14px 0;min-width:0}
+.model-detail svg{display:block;width:100%;height:auto;max-height:305px}
+@media(max-width:600px){.model-detail{padding:4px}.model-detail svg{max-height:none}}
+@media print{.model-detail{break-inside:avoid}}

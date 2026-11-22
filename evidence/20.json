@@ -1,0 +1,31 @@
+{
+  "title": "分块矩阵乘法：为什么不改变乘法次数也可能明显变快",
+  "chapter": "2.6.2",
+  "claims": [
+    {
+      "id": "c2-20-0",
+      "topic": "Optimize Matrix Multiplication",
+      "locator": "Demmel, Applied Numerical Linear Algebra, Chapter 2",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "claim_category": "foundational textbook",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-20-1",
+      "topic": "Optimize Matrix Multiplication",
+      "locator": "BLAS and LAPACK implementation overview",
+      "url": "https://www.netlib.org/lapack/lawnspdf/lawn106.pdf",
+      "claim_category": "primary documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    },
+    {
+      "id": "c2-20-2",
+      "topic": "Optimize Matrix Multiplication",
+      "locator": "ETH Zurich, How to Write Fast Numerical Code: matrix multiplication",
+      "url": "https://acl.inf.ethz.ch/teaching/fastcode/2026/slides/10-linear-algebra-MMM.pdf",
+      "claim_category": "primary documentation",
+      "status": "source-grounded; verify assumptions against cited source"
+    }
+  ],
+  "experimental_note": "Visual numeric models are didactic; real Python and MATLAB outputs require explicit execution and checks."
+}

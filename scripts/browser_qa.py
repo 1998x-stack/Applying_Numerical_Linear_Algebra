@@ -29,6 +29,14 @@ PAGES = [
     ("14", "2_Linear_Equation_Solving/2.4_Error_Analysis/01_2.4.2_Formal_Error_Analysis_of_Gaussian_Elimination.html"),
     ("15", "2_Linear_Equation_Solving/2.4_Error_Analysis/02_2.4.3_Estimating_Condition_Numbers.html"),
     ("16", "2_Linear_Equation_Solving/2.4_Error_Analysis/03_2.4.4_Practical_Error_Bounds.html"),
+    ("17", "2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/00_2.5.1_Single_Precision_Iterative_Refinement.html"),
+    ("18", "2_Linear_Equation_Solving/2.5_Improving_the_Accuracy_of_a_Solution/01_2.5.2_Equilibration.html"),
+    ("19", "2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/00_2.6.1_Basic_Linear_Algebra_Subroutines_(BLAS).html"),
+    ("20", "2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/01_2.6.2_How_to_Optimize_Matrix_Multiplication.html"),
+    ("21", "2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/02_2.6.3_Reorganizing_Gaussian_Elimination_to_use_Level_3_BLAS.html"),
+    ("22", "2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues.html"),
+    ("23", "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/00_2.7.1_Real_Symmetric_Positive_Definite_Matrices.html"),
+    ("24", "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices.html"),
 ]
 VIEWPORTS = [(1440, 900), (768, 1024), (390, 844), (360, 800)]
 
@@ -131,6 +139,40 @@ def main() -> int:
                                 after = page.locator("[data-output]").inner_text()
                                 if before == after:
                                     failures.append(f"{rel}: demo did not change meaningful output")
+
+                            # Advanced lessons: move a native range slider and check the
+                            # actual computed chart and live numerical explanation.
+                            lab = page.locator("[data-advanced-lab]")
+                            if lab.count():
+                                slider = lab.locator("[data-lab-slider]")
+                                output = lab.locator("[data-lab-output]")
+                                if slider.count() != 1 or output.count() != 1:
+                                    failures.append(f"{rel}: numeric lab slider or output missing")
+                                else:
+                                    prior = output.inner_text()
+                                    slider.evaluate("(el) => { el.value = el.max; el.dispatchEvent(new Event('input', {bubbles:true})); }")
+                                    current = output.inner_text()
+                                    if prior == current:
+                                        failures.append(f"{rel}: moving numeric slider did not update the computed result")
+                                    rows = lab.locator(".model-row")
+                                    if rows.count() < 2:
+                                        failures.append(f"{rel}: numeric model failed to draw comparison bars")
+                                    elif not rows.first.locator(".model-fill").get_attribute("style"):
+                                        failures.append(f"{rel}: numeric model bar has no computed geometry")
+                                # The four graphical deep dives must redraw SVG geometry.
+                                lab_kind = lab.get_attribute("data-advanced-lab")
+                                if lab_kind in ("gemm", "blockedlu", "roofline", "indefinite"):
+                                    drawing = lab.locator("[data-dynamic-svg]")
+                                    if drawing.count() != 1 or drawing.locator("svg").count() != 1:
+                                        failures.append(f"{rel}: missing live domain-specific SVG")
+                                    else:
+                                        fingerprint = drawing.get_attribute("data-model-fingerprint")
+                                        if fingerprint != f"{lab_kind}:{slider.get_attribute('max')}":
+                                            failures.append(f"{rel}: SVG did not redraw with changed parameter")
+                                        bbox = drawing.locator("svg").bounding_box()
+                                        if bbox is None or bbox["width"] <= 0 or bbox["height"] <= 0:
+                                            failures.append(f"{rel}: live SVG geometry is empty")
+
 
                             # Keyboard focus must move through native controls.
                             first = page.locator("[data-demo-control]").first
