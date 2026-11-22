@@ -1,0 +1,34 @@
+{
+  "article": "3.4.2",
+  "article_title": "3.4.2 Givens 旋转：只动两个坐标，也能精确消去一个元素",
+  "source": "James W. Demmel, Applied Numerical Linear Algebra",
+  "claims": [
+    {
+      "id": "3.4.2-textbook",
+      "claim": "令 r=hypot(a,b)，在 r>0 时取 c=a/r、s=b/r。定义 G=[[c,s],[−s,c]]，满足 G(a,b)ᵀ=(r,0)ᵀ，且 GᵀG=I。若 a=b=0，可取 G=I。为零化矩阵 A 中第 i 列的第 j 行元素，将这个 2×2 块放入作用于第 i 和 j 行的更大单位矩阵，左乘 A 后目标项归零。连续的 Givens 左乘逐项构造 R，上述左乘矩阵转置乘积得到 Q。角度与正弦的符号约定不唯一；此处采用 [[c,s],[−s,c]]，而另一种常见约定会把 s 的负号分配到不同位置。",
+      "kind": "textbook",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§3.4.2 (pp.121–123), Givens rotation and QR elimination",
+      "status": "verified",
+      "notes": "对照原书，完整推导和文字由本教程独立创作"
+    },
+    {
+      "id": "3.4.2-example",
+      "claim": "取 (a,b)=(3,4)，r=5、c=3/5、s=4/5，G=[[3/5,4/5],[−4/5,3/5]]。G(3,4)ᵀ=(5,0)ᵀ 且 GᵀG=I。在一个 3×3 矩阵中，将同一旋转放在第 1、3 行的对应位置，会只改变这两行，第二行保持不变。用 Python 和 MATLAB 两次断言交叉确认行局部性与范数守恒。",
+      "kind": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§3.4.2 (pp.121–123), Givens rotation and QR elimination",
+      "status": "derived",
+      "notes": "配套 Python/MATLAB 小型确定性数值算例，包含断言"
+    },
+    {
+      "id": "3.4.2-scope",
+      "claim": "对极大或极小 a,b，应使用稳定的 hypot 而非直接先求 a²+b²（可能溢出/下溢）；若二者都为 0，不能除以 r。Givens 在稀疏矩阵上可保留更多局部性，但并不保证零填充永远最少；算法效率还取决于消元顺序。复数 Givens 需要使用酉旋转和相位约定。",
+      "kind": "scope",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§3.4.2 (pp.121–123), Givens rotation and QR elimination",
+      "status": "verified",
+      "notes": "限定输入条件和浮点环境，不冒充硬件实测"
+    }
+  ]
+}
