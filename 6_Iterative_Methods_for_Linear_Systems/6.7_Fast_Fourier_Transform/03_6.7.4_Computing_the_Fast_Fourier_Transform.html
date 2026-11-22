@@ -1,36 +1,9 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.7.4 Computing the Fast Fourier Transform</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>03_6.7.4_Computing_the_Fast_Fourier_Transform</h1>
-<pre><code>Lecture: 6_Iterative_Methods_for_Linear_Systems/6.7_Fast_Fourier_Transform
-Content: 03_6.7.4_Computing_the_Fast_Fourier_Transform
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 03_6.7.4_Computing_the_Fast_Fourier_Transform
-
-"""
-Lecture: 6_Iterative_Methods_for_Linear_Systems/6.7_Fast_Fourier_Transform
-Content: 03_6.7.4_Computing_the_Fast_Fourier_Transform
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="FFT 没有改变 DFT 的定义，而是利用单位根重复出现的结构，避免反复计算相同子问题。偶数与奇数样本分开以后，一次大变换就缩成两次小变换。"><title>6.7.4 FFT 蝶形：如何把 N² 次求和变成 NlogN · 应用数值线性代数</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="../../assets/js/course.js"></script></head><body class="article-page"><a class="skip-link" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 / FAST SOLVERS</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../../index.html#chapter6-spectral">本批学习路线</a><a href="../../README.md">README</a></nav></header><div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">第六章 / 快速算子</p><nav class="sidebar-nav" aria-label="专题目录"><a href="../6.7_Fast_Fourier_Transform/00_6.7.1_The_Discrete_Fourier_Transform.html">6.7.1 DFT</a><a href="../6.7_Fast_Fourier_Transform/02_6.7.3_Convolutions.html">6.7.3 卷积</a><a href="../6.7_Fast_Fourier_Transform/03_6.7.4_Computing_the_Fast_Fourier_Transform.html" aria-current="page">6.7.4 FFT 蝶形</a><a href="../07_6.8_Block_Cyclic_Reduction.html">6.8 块循环约化</a><a href="../6.9_Multigrid/00_6.9.1_Overview_of_Multigrid_on_Two_Dimensional_Poisson’s_Equation.html">6.9.1 多重网格</a><a href="../../index.html#chapter6-spectral">课程地图</a></nav></aside><main id="main" class="article"><article><header class="article-header"><p class="eyebrow">第六章 · FOURIER, REDUCTION AND MULTIGRID</p><h1>6.7.4 FFT 蝶形：如何把 N² 次求和变成 NlogN</h1><p class="article-lead">FFT 没有改变 DFT 的定义，而是利用单位根重复出现的结构，避免反复计算相同子问题。偶数与奇数样本分开以后，一次大变换就缩成两次小变换。</p><ul class="article-meta"><li>独立完整的数学推导</li><li>交互图解</li><li>NumPy / MATLAB 对照</li></ul></header>
+<section id="problem"><h2>先看问题：为什么会需要它？</h2><p>按 DFT 定义计算每个 X_j=Σ_{k=0}^{N−1}x_k exp(−2πijk/N)，需要约 N² 次复数乘加。若 N=2^m，单位根的周期性和对称性意味着很多求和项重用同一组结果。有没有一种拆解让每一级总工作量仅与 N 成正比，并且只需要 log₂N 级？</p></section>
+<section id="derivation"><h2>把公式分解成具体操作</h2><p>把多项式 p(z)=Σ_{k=0}^{N−1}x_kz^k 拆成 p_even(z²)+z p_odd(z²)，其中 p_even 由偶数编号系数构成，p_odd 由奇数编号系数构成。对 N 次单位根 ω_N=exp(−2πi/N)，偶/奇两半都只需要一个长度 N/2 的 DFT：E_j=DFT(x_even)_j，O_j=DFT(x_odd)_j。长度 N 结果由蝶形公式 X_j=E_j+ω_N^jO_j、X_{j+N/2}=E_j−ω_N^jO_j 组合。这给出 T(N)=2T(N/2)+O(N)=O(NlogN)。要避免误读：这是假设 N 为 2 的幂的递归 radix-2 版本；通用 FFT 库还支持混合基数等算法。</p><div class="math-equation"><div class="math-scroll" role="region" tabindex="0" aria-label="6.7.4 公式"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>X</mi><mi>j</mi></msub><mo>=</mo><msub><mi>E</mi><mi>j</mi></msub><mo>+</mo><msubsup><mi>ω</mi><mi>N</mi><mi>j</mi></msubsup><msub><mi>O</mi><mi>j</mi></msub><mo>,</mo><mspace width="0.8em"/><msub><mi>X</mi><mrow><mi>j</mi><mo>+</mo><mi>N</mi><mo>/</mo><mn>2</mn></mrow></msub><mo>=</mo><msub><mi>E</mi><mi>j</mi></msub><mo>−</mo><msubsup><mi>ω</mi><mi>N</mi><mi>j</mi></msubsup><msub><mi>O</mi><mi>j</mi></msub></mrow></math></div></div><figure class="figure-card"><svg viewBox="0 0 730 245" role="img" aria-labelledby="fig-6-7-4-t fig-6-7-4-d"><title id="fig-6-7-4-t">6.7.4 FFT 蝶形：如何把 N² 次求和变成 NlogN 的推导图</title><desc id="fig-6-7-4-d">偶下标 x₀,x₂,…，奇下标 x₁,x₃,…，乘 twiddle ωʲ，蝶形 ± 组合：逐步给出数学结构和验证目标。</desc><text x="24" y="35" font-size="13" fill="#657d79">同一问题如何被重新表达并求解</text><rect x="24" y="72" width="148" height="85" rx="16" fill="#e5f0e9" stroke="#b5cdc4"/><text x="98" y="109" text-anchor="middle" font-size="12" fill="#264a50" font-weight="700">偶下标 x₀,x₂,…</text><text x="98" y="137" text-anchor="middle" font-size="11" fill="#637e7d">1 / 4</text><path d="M175 114h16l-6 -6m6 6l-6 6" fill="none" stroke="#247b78" stroke-width="2"/><rect x="200" y="72" width="148" height="85" rx="16" fill="#e8eff6" stroke="#b5cdc4"/><text x="274" y="109" text-anchor="middle" font-size="12" fill="#264a50" font-weight="700">奇下标 x₁,x₃,…</text><text x="274" y="137" text-anchor="middle" font-size="11" fill="#637e7d">2 / 4</text><path d="M351 114h16l-6 -6m6 6l-6 6" fill="none" stroke="#247b78" stroke-width="2"/><rect x="376" y="72" width="148" height="85" rx="16" fill="#e5f0e9" stroke="#b5cdc4"/><text x="450" y="109" text-anchor="middle" font-size="12" fill="#264a50" font-weight="700">乘 twiddle ωʲ</text><text x="450" y="137" text-anchor="middle" font-size="11" fill="#637e7d">3 / 4</text><path d="M527 114h16l-6 -6m6 6l-6 6" fill="none" stroke="#247b78" stroke-width="2"/><rect x="552" y="72" width="148" height="85" rx="16" fill="#e8eff6" stroke="#b5cdc4"/><text x="626" y="109" text-anchor="middle" font-size="12" fill="#264a50" font-weight="700">蝶形 ± 组合</text><text x="626" y="137" text-anchor="middle" font-size="11" fill="#637e7d">4 / 4</text></svg><figcaption>偶下标 x₀,x₂,… → 奇下标 x₁,x₃,… → 乘 twiddle ωʲ → 蝶形 ± 组合。箭头表示运算依赖，而不是实测加速倍数。</figcaption></figure></section>
+<section id="worked"><h2>一个可以手算的例子</h2><p>令 x=(1,2,3,4)，长度 N=4。偶数组是 (1,3)，其 2 点 DFT 为 E=(4,−2)；奇数组是 (2,4)，其 DFT 为 O=(6,−2)。ω₄=−i，因此前半输出 X₀=4+6=10、X₁=−2+(−i)(−2)=−2+2i，后半输出 X₂=4−6=−2、X₃=−2−2i。直接代入 DFT 定义可得到完全相同的结果。</p></section>
+<section id="demo"><h2>交互实验与复现实验</h2><div class="interactive-panel" data-demo-panel data-demo-kind="fft"><h3>改变参数观察模型</h3><div class="control-row"><label for="control-fft">log₂N（N=2^m）：</label><input id="control-fft" type="range" min="2" max="6" step="1" value="3" data-demo-control></div><p class="demo-output" data-demo-output aria-live="polite">计算中……</p><div class="demo-meter" role="presentation"><span data-demo-meter style="display:block;height:8px;background:#247b78;border-radius:50px;width:45%"></span></div></div><p>改变 N（4、8、16、32、64）查看 radix-2 递归的层数 log₂N 和蝶形数量 (N/2)log₂N。此处显示的是算法结构计数，不是 CPU/GPU 的实测执行时间。</p><p>在仓库根目录运行同名 Python 代码，可从真实残差、解析结果或变换恒等式独立验证本页示例；MATLAB 脚本也提供相关数值断言。</p></section>
+<section id="limits"><h2>适用条件以及会失败的地方</h2><p>FFT 快不代表 FFT 永远最适用于任何长度、数据布局或硬件。实际库会选择混合基数、SIMD、并行和规划方法。必须保持 DFT 方向和缩放约定一致；正向常不除 N，逆向通常除 N。递归示例牺牲额外内存便于阅读，生产实现可使用原地迭代蝶形。对于非周期边界的 Poisson 模型，需使用适配的正弦/余弦变换或相应边界处理，不能仅把 FFT 的频率波数代入周期公式。</p></section>
+<section id="takeaway"><h2>总结：如何正确使用这个结论</h2><p>FFT 的时间复杂度改进来自重复使用更小尺寸 DFT，而不是使用近似答案；在浮点下仍需分析舍入误差和变换归一化。</p><h3>自检</h3><ol><li>为什么 ω_N^(j+N/2)=−ω_N^j？</li><li>T(N)=2T(N/2)+O(N) 对应哪三项实际工作？</li><li>为什么 radix-2 的数学推导不能充当任何硬件的性能测试？</li></ol></section>
+<section id="references" class="references"><h2>证据与来源</h2><ol><li>Demmel, <em>Applied Numerical Linear Algebra</em> (SIAM, 1997), §6.7.4, recursive FFT Algorithm 6.14 and even/odd factorization；<a href="https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf">原书 PDF</a> · <a href="https://doi.org/10.1137/1.9781611971446">书目 DOI</a>。</li></ol></section>
+<footer class="article-footer"><a href="../../index.html#chapter6-spectral">← 本批章节入口</a><a href="../../README.md">代码与学习路径 →</a></footer></article></main></div></body></html>

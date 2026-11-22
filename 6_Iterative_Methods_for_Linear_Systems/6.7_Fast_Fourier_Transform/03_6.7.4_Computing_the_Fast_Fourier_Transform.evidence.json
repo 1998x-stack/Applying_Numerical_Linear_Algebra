@@ -1,0 +1,33 @@
+{
+  "article": "6.7.4",
+  "article_title": "6.7.4 FFT 蝶形：如何把 N² 次求和变成 NlogN",
+  "claims": [
+    {
+      "id": "6.7.4-theory",
+      "claim": "把多项式 p(z)=Σ_{k=0}^{N−1}x_kz^k 拆成 p_even(z²)+z p_odd(z²)，其中 p_even 由偶数编号系数构成，p_odd 由奇数编号系数构成。对 N 次单位根 ω_N=exp(−2πi/N)，偶/奇两半都只需要一个长度 N/2 的 DFT：E_j=DFT(x_even)_j，O_j=DFT(x_odd)_j。长度 N 结果由蝶形公式 X_j=E_j+ω_N^jO_j、X_{j+N/2}=E_j−ω_N^jO_j 组合。这给出 T(N)=2T(N/2)+O(N)=O(NlogN)。要避免误读：这是假设 N 为 2 的幂的递归 radix-2 版本；通用 FFT 库还支持混合基数等算法。",
+      "kind": "textbook",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.7.4, recursive FFT Algorithm 6.14 and even/odd factorization",
+      "notes": "依据教材对应章节数学结构，图示和文字独立创作"
+    },
+    {
+      "id": "6.7.4-demo",
+      "claim": "令 x=(1,2,3,4)，长度 N=4。偶数组是 (1,3)，其 2 点 DFT 为 E=(4,−2)；奇数组是 (2,4)，其 DFT 为 O=(6,−2)。ω₄=−i，因此前半输出 X₀=4+6=10、X₁=−2+(−i)(−2)=−2+2i，后半输出 X₂=4−6=−2、X₃=−2−2i。直接代入 DFT 定义可得到完全相同的结果。",
+      "kind": "derived",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.7.4, recursive FFT Algorithm 6.14 and even/odd factorization",
+      "notes": "NumPy 数值断言验证指定算例，不宣称 benchmark"
+    },
+    {
+      "id": "6.7.4-limits",
+      "claim": "FFT 快不代表 FFT 永远最适用于任何长度、数据布局或硬件。实际库会选择混合基数、SIMD、并行和规划方法。必须保持 DFT 方向和缩放约定一致；正向常不除 N，逆向通常除 N。递归示例牺牲额外内存便于阅读，生产实现可使用原地迭代蝶形。对于非周期边界的 Poisson 模型，需使用适配的正弦/余弦变换或相应边界处理，不能仅把 FFT 的频率波数代入周期公式。",
+      "kind": "scope",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.7.4, recursive FFT Algorithm 6.14 and even/odd factorization",
+      "notes": "准确区分推广条件和算法复杂度"
+    }
+  ]
+}

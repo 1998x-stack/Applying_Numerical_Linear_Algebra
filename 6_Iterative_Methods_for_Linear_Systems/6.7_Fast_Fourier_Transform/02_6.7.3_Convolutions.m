@@ -1,8 +1,9 @@
-% 02_6.7.3_Convolutions
-
-%
-
-%Lecture: 6_Iterative_Methods_for_Linear_Systems/6.7_Fast_Fourier_Transform
-%Content: 02_6.7.3_Convolutions
-
-%
+% Linear-vs-circular convolution, no toolbox.
+a=[1 2 1]; b=[1 -1];
+linear=conv(a,b);
+short=ifft(fft(a,3).*fft(b,3));
+long=ifft(fft(a,4).*fft(b,4));
+assert(norm(linear-[1 1 -1 -1])<1e-12);
+assert(norm(real(short)-[0 1 -1])<1e-12);
+assert(norm(real(long)-linear)<1e-12);
+fprintf('L=3 aliases; L=4 recovers linear convolution.\n');

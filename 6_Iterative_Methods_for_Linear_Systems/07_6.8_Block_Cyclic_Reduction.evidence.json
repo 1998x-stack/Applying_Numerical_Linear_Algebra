@@ -1,0 +1,33 @@
+{
+  "article": "6.8",
+  "article_title": "6.8 块循环约化：消掉隔行未知量后得到什么方程",
+  "claims": [
+    {
+      "id": "6.8-theory",
+      "claim": "把要保留的偶行未知量记作 x_E，被消去的奇行记作 x_O。原方程重排为 [A_EE A_EO; A_OE A_OO][x_E;x_O]=[b_E;b_O]。如果 A_OO 可逆，就先写 x_O=A_OO⁻¹(b_O−A_OE x_E)，代回偶行，得到 Schur 补 S x_E= b_E−A_EO A_OO⁻¹b_O，其中 S=A_EE−A_EO A_OO⁻¹A_OE。随后回代恢复 x_O。对特殊重复块与可交换结构，还能利用多项式重排更高效地做多级约化；在一般块矩阵上，不能假定 S 一定保持原先的稀疏带宽。",
+      "kind": "textbook",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.8, Block Cyclic Reduction and Algorithms 6.15–6.16",
+      "notes": "依据教材对应章节数学结构，图示和文字独立创作"
+    },
+    {
+      "id": "6.8-demo",
+      "claim": "取 3×3 内部 Poisson 网格，块行数 3、每块宽度 3，B=tridiag(−1,4,−1)，非对角块 −I₃。消去第 1、3 个块行，保留第 2 行，则 A_OO=diag(B,B)，S=B−2B⁻¹。这个新的 3×3 Schur 补一般已经不再与原 B 具有同样的三对角稀疏模式，因为 B⁻¹ 是稠密的。计算 S 后解三维系统，再回代，就应与直接解原来的九维系统一致。",
+      "kind": "derived",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.8, Block Cyclic Reduction and Algorithms 6.15–6.16",
+      "notes": "NumPy 数值断言验证指定算例，不宣称 benchmark"
+    },
+    {
+      "id": "6.8-limits",
+      "claim": "书中讨论的特殊 Poisson 模型还有更多技巧，不应把简单的块 Schur 补演示当成完整的高性能 BCR 程序。对复杂系数、非交换块或一般网格，填充和块求解代价可能迅速增长。直接构造逆矩阵尤其不合理，示例用线性系统求解形成 Schur 补；真正的大规模实现需要结构化递归、稳定性分析和内存开销评估。",
+      "kind": "scope",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.8, Block Cyclic Reduction and Algorithms 6.15–6.16",
+      "notes": "准确区分推广条件和算法复杂度"
+    }
+  ]
+}

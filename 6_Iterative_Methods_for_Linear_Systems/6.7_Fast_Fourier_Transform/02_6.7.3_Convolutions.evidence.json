@@ -1,0 +1,33 @@
+{
+  "article": "6.7.3",
+  "article_title": "6.7.3 卷积：为什么到频域相乘就等于时域滑动求和",
+  "claims": [
+    {
+      "id": "6.7.3-theory",
+      "claim": "对长度为 L 的向量，循环卷积 c^circ_k=Σ_{j=0}^{L−1}a_j b_{(k−j) mod L}。若 F 是采用 exp(−2πijk/L) 的 DFT，则 F(c^circ)=F(a)·F(b)，其中右侧是逐元素乘法；逆变换返回长度 L 的循环卷积。若想恢复原长度 m+n−1 的线性卷积，必须先把 a 和 b 补零到至少 L≥m+n−1，再计算 IFFT(FFT(a,L)·FFT(b,L))，并截取前 m+n−1 个分量。否则高阶系数会因周期回绕叠加到低阶系数，这种错误称为 circular aliasing。",
+      "kind": "textbook",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.7.3, discrete convolution and the convolution theorem",
+      "notes": "依据教材对应章节数学结构，图示和文字独立创作"
+    },
+    {
+      "id": "6.7.3-demo",
+      "claim": "取 a=(1,2,1)，b=(1,−1)。线性卷积为 c=(1,1,−1,−1)，它恰好是多项式 (1+2z+z²)(1−z) 的系数。若用长度 L=3 的 DFT，末端 −1 会回绕加到第一个分量，得到 (0,1,−1)，与目标明显不同。只有当 L≥4 时，补零后的 FFT–乘法–IFFT 才恢复完整长度 4 的系数；对实数输入，浮点输出的虚部仅是舍入误差。",
+      "kind": "derived",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.7.3, discrete convolution and the convolution theorem",
+      "notes": "NumPy 数值断言验证指定算例，不宣称 benchmark"
+    },
+    {
+      "id": "6.7.3-limits",
+      "claim": "“卷积定理”对应的是一致的 DFT 长度、指数与缩放约定。要进行线性卷积，L 的下界必须根据两个原序列的实际长度计算；实数序列的浮点 IFFT 允许出现极小虚部，取实部前应检查误差规模。FFT 卷积在短序列上未必比直接卷积更快，实际速度取决于实现、长度和缓存。多项式乘法是离散卷积的直接例子，但一般线性卷积也可用于 Toeplitz 型算子。",
+      "kind": "scope",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.7.3, discrete convolution and the convolution theorem",
+      "notes": "准确区分推广条件和算法复杂度"
+    }
+  ]
+}
