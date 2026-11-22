@@ -1,36 +1,9 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.6.4 Convergence Analysis of the Conjugate Gradient Method</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method</h1>
-<pre><code>Lecture: 6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods
-Content: 03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method
-
-"""
-Lecture: 6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods
-Content: 03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="共轭梯度法的收敛速度常用条件数描述，但实际表现有时远好于最坏情况上界。要看清差别，必须弄清楚界控制的是哪一种误差范数。"><title>6.6.4 CG 为什么快：条件数界与实际谱分布 · 应用数值线性代数</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="../../assets/js/course.js"></script></head><body class="article-page"><a class="skip-link" href="#main">跳到正文</a>
+<header class="topbar"><a class="brand" href="../../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · KRYLOV SUBSPACES</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../../index.html#chapter6-deep-dives">第六章路线</a><a href="../../README.md">README</a></nav></header><div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">第 6 章 · Krylov 与 CG</p><nav class="sidebar-nav" aria-label="章节导航"><a href="../6.5_Basic_Iterative_Methods/05_6.5.6_Chebyshev_Acceleration_and_Symmetric_SOR_(SSOR).html">6.5.6 Chebyshev</a><a href="00_6.6.1_Extracting_Information_about_A_via_Matrix_Vector_Multiplication.html">6.6.1 只会计算 Av，为什么仍能读出矩阵的结构</a><a href="01_6.6.2_Solving_Ax_=b_Using_the_Krylov_Subspace_Kk.html">6.6.2 从 Krylov 子空间求解 Ax=b</a><a href="02_6.6.3_Conjugate_Gradient_Method.html">6.6.3 共轭梯度法</a><a href="03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method.html" aria-current="page">6.6.4 CG 为什么快</a><a href="04_6.6.5_Preconditioning.html">6.6.5 预条件（后续）</a></nav></aside>
+<main id="main" class="article"><article><header class="article-header"><p class="eyebrow">第六章 · KRYLOV SUBSPACE METHODS</p><h1>6.6.4 CG 为什么快：条件数界与实际谱分布</h1><p class="article-lead">共轭梯度法的收敛速度常用条件数描述，但实际表现有时远好于最坏情况上界。要看清差别，必须弄清楚界控制的是哪一种误差范数。</p><ul class="article-meta"><li>独立推导</li><li>原创示意</li><li>可验证的数值实验</li></ul></header>
+<section id="question"><h2>为何需要这个计算机制</h2><p>在 SPD 问题 Ax=b 中，精确解为 x*，第 k 步误差是 e_k=x*−x_k。由于 CG 在 Krylov 空间内最小化 A-范数误差，收敛分析可以转换成：找到一个 q_k(0)=1 的次数 k 多项式，让所有特征值上的 |q_k(λ)| 尽可能小。这里 A 的条件数 κ₂(A)=λ_max/λ_min 至少为 1；当特征值极端分散时，最慢模态可能拖累低阶多项式。</p></section><section id="derivation"><h2>数学机制与维度</h2><p>设 q=(√κ−1)/(√κ+1)。利用 Chebyshev 多项式在 [λ_min,λ_max] 上的极小极大性质，可得 ||e_k||_A/||e_0||_A≤2q^k，其中 ||v||_A=√(vᵀAv)。等价地也可写为残差的 A⁻¹-范数界，因为 r_k=Ae_k。该公式是最坏情况上界，不能不加说明地替换成普通 2-范数残差比 ||r_k||₂/||r_0||₂。若 κ=1，则 A 是标量倍单位矩阵，非零初始残差在一步 CG 后即被消除。</p><div class="math-equation"><div class="math-scroll" role="region" tabindex="0" aria-label="6.6.4 核心公式"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mfrac><msub><mrow><mo>∥</mo><msub><mi>e</mi><mi>k</mi></msub><mo>∥</mo></mrow><mi>A</mi></msub><msub><mrow><mo>∥</mo><msub><mi>e</mi><mn>0</mn></msub><mo>∥</mo></mrow><mi>A</mi></msub></mfrac><mo>≤</mo><mn>2</mn><msup><mrow><mo>(</mo><mfrac><mrow><msqrt><mi>κ</mi></msqrt><mo>−</mo><mn>1</mn></mrow><mrow><msqrt><mi>κ</mi></msqrt><mo>+</mo><mn>1</mn></mrow></mfrac><mo>)</mo></mrow><mi>k</mi></msup></mrow></math></div></div></section>
+<section id="figure"><h2>追踪一次计算的数据流</h2><figure class="figure-card"><svg role="img" viewBox="0 0 720 258" aria-labelledby="flow-6-6-4-title flow-6-6-4-desc"><title id="flow-6-6-4-title">6.6.4 CG 为什么快：条件数界与实际谱分布 运算过程</title><desc id="flow-6-6-4-desc">条件数仅压缩成谱区间两个端点，而 Chebyshev 极小极大多项式控制精确算术下的 A-范数误差。</desc><text x="18" y="38" font-size="12" fill="#53716d">矩阵—向量乘法如何构造一个可检验的近似解</text><rect x="18" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="96" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">SPD 特征值区间</text><text x="96" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 1</text><path d="M177 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><rect x="195" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#b9d3c7"/><text x="273" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">κ₂=λmax/λmin</text><text x="273" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 2</text><path d="M354 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><rect x="372" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="450" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">多项式逼近</text><text x="450" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 3</text><path d="M531 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><rect x="549" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#b9d3c7"/><text x="627" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">A-范数误差上界</text><text x="627" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 4</text></svg><figcaption>条件数仅压缩成谱区间两个端点，而 Chebyshev 极小极大多项式控制精确算术下的 A-范数误差。</figcaption></figure></section><section id="example"><h2>从一个小矩阵亲手推导</h2><p>考虑 κ=100，此时 √κ=10，q=(10−1)/(10+1)=9/11。即使不知道 A 的全部特征值，仍可写出第 k 步 A-范数误差的通用上界 2(9/11)^k。这个上界在初始几步可能大于 1，并不是错误：它只是宽松的上界而不是单调性预测。若真实特征值只聚成少数几簇，CG 的实际曲线通常可远快于该只依赖端点的表达式。</p></section>
+<section id="demo"><h2>交互：改变子空间或收敛参数</h2><div class="interactive-panel" data-demo-panel data-demo-kind="cgbound"><h3>在确定性模型上观察变化</h3><div class="control-row"><label for="slider-cgbound">假设条件数 κ：</label><input id="slider-cgbound" type="range" min="2" max="200" step="2" value="100" data-demo-control></div><p class="demo-output" data-demo-output aria-live="polite">正在计算……</p><div class="demo-meter" role="presentation"><span data-demo-meter style="display:block;width:44%;height:8px;background:#247b78;border-radius:100px;transition:width .15s"></span></div></div><p>代码在 A=diag(1,3,20,100) 上执行小规模 CG，每轮重新计算 e_k 的 A-范数与真实残差，核对 A-范数比不超过 2q^k，并检查最终结果。若某轮上界大于 1，应读成“尚不提供有用的下降保证”，而非算法发散。</p></section>
+<section id="limits"><h2>边界：哪些结论不能直接推广</h2><p>CG 理论界依赖 SPD、确切的 λ_min&gt;0 与 λ_max、精确算术以及 A-范数；有限精度会使残差递推与重新计算的真实残差出现偏差。若使用预条件器 M，速度应由对称变换后预条件算子的有效谱/条件数决定，而不是直接把原始 κ 当作预条件 CG 的最终收敛率。条件数界不提供对具体硬件时延的承诺，也不能代替不同矩阵/预条件器的实验。</p></section>
+<section id="takeaway"><h2>最后记住什么</h2><p>CG 的速度由完整谱分布决定，κ 只给出保守的最坏情况尺度；比较收敛曲线时务必标明范数、预条件策略和浮点环境。</p><h3>自检问题</h3><ol><li>为什么界控制的是 A-范数误差而非普通残差 2-范数？</li><li>为什么 2q^k 在某些 k 上可以大于 1？</li><li>谱聚簇如何使实际 CG 比条件数上界预测得更快？</li></ol></section><section class="references" id="references"><h2>核查来源</h2><ol><li>James W. Demmel, <em>Applied Numerical Linear Algebra</em>, 1997, §6.6.4, Chebyshev bound and conjugate-gradient convergence. <a href="https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf">原始书籍 PDF</a> · <a href="https://doi.org/10.1137/1.9781611971446">SIAM DOI</a></li></ol><p>示例输出由同名程序重现；图形与叙述为独立制作，未复刻原书插图。</p></section>
+<footer class="article-footer"><a href="../../index.html#chapter6-deep-dives">← 章节导航</a><a href="../../README.md">代码与学习路线 →</a></footer></article></main></div></body></html>

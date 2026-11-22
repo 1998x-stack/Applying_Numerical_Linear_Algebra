@@ -18,6 +18,14 @@ STEMS = [
     "03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation",
     "6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method",
     "6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method",
+    "6.5_Basic_Iterative_Methods/02_6.5.3_Successive_Overrelaxation",
+    "6.5_Basic_Iterative_Methods/03_6.5.4_Convergence_of_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods_on_the_Model_Problem",
+    "6.5_Basic_Iterative_Methods/04_6.5.5_Detailed_Convergence_Criteria_for_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods",
+    "6.5_Basic_Iterative_Methods/05_6.5.6_Chebyshev_Acceleration_and_Symmetric_SOR_(SSOR)",
+    "6.6_Krylov_Subspace_Methods/00_6.6.1_Extracting_Information_about_A_via_Matrix_Vector_Multiplication",
+    "6.6_Krylov_Subspace_Methods/01_6.6.2_Solving_Ax_=b_Using_the_Krylov_Subspace_Kk",
+    "6.6_Krylov_Subspace_Methods/02_6.6.3_Conjugate_Gradient_Method",
+    "6.6_Krylov_Subspace_Methods/03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method",
 ]
 
 

@@ -1,0 +1,34 @@
+{
+  "article": "6.6.2",
+  "article_title": "6.6.2 从 Krylov 子空间求解 Ax=b：为什么要让残差正交",
+  "primary_source": "Demmel, Applied Numerical Linear Algebra (1997)",
+  "claims": [
+    {
+      "id": "6.6.2-theory",
+      "claim": "SPD Galerkin 投影、能量误差最小化以及与最小残差方法的区别",
+      "kind": "textbook-theory",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.6.2, Galerkin projection and small projected systems",
+      "notes": "以对应章节的定义/证明限定适用假设，原文图表不复制"
+    },
+    {
+      "id": "6.6.2-example",
+      "claim": "令 A=diag(1,2,3,4)，b=(1,1,1,1)^T，x₀=0。第一层 Krylov 空间只有 span(b)，所以 x₁=αb。条件 bᵀ(b−αAb)=0 给出 α=(bᵀb)/(bᵀAb)=4/10=0.4。残差为 (0.6,0.2,−0.2,−0.6)^T，确实与 b 正交：四个分量的和为 0。但残差并非零，且其 2-范数在这个投影准则下并不保证对任意问题都最小。",
+      "kind": "worked-example",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.6.2, Galerkin projection and small projected systems; independently computed matrix example",
+      "notes": "随页面同名 Python 和 MATLAB 脚本给出数值核查"
+    },
+    {
+      "id": "6.6.2-scope",
+      "claim": "若 V_k 未正交化，投影系统可能受严重病态影响；因此 Arnoldi/Lanczos 不是可有可无的优化。SPD 保证小矩阵 V_kᵀAV_k 正定，非对称或不定矩阵不能直接套用这一能量最小化证明。精确算术下 K_n 覆盖相关不变子空间可得到精确解；浮点计算需要重新正交化、真实残差检查和可能的重启策略。",
+      "kind": "scope-and-assumptions",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.6.2, Galerkin projection and small projected systems",
+      "notes": "数学上界、真实残差、有限精度与实际性能分别说明"
+    }
+  ]
+}
