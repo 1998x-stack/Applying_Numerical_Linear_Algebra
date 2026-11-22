@@ -124,3 +124,8 @@
 - 关键数学断言：band nnz=3n-2；星形 Cholesky 中心先/后 fill 比较 21 vs 11；Woodbury 解 [.8,-.2,-.2,-.2]；常数拟合 7/3；Gram κ²；经济 QR；SVD 最小范数；残差导致的 LS 矩阵扰动。
 - Chromium 扩展到首页加前 32 篇，四种视口 1440/768/390/360，增加参数变化后数值、SVG 几何和绘图指纹的检查。第六章已有单独的浏览器质量门禁保持启用。
 - CI 通过前不标注已验证；Pages 发布必须以部署 job 成功为准。
+
+
+## 第八批数值正确性与浏览器回归
+
+检查一维多级 V-cycle 的真残差、Poisson Galerkin 恒等式、Schur 界面与直接解一致性、Schwarz SPD / 阻尼谱；检查 Householder 反射正交性、Givens 行局部性、QR 正交性与重构误差、正交旋转的长度/内积保持，以及 TSVD 截断带来的范数和残差变化。8 篇均提供 MathML、SVG、滑块、Python、MATLAB/Octave、证据文件，扩充 Chromium 四视口回归。

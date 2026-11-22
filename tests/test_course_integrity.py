@@ -34,6 +34,9 @@ STEMS = [
     "6.7_Fast_Fourier_Transform/03_6.7.4_Computing_the_Fast_Fourier_Transform",
     "07_6.8_Block_Cyclic_Reduction",
     "6.9_Multigrid/00_6.9.1_Overview_of_Multigrid_on_Two_Dimensional_Poisson’s_Equation",
+    "6.9_Multigrid/01_6.9.2_Detailed_Description_of_Multigrid_on_One_Dimensional_Poisson’s_Equation",
+    "6.10_Domain_Decomposition/00_6.10.1_Nonoverlapping_Methods",
+    "6.10_Domain_Decomposition/01_6.10.2_Overlapping_Methods",
 ]
 
 

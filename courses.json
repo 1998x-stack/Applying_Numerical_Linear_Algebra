@@ -21,7 +21,7 @@
       "title": "Linear Least Squares Problems",
       "path": "3_Linear_Least_Squares_Problems/00_3.1_Introduction.html",
       "status": "in-progress",
-      "deepened": 5
+      "deepened": 10
     },
     {
       "id": 4,
@@ -40,7 +40,7 @@
       "title": "Iterative Methods for Linear Systems",
       "path": "6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html",
       "status": "in-progress",
-      "deepened": 24
+      "deepened": 27
     },
     {
       "id": 7,
@@ -386,6 +386,56 @@
       "id": "6.9.1",
       "title": "二维 Poisson 的两网格纠错",
       "path": "6_Iterative_Methods_for_Linear_Systems/6.9_Multigrid/00_6.9.1_Overview_of_Multigrid_on_Two_Dimensional_Poisson’s_Equation.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.9.2",
+      "title": "一维 Poisson 完整 V-cycle",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.9_Multigrid/01_6.9.2_Detailed_Description_of_Multigrid_on_One_Dimensional_Poisson’s_Equation.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.10.1",
+      "title": "非重叠区域分解与界面 Schur 补",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.10_Domain_Decomposition/00_6.10.1_Nonoverlapping_Methods.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.10.2",
+      "title": "重叠 Additive Schwarz 预条件",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.10_Domain_Decomposition/01_6.10.2_Overlapping_Methods.html",
+      "status": "enhanced"
+    }
+  ],
+  "chapter3_modules": [
+    {
+      "id": "3.4.1",
+      "title": "Householder：一次消去整列尾部",
+      "path": "3_Linear_Least_Squares_Problems/3.4_Orthogonal_Matrices/00_3.4.1_Householder_Transformations.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "3.4.2",
+      "title": "Givens：两坐标局部零化",
+      "path": "3_Linear_Least_Squares_Problems/3.4_Orthogonal_Matrices/01_3.4.2_Givens_Rotations.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "3.4.3",
+      "title": "正交性与舍入误差双重审计",
+      "path": "3_Linear_Least_Squares_Problems/3.4_Orthogonal_Matrices/02_3.4.3_Roundoff_Error_Analysis_for_Orthogonal_Matrices.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "3.4.4",
+      "title": "正交矩阵保持长度与内积",
+      "path": "3_Linear_Least_Squares_Problems/3.4_Orthogonal_Matrices/03_3.4.4_Why_Orthogonal_Matrices?.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "3.5.1",
+      "title": "秩亏 SVD：伪逆与奇异值截断",
+      "path": "3_Linear_Least_Squares_Problems/3.5_Rank_Deficient_Least_Squares_Problems/00_3.5.1_Solving_Rank_Deficient_Least_Squares_Problems_Using_the_SVD.html",
       "status": "enhanced"
     }
   ]
