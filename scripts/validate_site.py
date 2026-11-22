@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static checks for the first eight lessons and the course portal."""
+"""Static checks for the first sixteen Chapter 1/2 lessons and the course portal."""
 from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
@@ -16,6 +16,14 @@ PAGES = [
 "1_Introduction/1.3_General_Techniques/03_1.3.4_Analyzing_the_Speed_of_Algorithms.html",
 "1_Introduction/1.3_General_Techniques/04_1.3.5_Engineering_Numerical_Software.html",
 "1_Introduction/03_1.4_Example:_Polynomial_Evaluation.html",
+"2_Linear_Equation_Solving/00_2.1_Introduction.html",
+"2_Linear_Equation_Solving/01_2.2_Perturbation_Theory.html",
+"2_Linear_Equation_Solving/02_2.2.1_Relative_Perturbation_Theory.html",
+"2_Linear_Equation_Solving/03_2.3_Gaussian_Elimination.html",
+"2_Linear_Equation_Solving/2.4_Error_Analysis/00_2.4.1_The_Need_for_Pivoting.html",
+"2_Linear_Equation_Solving/2.4_Error_Analysis/01_2.4.2_Formal_Error_Analysis_of_Gaussian_Elimination.html",
+"2_Linear_Equation_Solving/2.4_Error_Analysis/02_2.4.3_Estimating_Condition_Numbers.html",
+"2_Linear_Equation_Solving/2.4_Error_Analysis/03_2.4.4_Practical_Error_Bounds.html",
 ]
 
 class Audit(HTMLParser):
@@ -68,7 +76,7 @@ def check_lesson_sources(html_path: Path) -> list[str]:
     md = md_path.read_text(encoding="utf-8")
     html = html_path.read_text(encoding="utf-8")
     headings = [h.strip() for h in re.findall(r"^## (.+)$", md, flags=re.M)
-                if h.strip() not in {"学习目标", "动手检查", "参考资料"}]
+                if h.strip() not in {"学习目标", "动手检查", "参考资料", "可交互的判断题", "最小可复现实验", "参考来源"}]
     for heading in headings:
         if f"<h2>{heading}</h2>" not in html:
             errors.append(f"{html_path.name}: Markdown heading missing in HTML: {heading}")
@@ -84,13 +92,13 @@ def main() -> int:
             example = page.with_suffix(suffix)
             if not example.exists():
                 errors.append(f"missing example: {example.relative_to(ROOT)}")
-    for i in range(1, 9):
+    for i in range(1, 17):
         if not (ROOT / "evidence" / f"{i:02d}.json").exists():
             errors.append(f"missing evidence ledger: evidence/{i:02d}.json")
     if errors:
         print("\n".join(errors))
         return 1
-    print(f"Static validation passed: homepage + {len(PAGES)} lessons, Markdown headings, examples and evidence ledgers.")
+    print(f"Static validation passed: homepage + {len(PAGES)} Chapter 1/2 lessons, Markdown headings, examples and evidence ledgers.")
     return 0
 
 if __name__ == "__main__":

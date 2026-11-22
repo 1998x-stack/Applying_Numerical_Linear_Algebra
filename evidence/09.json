@@ -1,0 +1,20 @@
+[
+  {
+    "id": "chapter2-09-1",
+    "claim": "2.1 从 Ax=b 出发：如何判断一个线性方程组求得是否可靠",
+    "kind": "source-based theory",
+    "source_url": "https://doi.org/10.1137/1.9781611971446",
+    "locator": "Demmel, Applied Numerical Linear Algebra §2.1",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  },
+  {
+    "id": "chapter2-09-2",
+    "claim": "2.1 从 Ax=b 出发：如何判断一个线性方程组求得是否可靠",
+    "kind": "source-based theory",
+    "source_url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html",
+    "locator": "NumPy solve",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  }
+]

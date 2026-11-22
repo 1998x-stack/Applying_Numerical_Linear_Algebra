@@ -48,3 +48,17 @@
 - 6.5.2 Gauss–Seidel 新旧分量复用与红黑排序
 
 状态：源文档、示例、SVG 与证据台账已提交到工作分支；CI / Pages 必须以远端结果为准。后续 6.5.3 SOR、6.6 Krylov/CG、6.7 FFT、6.9 Multigrid 将按同一标准逐篇完善。
+
+
+## 第三批：第二章 8 篇（2026-11-22）
+
+- **2.1 从 Ax=b 出发：求解可靠性**：独立 HTML / MD，Python / MATLAB 实验，SVG 与 evidence/09.json
+- **2.2 矩阵与右端项同时扰动**：独立 HTML / MD，Python / MATLAB 实验，SVG 与 evidence/10.json
+- **2.2.1 范数与逐元素相对扰动**：独立 HTML / MD，Python / MATLAB 实验，SVG 与 evidence/11.json
+- **2.3 高斯消去 PA=LU**：独立 HTML / MD，Python / MATLAB 实验，SVG 与 evidence/12.json
+- **2.4.1 小主元为何危险**：独立 HTML / MD，Python / MATLAB 实验，SVG 与 evidence/13.json
+- **2.4.2 舍入误差与增长因子**：独立 HTML / MD，Python / MATLAB 实验，SVG 与 evidence/14.json
+- **2.4.3 逆范数与条件数诊断**：独立 HTML / MD，Python / MATLAB 实验，SVG 与 evidence/15.json
+- **2.4.4 残差、BERR 与前向界**：独立 HTML / MD，Python / MATLAB 实验，SVG 与 evidence/16.json
+
+本批提交以 S2/S3 内容与代码基线为目标；S4/S5 只在实际 Actions/Pages 验收成功后标记，MATLAB 未实机执行前不标记为已验证。

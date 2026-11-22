@@ -1,0 +1,29 @@
+[
+  {
+    "id": "chapter2-14-1",
+    "claim": "2.4.2 高斯消去为什么通常稳定，却仍存在指数增长的反例",
+    "kind": "source-based theory",
+    "source_url": "https://nhigham.com/2020/07/14/what-is-the-growth-factor-for-gaussian-elimination/",
+    "locator": "Higham, What Is the Growth Factor for Gaussian Elimination?",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  },
+  {
+    "id": "chapter2-14-2",
+    "claim": "2.4.2 高斯消去为什么通常稳定，却仍存在指数增长的反例",
+    "kind": "source-based theory",
+    "source_url": "https://math.nist.gov/MatrixMarket/deli/Wilkinson/information.html",
+    "locator": "NIST Matrix Market, Wilkinson matrix",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  },
+  {
+    "id": "chapter2-14-3",
+    "claim": "2.4.2 高斯消去为什么通常稳定，却仍存在指数增长的反例",
+    "kind": "source-based theory",
+    "source_url": "https://doi.org/10.1137/1.9781611971446",
+    "locator": "Demmel, Applied Numerical Linear Algebra §2.4.2",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  }
+]
