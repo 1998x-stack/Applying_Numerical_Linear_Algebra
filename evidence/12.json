@@ -1,0 +1,20 @@
+[
+  {
+    "id": "chapter2-12-1",
+    "claim": "2.3 把高斯消去拆开看：行交换、乘子与三角求解",
+    "kind": "source-based theory",
+    "source_url": "https://doi.org/10.1137/1.9781611971446",
+    "locator": "Demmel, Applied Numerical Linear Algebra §2.3",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  },
+  {
+    "id": "chapter2-12-2",
+    "claim": "2.3 把高斯消去拆开看：行交换、乘子与三角求解",
+    "kind": "source-based theory",
+    "source_url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lu_factor.html",
+    "locator": "SciPy lu_factor (LAPACK getrf)",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  }
+]

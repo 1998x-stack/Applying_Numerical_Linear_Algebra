@@ -1,0 +1,29 @@
+[
+  {
+    "id": "chapter2-15-1",
+    "claim": "2.4.3 怎样估计条件数，而不显式求出整个逆矩阵",
+    "kind": "source-based theory",
+    "source_url": "https://doi.org/10.1137/1.9781611971446",
+    "locator": "Demmel, Applied Numerical Linear Algebra §2.4.3",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  },
+  {
+    "id": "chapter2-15-2",
+    "claim": "2.4.3 怎样估计条件数，而不显式求出整个逆矩阵",
+    "kind": "source-based theory",
+    "source_url": "https://www.netlib.org/lapack/explore-html/d5/dbe/group__gesvx_ga9f785df2efd9d9f8408e2de492f28673.html",
+    "locator": "LAPACK gesvx reciprocal condition estimate",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  },
+  {
+    "id": "chapter2-15-3",
+    "claim": "2.4.3 怎样估计条件数，而不显式求出整个逆矩阵",
+    "kind": "source-based theory",
+    "source_url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.cond.html",
+    "locator": "NumPy condition number",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  }
+]

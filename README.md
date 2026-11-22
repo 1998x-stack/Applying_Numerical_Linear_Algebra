@@ -65,6 +65,32 @@
 └── docs/
 ```
 
+
+
+## 第二章深度重构：新增 8 篇
+
+本批次保留原文件路径，将第二章 2.1–2.4.4 的八篇内容改写为独立文章，强调问题条件数与算法稳定性的区别、数学假设、数值验证与实际使用边界。前两批第一章和第六章内容不被覆盖。
+
+| 原编号 | 数值线性代数主题 | HTML | Python | MATLAB |
+|---|---|---|---|---|
+| 2.1 | 从 Ax=b 出发：求解可靠性 | [阅读](2_Linear_Equation_Solving/00_2.1_Introduction.html) | [运行](2_Linear_Equation_Solving/00_2.1_Introduction.py) | [运行](2_Linear_Equation_Solving/00_2.1_Introduction.m) |
+| 2.2 | 矩阵与右端项同时扰动 | [阅读](2_Linear_Equation_Solving/01_2.2_Perturbation_Theory.html) | [运行](2_Linear_Equation_Solving/01_2.2_Perturbation_Theory.py) | [运行](2_Linear_Equation_Solving/01_2.2_Perturbation_Theory.m) |
+| 2.2.1 | 范数与逐元素相对扰动 | [阅读](2_Linear_Equation_Solving/02_2.2.1_Relative_Perturbation_Theory.html) | [运行](2_Linear_Equation_Solving/02_2.2.1_Relative_Perturbation_Theory.py) | [运行](2_Linear_Equation_Solving/02_2.2.1_Relative_Perturbation_Theory.m) |
+| 2.3 | 高斯消去 PA=LU | [阅读](2_Linear_Equation_Solving/03_2.3_Gaussian_Elimination.html) | [运行](2_Linear_Equation_Solving/03_2.3_Gaussian_Elimination.py) | [运行](2_Linear_Equation_Solving/03_2.3_Gaussian_Elimination.m) |
+| 2.4.1 | 小主元为何危险 | [阅读](2_Linear_Equation_Solving/2.4_Error_Analysis/00_2.4.1_The_Need_for_Pivoting.html) | [运行](2_Linear_Equation_Solving/2.4_Error_Analysis/00_2.4.1_The_Need_for_Pivoting.py) | [运行](2_Linear_Equation_Solving/2.4_Error_Analysis/00_2.4.1_The_Need_for_Pivoting.m) |
+| 2.4.2 | 舍入误差与增长因子 | [阅读](2_Linear_Equation_Solving/2.4_Error_Analysis/01_2.4.2_Formal_Error_Analysis_of_Gaussian_Elimination.html) | [运行](2_Linear_Equation_Solving/2.4_Error_Analysis/01_2.4.2_Formal_Error_Analysis_of_Gaussian_Elimination.py) | [运行](2_Linear_Equation_Solving/2.4_Error_Analysis/01_2.4.2_Formal_Error_Analysis_of_Gaussian_Elimination.m) |
+| 2.4.3 | 逆范数与条件数诊断 | [阅读](2_Linear_Equation_Solving/2.4_Error_Analysis/02_2.4.3_Estimating_Condition_Numbers.html) | [运行](2_Linear_Equation_Solving/2.4_Error_Analysis/02_2.4.3_Estimating_Condition_Numbers.py) | [运行](2_Linear_Equation_Solving/2.4_Error_Analysis/02_2.4.3_Estimating_Condition_Numbers.m) |
+| 2.4.4 | 残差、BERR 与前向界 | [阅读](2_Linear_Equation_Solving/2.4_Error_Analysis/03_2.4.4_Practical_Error_Bounds.html) | [运行](2_Linear_Equation_Solving/2.4_Error_Analysis/03_2.4.4_Practical_Error_Bounds.py) | [运行](2_Linear_Equation_Solving/2.4_Error_Analysis/03_2.4.4_Practical_Error_Bounds.m) |
+
+### 本批次的准确性修订
+
+- 保留 (A+ΔA)Δx=Δb−ΔA x，并在相对扰动界中明确 κ(A)α<1。
+- 区分范数条件与逐元素比例扰动；对角阵可能整体病态但对结构化扰动不敏感。
+- GEPP 使用 PA=LU，清晰区分无主元、小主元与部分选主元。
+- Wilkinson 增长因子说明最坏界；不将选主元直接写成无条件数值稳定保证。
+- 基向量解算逆范数为教学参考，不冒充高效条件数估计器；FERR/BERR/RCOND 使用官方 LAPACK 语义。
+- 浏览器质量门禁覆盖第一章和第二章；第六章保留自己的浏览器验收脚本。
+
 ## 本地运行
 
 需要 Python 3.10+。核心数值示例使用 NumPy；浏览器验收额外需要 Playwright 和 Chromium。

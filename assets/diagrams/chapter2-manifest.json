@@ -1,0 +1,58 @@
+{
+  "09-chapter2.svg": {
+    "chapter": "2",
+    "lesson": 9,
+    "original": true,
+    "role": "explanation diagram",
+    "verified_by": "static SVG and browser QA"
+  },
+  "10-chapter2.svg": {
+    "chapter": "2",
+    "lesson": 10,
+    "original": true,
+    "role": "explanation diagram",
+    "verified_by": "static SVG and browser QA"
+  },
+  "11-chapter2.svg": {
+    "chapter": "2",
+    "lesson": 11,
+    "original": true,
+    "role": "explanation diagram",
+    "verified_by": "static SVG and browser QA"
+  },
+  "12-chapter2.svg": {
+    "chapter": "2",
+    "lesson": 12,
+    "original": true,
+    "role": "explanation diagram",
+    "verified_by": "static SVG and browser QA"
+  },
+  "13-chapter2.svg": {
+    "chapter": "2",
+    "lesson": 13,
+    "original": true,
+    "role": "explanation diagram",
+    "verified_by": "static SVG and browser QA"
+  },
+  "14-chapter2.svg": {
+    "chapter": "2",
+    "lesson": 14,
+    "original": true,
+    "role": "explanation diagram",
+    "verified_by": "static SVG and browser QA"
+  },
+  "15-chapter2.svg": {
+    "chapter": "2",
+    "lesson": 15,
+    "original": true,
+    "role": "explanation diagram",
+    "verified_by": "static SVG and browser QA"
+  },
+  "16-chapter2.svg": {
+    "chapter": "2",
+    "lesson": 16,
+    "original": true,
+    "role": "explanation diagram",
+    "verified_by": "static SVG and browser QA"
+  }
+}

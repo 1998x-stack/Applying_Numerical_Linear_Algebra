@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Responsive, offline-first Chromium QA for the homepage and first eight lessons."""
+"""Responsive, offline-first Chromium QA for the homepage and Chapters 1/2 lessons."""
 from __future__ import annotations
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
@@ -21,6 +21,14 @@ PAGES = [
     ("06", "1_Introduction/1.3_General_Techniques/03_1.3.4_Analyzing_the_Speed_of_Algorithms.html"),
     ("07", "1_Introduction/1.3_General_Techniques/04_1.3.5_Engineering_Numerical_Software.html"),
     ("08", "1_Introduction/03_1.4_Example:_Polynomial_Evaluation.html"),
+    ("9", "2_Linear_Equation_Solving/00_2.1_Introduction.html"),
+    ("10", "2_Linear_Equation_Solving/01_2.2_Perturbation_Theory.html"),
+    ("11", "2_Linear_Equation_Solving/02_2.2.1_Relative_Perturbation_Theory.html"),
+    ("12", "2_Linear_Equation_Solving/03_2.3_Gaussian_Elimination.html"),
+    ("13", "2_Linear_Equation_Solving/2.4_Error_Analysis/00_2.4.1_The_Need_for_Pivoting.html"),
+    ("14", "2_Linear_Equation_Solving/2.4_Error_Analysis/01_2.4.2_Formal_Error_Analysis_of_Gaussian_Elimination.html"),
+    ("15", "2_Linear_Equation_Solving/2.4_Error_Analysis/02_2.4.3_Estimating_Condition_Numbers.html"),
+    ("16", "2_Linear_Equation_Solving/2.4_Error_Analysis/03_2.4.4_Practical_Error_Bounds.html"),
 ]
 VIEWPORTS = [(1440, 900), (768, 1024), (390, 844), (360, 800)]
 

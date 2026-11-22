@@ -13,7 +13,8 @@
       "id": 2,
       "title": "Linear Equation Solving",
       "path": "2_Linear_Equation_Solving/00_2.1_Introduction.html",
-      "status": "legacy"
+      "status": "in-progress",
+      "deepened": 8
     },
     {
       "id": 3,
@@ -95,6 +96,54 @@
       "title": "多项式求值：Horner 方法与数值稳定性",
       "path": "1_Introduction/03_1.4_Example:_Polynomial_Evaluation.html",
       "figure": "assets/diagrams/08-horner.svg"
+    },
+    {
+      "id": "09",
+      "title": "从 Ax=b 出发：求解可靠性",
+      "path": "2_Linear_Equation_Solving/00_2.1_Introduction.html",
+      "figure": "assets/diagrams/09-chapter2.svg"
+    },
+    {
+      "id": "10",
+      "title": "矩阵与右端项同时扰动",
+      "path": "2_Linear_Equation_Solving/01_2.2_Perturbation_Theory.html",
+      "figure": "assets/diagrams/10-chapter2.svg"
+    },
+    {
+      "id": "11",
+      "title": "范数与逐元素相对扰动",
+      "path": "2_Linear_Equation_Solving/02_2.2.1_Relative_Perturbation_Theory.html",
+      "figure": "assets/diagrams/11-chapter2.svg"
+    },
+    {
+      "id": "12",
+      "title": "高斯消去 PA=LU",
+      "path": "2_Linear_Equation_Solving/03_2.3_Gaussian_Elimination.html",
+      "figure": "assets/diagrams/12-chapter2.svg"
+    },
+    {
+      "id": "13",
+      "title": "小主元为何危险",
+      "path": "2_Linear_Equation_Solving/2.4_Error_Analysis/00_2.4.1_The_Need_for_Pivoting.html",
+      "figure": "assets/diagrams/13-chapter2.svg"
+    },
+    {
+      "id": "14",
+      "title": "舍入误差与增长因子",
+      "path": "2_Linear_Equation_Solving/2.4_Error_Analysis/01_2.4.2_Formal_Error_Analysis_of_Gaussian_Elimination.html",
+      "figure": "assets/diagrams/14-chapter2.svg"
+    },
+    {
+      "id": "15",
+      "title": "逆范数与条件数诊断",
+      "path": "2_Linear_Equation_Solving/2.4_Error_Analysis/02_2.4.3_Estimating_Condition_Numbers.html",
+      "figure": "assets/diagrams/15-chapter2.svg"
+    },
+    {
+      "id": "16",
+      "title": "残差、BERR 与前向界",
+      "path": "2_Linear_Equation_Solving/2.4_Error_Analysis/03_2.4.4_Practical_Error_Bounds.html",
+      "figure": "assets/diagrams/16-chapter2.svg"
     }
   ],
   "chapter6_modules": [

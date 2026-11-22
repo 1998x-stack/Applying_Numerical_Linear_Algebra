@@ -1,0 +1,20 @@
+[
+  {
+    "id": "chapter2-16-1",
+    "claim": "2.4.4 求得一个近似解后，如何计算真正有意义的误差指标",
+    "kind": "source-based theory",
+    "source_url": "https://www.netlib.org/lapack/explore-html/d5/dbe/group__gesvx_ga9f785df2efd9d9f8408e2de492f28673.html",
+    "locator": "LAPACK gesvx: RCOND, FERR, BERR",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  },
+  {
+    "id": "chapter2-16-2",
+    "claim": "2.4.4 求得一个近似解后，如何计算真正有意义的误差指标",
+    "kind": "source-based theory",
+    "source_url": "https://doi.org/10.1137/1.9781611971446",
+    "locator": "Demmel, Applied Numerical Linear Algebra §2.4.4",
+    "status": "derived",
+    "notes": "本文数学结论需要配合等式假设和 Python/MATLAB 实验；正式来源页面和原书章节用于内容定位。"
+  }
+]
