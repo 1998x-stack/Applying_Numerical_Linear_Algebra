@@ -78,3 +78,6 @@ button,a,input,select{outline-offset:3px}
 .article th{background:#edf4ef;font-weight:750;white-space:nowrap}
 .article td:first-child{font-weight:650;white-space:nowrap}
 [hidden]{display:none!important}
+
+/* Progressive-enhancement meter for Chapter 6 interactive spectrum lessons. */
+.demo-meter{width:100%;height:8px;border-radius:100px;background:#dde9e3;overflow:hidden;margin:12px 0 4px}.demo-meter span{display:block;height:100%;max-width:100%}

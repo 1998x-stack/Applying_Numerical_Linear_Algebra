@@ -39,7 +39,7 @@
       "title": "Iterative Methods for Linear Systems",
       "path": "6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html",
       "status": "in-progress",
-      "deepened": 8
+      "deepened": 16
     },
     {
       "id": 7,
@@ -193,6 +193,54 @@
       "id": "6.5.2",
       "title": "Gauss–Seidel：新旧分量复用",
       "path": "6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.5.3",
+      "title": "SOR：松弛参数与步长",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/02_6.5.3_Successive_Overrelaxation.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.5.4",
+      "title": "误差慢模态：三种迭代的收敛尺度",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/03_6.5.4_Convergence_of_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods_on_the_Model_Problem.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.5.5",
+      "title": "SPD 仍可能使 Jacobi 不收敛",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/04_6.5.5_Detailed_Convergence_Criteria_for_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.5.6",
+      "title": "Chebyshev 加速和 SSOR",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/05_6.5.6_Chebyshev_Acceleration_and_Symmetric_SOR_(SSOR).html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.6.1",
+      "title": "只用 Av 提取 Krylov 信息",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods/00_6.6.1_Extracting_Information_about_A_via_Matrix_Vector_Multiplication.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.6.2",
+      "title": "Krylov 投影与残差正交",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods/01_6.6.2_Solving_Ax_=b_Using_the_Krylov_Subspace_Kk.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.6.3",
+      "title": "CG：A-共轭短递推",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods/02_6.6.3_Conjugate_Gradient_Method.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.6.4",
+      "title": "CG 的 A-范数误差界",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods/03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method.html",
       "status": "enhanced"
     }
   ]

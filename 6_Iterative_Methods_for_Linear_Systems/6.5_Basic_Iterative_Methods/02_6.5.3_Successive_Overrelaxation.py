@@ -1,7 +1,7 @@
 """SOR on a 1-D Dirichlet Poisson system; NumPy >=1.26."""
 import numpy as np
 
-def sor(A, b, omega, sweeps=300):
+def sor(A, b, omega, sweeps=1200):
     A = np.asarray(A, dtype=float)
     b = np.asarray(b, dtype=float)
     if A.ndim != 2 or A.shape[0] != A.shape[1] or b.shape != (A.shape[0],):

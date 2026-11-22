@@ -62,3 +62,17 @@
 - **2.4.4 残差、BERR 与前向界**：独立 HTML / MD，Python / MATLAB 实验，SVG 与 evidence/16.json
 
 本批提交以 S2/S3 内容与代码基线为目标；S4/S5 只在实际 Actions/Pages 验收成功后标记，MATLAB 未实机执行前不标记为已验证。
+
+
+## 第四批：第六章 6.5.3–6.6.4（2026-11-22）
+
+- **6.5.3** SOR：松弛参数与步长：独立 HTML / MD / Python / MATLAB / evidence
+- **6.5.4** 误差慢模态：三种迭代的收敛尺度：独立 HTML / MD / Python / MATLAB / evidence
+- **6.5.5** SPD 仍可能使 Jacobi 不收敛：独立 HTML / MD / Python / MATLAB / evidence
+- **6.5.6** Chebyshev 加速和 SSOR：独立 HTML / MD / Python / MATLAB / evidence
+- **6.6.1** 只用 Av 提取 Krylov 信息：独立 HTML / MD / Python / MATLAB / evidence
+- **6.6.2** Krylov 投影与残差正交：独立 HTML / MD / Python / MATLAB / evidence
+- **6.6.3** CG：A-共轭短递推：独立 HTML / MD / Python / MATLAB / evidence
+- **6.6.4** CG 的 A-范数误差界：独立 HTML / MD / Python / MATLAB / evidence
+
+对所有模块按“独立问题 → 公式推导 → 具体算例 → 解释图 → 原生交互 → 限制 → 证据”组织；保留原有文件路径与章节顺序。新增 `tests/test_chapter6_batch4.py` 与既有 `scripts/browser_check.py` 16 篇验收。第六章深化进度 16 篇，全站累计 32 篇；CI 和 Pages 的 S4/S5 状态需根据实际远端结果标注。
