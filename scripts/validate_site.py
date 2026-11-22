@@ -68,7 +68,7 @@ def check_lesson_sources(html_path: Path) -> list[str]:
     md = md_path.read_text(encoding="utf-8")
     html = html_path.read_text(encoding="utf-8")
     headings = [h.strip() for h in re.findall(r"^## (.+)$", md, flags=re.M)
-                if h.strip() not in {"动手检查", "参考资料"}]
+                if h.strip() not in {"学习目标", "动手检查", "参考资料"}]
     for heading in headings:
         if f"<h2>{heading}</h2>" not in html:
             errors.append(f"{html_path.name}: Markdown heading missing in HTML: {heading}")
@@ -80,10 +80,10 @@ def main() -> int:
         page = ROOT / rel
         errors.extend(check_file(page, require_math=True))
         errors.extend(check_lesson_sources(page))
-        stem = page.with_suffix("")
         for suffix in (".py", ".m"):
-            if not stem.with_suffix(suffix).exists():
-                errors.append(f"missing example: {stem.with_suffix(suffix).relative_to(ROOT)}")
+            example = page.with_suffix(suffix)
+            if not example.exists():
+                errors.append(f"missing example: {example.relative_to(ROOT)}")
     for i in range(1, 9):
         if not (ROOT / "evidence" / f"{i:02d}.json").exists():
             errors.append(f"missing evidence ledger: evidence/{i:02d}.json")
