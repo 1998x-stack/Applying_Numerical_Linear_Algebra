@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static checks for 24 Chapter 1/2 lessons and the course portal."""
+"""Static checks for 32 Chapter 1/2/3 lessons and the course portal."""
 from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
@@ -32,6 +32,14 @@ PAGES = [
 "2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues.html",
 "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/00_2.7.1_Real_Symmetric_Positive_Definite_Matrices.html",
 "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices.html",
+"2_Linear_Equation_Solving/2.7_Special_Linear_Systems/02_2.7.3_Band_Matrices.html",
+"2_Linear_Equation_Solving/2.7_Special_Linear_Systems/03_2.7.4_General_Sparse_Matrices.html",
+"2_Linear_Equation_Solving/2.7_Special_Linear_Systems/04_2.7.5_Dense_Matrices_Depending_on_Fewer_Than_O(n²)_Parameters.html",
+"3_Linear_Least_Squares_Problems/00_3.1_Introduction.html",
+"3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/00_3.2.1_Normal_Equations.html",
+"3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/01_3.2.2_QR_Decomposition.html",
+"3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/02_3.2.3_Singular_Value_Decomposition.html",
+"3_Linear_Least_Squares_Problems/02_3.3_Perturbation_Theory_for_the_Least_Squares_Problem.html",
 ]
 
 class Audit(HTMLParser):
@@ -84,7 +92,7 @@ def check_lesson_sources(html_path: Path) -> list[str]:
     md = md_path.read_text(encoding="utf-8")
     html = html_path.read_text(encoding="utf-8")
     headings = [h.strip() for h in re.findall(r"^## (.+)$", md, flags=re.M)
-                if h.strip() not in {"学习目标", "动手检查", "参考资料", "可交互的判断题", "最小可复现实验", "参考来源", "可调数值模型", "复现实验与反例", "复现实验与边界检查"}]
+                if h.strip() not in {"学习目标", "动手检查", "参考资料", "可交互的判断题", "最小可复现实验", "参考来源", "可调数值模型", "复现实验与反例", "复现实验与边界检查", "数值交互与代码", "可调可视化与实验"}]
     for heading in headings:
         if f"<h2>{heading}</h2>" not in html:
             errors.append(f"{html_path.name}: Markdown heading missing in HTML: {heading}")
@@ -100,13 +108,13 @@ def main() -> int:
             example = page.with_suffix(suffix)
             if not example.exists():
                 errors.append(f"missing example: {example.relative_to(ROOT)}")
-    for i in range(1, 25):
+    for i in range(1, 33):
         if not (ROOT / "evidence" / f"{i:02d}.json").exists():
             errors.append(f"missing evidence ledger: evidence/{i:02d}.json")
     if errors:
         print("\n".join(errors))
         return 1
-    print(f"Static validation passed: homepage + {len(PAGES)} Chapter 1/2 lessons, Markdown headings, examples and evidence ledgers.")
+    print(f"Static validation passed: homepage + {len(PAGES)} Chapter 1/2/3 lessons, Markdown headings, examples and evidence ledgers.")
     return 0
 
 if __name__ == "__main__":

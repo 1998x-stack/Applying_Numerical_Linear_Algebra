@@ -104,3 +104,17 @@
 - 6.9.1 二维 Poisson 的两网格纠错：HTML / Markdown / Python / MATLAB / 原生 MathML / SVG / evidence
 
 全站 48 篇，其中第六章 24 篇；CI/Pages 只按实际成功的 workflow 和 SHA 更新发布状态。强调 PCG 必须保留 SPD 理论条件、GMRES 的真残差与 Arnoldi 内部残差区分、DST-I 与周期 DFT 边界差别、BCR 的 Schur 填充，以及多重网格重新离散与 Galerkin 粗算子的不同。
+
+
+## 第七批：第二章 2.7.3–2.7.5 和第三章 3.1–3.3
+
+- 2.7.3 带状矩阵与压缩存储：MD/HTML、Python/MATLAB、独立 SVG、动态模型、evidence/25.json
+- 2.7.4 稀疏消元与图填充：MD/HTML、Python/MATLAB、独立 SVG、动态模型、evidence/26.json
+- 2.7.5 Woodbury 低秩更新：MD/HTML、Python/MATLAB、独立 SVG、动态模型、evidence/27.json
+- 3.1 最小二乘几何投影：MD/HTML、Python/MATLAB、独立 SVG、动态模型、evidence/28.json
+- 3.2.1 正规方程与 κ²：MD/HTML、Python/MATLAB、独立 SVG、动态模型、evidence/29.json
+- 3.2.2 薄 QR 与正交残差：MD/HTML、Python/MATLAB、独立 SVG、动态模型、evidence/30.json
+- 3.2.3 SVD 与最小范数解：MD/HTML、Python/MATLAB、独立 SVG、动态模型、evidence/31.json
+- 3.3 残差相关的扰动理论：MD/HTML、Python/MATLAB、独立 SVG、动态模型、evidence/32.json
+
+理论检查：带状压缩数组、星形图填充、Woodbury n=4 手算、最小二乘正交残差、Gram κ²、薄 QR、SVD 秩亏、残差相关的最小二乘一阶导数。CI/Pages 状态以相应提交的实际 Actions 结果为准。

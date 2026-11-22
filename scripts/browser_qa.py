@@ -37,6 +37,14 @@ PAGES = [
     ("22", "2_Linear_Equation_Solving/2.6_Blocking_Algorithms_for_Higher_Performance/03_2.6.4_More_About_Parallelism_and_Other_Performance_Issues.html"),
     ("23", "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/00_2.7.1_Real_Symmetric_Positive_Definite_Matrices.html"),
     ("24", "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices.html"),
+    ("25", "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/02_2.7.3_Band_Matrices.html"),
+    ("26", "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/03_2.7.4_General_Sparse_Matrices.html"),
+    ("27", "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/04_2.7.5_Dense_Matrices_Depending_on_Fewer_Than_O(n²)_Parameters.html"),
+    ("28", "3_Linear_Least_Squares_Problems/00_3.1_Introduction.html"),
+    ("29", "3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/00_3.2.1_Normal_Equations.html"),
+    ("30", "3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/01_3.2.2_QR_Decomposition.html"),
+    ("31", "3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/02_3.2.3_Singular_Value_Decomposition.html"),
+    ("32", "3_Linear_Least_Squares_Problems/02_3.3_Perturbation_Theory_for_the_Least_Squares_Problem.html"),
 ]
 VIEWPORTS = [(1440, 900), (768, 1024), (390, 844), (360, 800)]
 
@@ -173,6 +181,33 @@ def main() -> int:
                                         if bbox is None or bbox["width"] <= 0 or bbox["height"] <= 0:
                                             failures.append(f"{rel}: live SVG geometry is empty")
 
+
+                            # Chapter 2/3 lessons redraw numerical output and live SVG.
+                            new_lab = page.locator("[data-next-lab]")
+                            if new_lab.count():
+                                new_slider = new_lab.locator("[data-next-slider]")
+                                new_output = new_lab.locator("[data-next-output]")
+                                new_visual = new_lab.locator("[data-next-visual]")
+                                if new_slider.count()!=1 or new_output.count()!=1 or new_visual.count()!=1:
+                                    failures.append(f"{rel}: new numerical model controls missing")
+                                else:
+                                    old_value = new_output.inner_text()
+                                    old_picture = new_visual.inner_html()
+                                    new_slider.evaluate("(el) => { el.value = el.max; el.dispatchEvent(new Event('input', {bubbles: true})); }")
+                                    if old_value == new_output.inner_text():
+                                        failures.append(f"{rel}: changing numerical slider did not update output")
+                                    if old_picture == new_visual.inner_html():
+                                        failures.append(f"{rel}: changing numerical slider did not redraw SVG")
+                                    picture = new_visual.locator("svg")
+                                    if picture.count()!=1:
+                                        failures.append(f"{rel}: no live SVG generated")
+                                    else:
+                                        bounds = picture.bounding_box()
+                                        if bounds is None or bounds["width"]<=0 or bounds["height"]<=0:
+                                            failures.append(f"{rel}: live SVG geometry invisible")
+                                    wanted = f"{new_lab.get_attribute('data-next-lab')}:{new_slider.get_attribute('max')}"
+                                    if new_visual.get_attribute("data-model-fingerprint") != wanted:
+                                        failures.append(f"{rel}: numeric diagram did not track current parameter")
 
                             # Keyboard focus must move through native controls.
                             first = page.locator("[data-demo-control]").first
