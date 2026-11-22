@@ -53,7 +53,7 @@ class LinearSystemsDeepDiveTests(unittest.TestCase):
             self.assertLessEqual(x["componentwise_relative_error"],x["componentwise_bound"]+1e-12)
 
     def test_23_partial_pivoted_lu_and_linear_solve(self):
-        A=np.array([[0.,2.,1.],[1.,3.,2.],[2.,0.,1.]])
+        A=np.array([[0.,2.,1.],[1.,3.,2.],[2.,0.,2.]])
         b=A@np.array([1.,2.,3.])
         fn=namespace(3)
         P,L,U=fn["lu_partial_pivoting"](A)
