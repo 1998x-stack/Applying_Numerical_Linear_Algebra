@@ -100,6 +100,7 @@ def check_lesson_sources(html_path: Path) -> list[str]:
 
 def main() -> int:
     errors = check_file(ROOT / "index.html", require_math=False)
+    errors.extend(check_file(ROOT / "README.html", require_math=False))
     for rel in PAGES:
         page = ROOT / rel
         errors.extend(check_file(page, require_math=True))
