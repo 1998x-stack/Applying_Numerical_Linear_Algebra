@@ -1,26 +1,34 @@
 {
   "article": "6.10.2",
-  "title": "6.10.2 重叠区域分解：Additive Schwarz 如何组合局部校正",
-  "source": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
-  "source_locator": "§6.10.2 (pp.352–357), overlapping domain decomposition / Schwarz methods",
+  "article_title": "6.10.2 重叠区域分解：Additive Schwarz 如何组合局部校正",
+  "source": "James W. Demmel, Applied Numerical Linear Algebra (1997)",
   "claims": [
     {
-      "type": "textbook",
+      "id": "6.10.2-1",
       "claim": "对 SPD A∈Rⁿˣⁿ，令 R_i 为从全局向量抽取第 i 个子域自由度的限制矩阵，A_i=R_i A R_iᵀ 是局部主子矩阵。Additive Schwarz 预条件算子 M_AS⁻¹=Σ_i R_iᵀ A_i⁻¹ R_i；作用在真实残差 r=b−Ax 上，相当于并行求解 A_i z_i=R_i r 并将 R_iᵀ z_i 累加。由于每个主子矩阵 A_i SPD 且子域覆盖所有自由度，M_AS⁻¹ 也是 SPD；但无阻尼的 x←x+M_AS⁻¹r 未必收敛。数值示例采用固定的 ω=1/2，检查该具体模型的预条件谱与实测残差，而不把 ω=1/2 声称为通用选择。",
-      "source_locator": "§6.10.2 (pp.352–357), overlapping domain decomposition / Schwarz methods",
-      "status": "verified"
+      "kind": "textbook",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.10.2 (pp.352–357), overlapping domain decomposition / Schwarz methods",
+      "status": "verified",
+      "notes": "与 Demmel 对应数学讨论交叉核对；适用条件和边界在本文正文中说明。"
     },
     {
-      "type": "derived",
+      "id": "6.10.2-2",
       "claim": "在 7×7 的一维三对角 SPD 系统（7 个未知量）取子域 Ω₁={0,1,2,3,4}，Ω₂={2,3,4,5,6}，交叠为三个自由度 {2,3,4}。使用局部 A_i 求解并累加每个残差校正，形成一个 7×7 对称预条件算子；计算 M_AS⁻¹ A 的全部特征值以确认本例 ω=1/2 的定点迭代满足 |1−ωλ|<1。由 x=0 出发重复若干次，对比真实残差，并与直接解交叉验证；所有数据都是明确可复算的小型教学算例。",
-      "source_locator": "§6.10.2 (pp.352–357), overlapping domain decomposition / Schwarz methods",
+      "kind": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.10.2 (pp.352–357), overlapping domain decomposition / Schwarz methods",
       "status": "derived",
-      "verification": "paired Python and MATLAB numerical assertions"
+      "notes": "教学构造的 NumPy / MATLAB 可复算案例；不宣称硬件 benchmark。"
     },
     {
-      "type": "scope",
+      "id": "6.10.2-3",
       "claim": "Additive Schwarz 在重叠节点处累加局部修正，若直接作为固定点迭代需控制阻尼；用作 CG 预条件时必须满足正定要求。交叠变宽并不总能让总运行时间更短：局部矩阵更大，通信和重合计算也会增加。大型问题还常需要全局粗空间来抑制跨子域的低频误差；单层方法的迭代次数可能随全局规模增长。",
-      "status": "verified"
+      "kind": "scope",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.10.2 (pp.352–357), overlapping domain decomposition / Schwarz methods",
+      "status": "verified",
+      "notes": "与 Demmel 对应数学讨论交叉核对；适用条件和边界在本文正文中说明。"
     }
   ]
 }

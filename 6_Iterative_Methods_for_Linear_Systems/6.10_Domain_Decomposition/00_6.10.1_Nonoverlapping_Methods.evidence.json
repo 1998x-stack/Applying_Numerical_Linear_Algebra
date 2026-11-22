@@ -1,26 +1,34 @@
 {
   "article": "6.10.1",
-  "title": "6.10.1 非重叠区域分解：两个子域如何通过界面 Schur 补耦合",
-  "source": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
-  "source_locator": "§6.10.1 (pp.349–352), substructuring / Schur complement formula (6.61)",
+  "article_title": "6.10.1 非重叠区域分解：两个子域如何通过界面 Schur 补耦合",
+  "source": "James W. Demmel, Applied Numerical Linear Algebra (1997)",
   "claims": [
     {
-      "type": "textbook",
+      "id": "6.10.1-1",
       "claim": "重排未知量为 (x_I,x_Γ)，得到 [A_II A_IΓ;A_ΓI A_ΓΓ][x_I;x_Γ]=[b_I;b_Γ]。对不相交子域的内部块，A_II 常是块对角的，每块可以独立求解。先消去内部：x_I=A_II⁻¹(b_I−A_IΓx_Γ)，再构造界面 Schur 补 S=A_ΓΓ−A_ΓI A_II⁻¹ A_IΓ，界面右端 g=b_Γ−A_ΓI A_II⁻¹b_I，解 Sx_Γ=g，再恢复 x_I。这一步与并行子域求解兼容，但不能把 S 的维数小误认为它总是稀疏或廉价。实际大系统通常不显式构造 A_II⁻¹，而使用局部求解作为算子。",
-      "source_locator": "§6.10.1 (pp.349–352), substructuring / Schur complement formula (6.61)",
-      "status": "verified"
+      "kind": "textbook",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.10.1 (pp.349–352), substructuring / Schur complement formula (6.61)",
+      "status": "verified",
+      "notes": "与 Demmel 对应数学讨论交叉核对；适用条件和边界在本文正文中说明。"
     },
     {
-      "type": "derived",
+      "id": "6.10.1-2",
       "claim": "取 N=5 的标准三对角 A=tridiag(−1,2,−1)，暂不乘共同的 1/h² 因子（不影响本例的分块结构）。左子域内部 I_L={1,2}，右子域内部 I_R={4,5}，界面 Γ={3}。设 b=(1,2,3,4,5)ᵀ，两块内部矩阵各为 [[2,−1],[−1,2]]；界面 Schur 补是单个正数 S=2−(2/3)−(2/3)=2/3。用局部解构造界面方程和回代后，||Ax−b||₂ 应接近浮点舍入量级，且解与直接解 A\\b 一致。",
-      "source_locator": "§6.10.1 (pp.349–352), substructuring / Schur complement formula (6.61)",
+      "kind": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.10.1 (pp.349–352), substructuring / Schur complement formula (6.61)",
       "status": "derived",
-      "verification": "paired Python and MATLAB numerical assertions"
+      "notes": "教学构造的 NumPy / MATLAB 可复算案例；不宣称硬件 benchmark。"
     },
     {
-      "type": "scope",
+      "id": "6.10.1-3",
       "claim": "界面分界不是把相邻变量人为删掉，内部块仍承受界面给定的边界值。Schur 补可以变稠密，而且对于高维非规则几何，界面未知量数量可能明显增加。若 A 非 SPD，相关块和界面问题的可逆性需要另行分析。将多级网格与子域算法组合可能提升性能，但不能只凭一维算例声称通用最优。",
-      "status": "verified"
+      "kind": "scope",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.10.1 (pp.349–352), substructuring / Schur complement formula (6.61)",
+      "status": "verified",
+      "notes": "与 Demmel 对应数学讨论交叉核对；适用条件和边界在本文正文中说明。"
     }
   ]
 }

@@ -1,29 +1,34 @@
 {
   "article": "3.3",
-  "title": "3.3 最小二乘扰动：为什么一个微小的观测变化会推走参数",
-  "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
-  "locator": "§3.3 (pp.117–118), perturbation of least squares, condition number and residual",
+  "article_title": "3.3 最小二乘扰动：为什么一个微小的观测变化会推走参数",
+  "source": "James W. Demmel, Applied Numerical Linear Algebra (1997)",
   "claims": [
     {
+      "id": "3.3-1",
       "claim": "若保持 A 不变并且满列秩，那么正规解的线性映射为 x*=A⁺b，故 δx=A⁺δb，得到绝对范数界 ||δx||₂≤||A⁺||₂||δb||₂=||δb||₂/σ_min(A)。若 b∈col(A) 且 x*≠0，可以将它改写为相对界 ||δx||₂/||x*||₂≤κ₂(A) ||δb||₂/||b||₂。这一相对表达式不能不加条件套到含大残差的任意超定系统：非零残差、A 本身扰动以及角度因素会改变一般扰动分析。尤其不应把正规方程 κ² 的计算病态性混淆为每次 b 扰动本身都按 κ² 放大的物理结论。",
-      "status": "verified",
       "kind": "textbook",
-      "location": "§3.3 (pp.117–118), perturbation of least squares, condition number and residual"
-    },
-    {
-      "claim": "取 t=(0,1,2,3)ᵀ、A_ε=[1,1+εt]，并选 x*=(1,1)ᵀ，因此干净数据 b=A_εx* 落在列空间。把第二个观测加上 δb=(0,10⁻³,0,0)ᵀ，分别计算 ε=10⁻² 与 ε=10⁻³ 时的最小二乘参数改变量。第二列逐渐与第一列共线，||δx||₂ 会大约增长十倍；同时 ||δb||₂ 始终为 10⁻³。数值检查使用 `lstsq` 和 SVD 的 σ_min，而不从 AᵀA 的舍入误差推断观测扰动的理论界。",
-      "status": "derived",
-      "kind": "toy_example",
-      "evidence": "python and MATLAB code numerical assertions"
-    },
-    {
-      "claim": "上界是 worst-case，实际 δb 方向可能几乎不落在弱奇异方向上，因此参数误差小于界。若 b 原本含显著残差，相对界需要额外考虑残差角度；若 A 也有误差，最小二乘解的敏感性分析更复杂。对于病态问题，SVD、列缩放、参数正则化和模型重设有不同作用，不能仅凭一个小残差挑选。",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§3.3 (pp.117–118), perturbation of least squares, condition number and residual",
       "status": "verified",
-      "kind": "scope"
+      "notes": "与 Demmel 对应数学讨论交叉核对；适用条件和边界在本文正文中说明。"
+    },
+    {
+      "id": "3.3-2",
+      "claim": "取 t=(0,1,2,3)ᵀ、A_ε=[1,1+εt]，并选 x*=(1,1)ᵀ，因此干净数据 b=A_εx* 落在列空间。把第二个观测加上 δb=(0,10⁻³,0,0)ᵀ，分别计算 ε=10⁻² 与 ε=10⁻³ 时的最小二乘参数改变量。第二列逐渐与第一列共线，||δx||₂ 会大约增长十倍；同时 ||δb||₂ 始终为 10⁻³。数值检查使用 `lstsq` 和 SVD 的 σ_min，而不从 AᵀA 的舍入误差推断观测扰动的理论界。",
+      "kind": "toy_example",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§3.3 (pp.117–118), perturbation of least squares, condition number and residual",
+      "status": "derived",
+      "notes": "教学构造的 NumPy / MATLAB 可复算案例；不宣称硬件 benchmark。"
+    },
+    {
+      "id": "3.3-3",
+      "claim": "上界是 worst-case，实际 δb 方向可能几乎不落在弱奇异方向上，因此参数误差小于界。若 b 原本含显著残差，相对界需要额外考虑残差角度；若 A 也有误差，最小二乘解的敏感性分析更复杂。对于病态问题，SVD、列缩放、参数正则化和模型重设有不同作用，不能仅凭一个小残差挑选。",
+      "kind": "scope",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§3.3 (pp.117–118), perturbation of least squares, condition number and residual",
+      "status": "verified",
+      "notes": "与 Demmel 对应数学讨论交叉核对；适用条件和边界在本文正文中说明。"
     }
-  ],
-  "api_urls": [
-    "https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html",
-    "https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html"
   ]
 }
