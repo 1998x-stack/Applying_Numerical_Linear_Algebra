@@ -176,6 +176,60 @@
         " 轮：最低二维正弦模态因子绝对值≈"+low.toFixed(5)+
         "，最高模态≈"+high.toExponential(3)+
         "。低频仍顽固，故需要粗网格校正；非两网格实测残差。";
+
+    } else if(kind==="vcycle"){
+      const cycles=Number(value),n=15;
+      function A(x) {const h=1/(x.length+1);return x.map((u,i)=>(2*u-(i?x[i-1]:0)-(i+1<x.length?x[i+1]:0))/(h*h));}
+      function mg(b,x) {
+        const m=b.length,h=1/(m+1);
+        if(m===1)return [b[0]*h*h/2];
+        const smooth=(arr)=>{let Ax=A(arr);return arr.map((u,i)=>u+(2/3)*(h*h/2)*(b[i]-Ax[i]));};
+        x=smooth(smooth(x));
+        const rr=b.map((u,i)=>u-A(x)[i]),rc=[];
+        for(let i=1;i<m;i+=2)rc.push((rr[i-1]+2*rr[i]+rr[i+1])/4);
+        const ec=mg(rc,Array(rc.length).fill(0)),P=Array(m).fill(0);
+        ec.forEach((v,i)=>P[2*i+1]=v);
+        for(let i=0;i<m;i+=2)P[i]=((i>0?P[i-1]:0)+(i+1<m?P[i+1]:0))/2;
+        x=x.map((u,i)=>u+P[i]);return smooth(smooth(x));
+      }
+      const truth=Array.from({length:n},(_,i)=>Math.sin(Math.PI*(i+1)/(n+1))),b=A(truth);
+      let x=Array(n).fill(0);for(let j=0;j<cycles;j++)x=mg(b,x);
+      const Ax=A(x),r=Math.sqrt(b.reduce((s,v,i)=>s+(v-Ax[i])**2,0));
+      output.textContent="15→7→3→1 四层 Poisson V-cycle，完成 "+cycles+
+        " 轮后真实 ||b−Ax||₂≈"+r.toExponential(5)+"（从零初值开始，b=A sin(πih)，每层前后各两次加权 Jacobi）。";
+    } else if(kind==="substructure"){
+      const n=Number(value),k=(n-1)/2,S=2/(k+1);
+      output.textContent="1D Poisson N="+n+"（左右各 "+k+" 个内部点，公共界面 1 点），界面 Schur 补是单个数 S=2/(k+1)≈"+S.toFixed(6)+
+        "；2k 个内部节点的方程可以分成两个独立子问题。";
+    } else if(kind==="schwarz"){
+      const overlap=Number(value),last=3+Math.floor((overlap-1)/2),first=4-Math.ceil((overlap+1)/2);
+      output.textContent="n=7，Ω₁={0,…,"+last+"}，Ω₂={"+first+",…,6}；交叠自由度 "+overlap+
+        " 个，序号 "+first+"…"+last+"；加性 Schwarz 在这些节点叠加两个局部校正。";
+    } else if(kind==="fit"){
+      const y=Number(value),beta=0.5,alpha=(3+y)/3-beta;
+      const sq=(2*y-3)**2/6;
+      output.textContent="三个观测 (1,"+y.toFixed(2)+",2)，线性拟合 y≈α+βt：α="+alpha.toFixed(5)+
+        "，β="+beta.toFixed(5)+"，最小残差平方和="+sq.toFixed(6)+
+        "。该对称 t=0,1,2 案例中，仅改变中间点并不会改变斜率。";
+    } else if(kind==="normal"){
+      const p=Number(value),eps=10**(-p),det=6*eps*eps,trace=6+6*eps+5*eps*eps;
+      const large=(trace+Math.sqrt(trace*trace-4*det))/2,small=det/large,cond=Math.sqrt(large/small);
+      output.textContent="ε=10⁻"+p+"，A=[1,1;1,1+ε;1,1+2ε]：κ₂(A)≈"+cond.toExponential(4)+
+        "；κ₂(AᵀA)≈"+(cond*cond).toExponential(4)+
+        "。小特征值通过 det(AᵀA)=6ε² 计算以减少演示自身的相消误差。";
+    } else if(kind==="qr"){
+      const theta=Number(value)*Math.PI/180,c=Math.cos(theta),kappa=Math.sqrt((1+c)/(1-c));
+      output.textContent="两个等长单位列向量夹角 "+value+"°；κ₂(A)=√[(1+cosθ)/(1−cosθ)]≈"+
+        kappa.toFixed(5)+"；用 QR 重写列空间后 QᵀQ=I，但 R 仍反映原始问题的条件。";
+    } else if(kind==="svd"){
+      const sigma=Number(value);
+      output.textContent="教学对角模型 Σ=diag(1,"+sigma.toFixed(2)+")："+
+        (sigma===0?"第二个方向完全不可辨识；伪逆把该方向的参数设为 0。":"第二方向伪逆系数为 1/σ≈"+(1/sigma).toFixed(2)+"，该方向观测误差也会相应放大。");
+    } else if(kind==="perturb"){
+      const p=Number(value),eps=10**(-p),delta=1e-3;
+      const dx2=-.1*delta/eps,dx1=.4*delta+.1*delta/eps;
+      output.textContent="ε=10⁻"+p+"，δb=(0,10⁻³,0,0)：近共线两列使参数改变量 ||δx||₂≈"+
+        Math.hypot(dx1,dx2).toExponential(5)+"，但数据扰动范数始终为 0.001。";
     }
   }
 

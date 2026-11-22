@@ -115,3 +115,10 @@
 - 关键跨检查：PCG 对称变换；Arnoldi 正交化及真残差；Parseval 和逆 DFT；连续/离散正弦特征值；补零长度至少 m+n−1；radix-2 直接与库 FFT 对照；Schur 补与直接求解；两网格残差前后比较。
 - 纳入静态完整性、24 篇第六章的 Chromium 四视口交互与资源验证；测试结果以最新 Actions 为准。
 - MATLAB/Octave 同名脚本仅做算法对照，若未在 MATLAB 环境运行，标为 not verified。
+
+
+## 七批第六章 / 第三章交叉验证
+
+- 第六章累计 27 篇，第三章首批 5 篇：全部纳入同名 HTML / MD / Python / MATLAB / evidence 静态校验；Playwright 4 个视口验证 8 个新交互与 SVG。
+- 数值交叉验证包含：V-cycle 真残差递降与标准 Galerkin 同等性、Schur 2/3 计算、Schwarz 预条件谱和固定点稳定性、3 点直线拟合与投影正交、正规条件数平方、QR 残差分解、SVD 秩一最小范数、观测扰动绝对/相对界。
+- 不将 MATLAB/Octave 未执行的对照代码冒充实机通过，也不将模型算例或理论复杂度冒充运行性能 benchmark。

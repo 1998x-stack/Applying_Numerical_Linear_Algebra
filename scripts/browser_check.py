@@ -1,4 +1,4 @@
-"""Chromium responsive smoke tests for Chapter 6's expanded articles and homepage.
+"""Chromium responsive smoke tests for Chapters 3 and 6 and homepage.
 
 Install: python -m pip install -r requirements-dev.txt
          python -m playwright install chromium
@@ -40,6 +40,14 @@ ARTICLES = [
     BASE + "6.7_Fast_Fourier_Transform/03_6.7.4_Computing_the_Fast_Fourier_Transform.html",
     BASE + "07_6.8_Block_Cyclic_Reduction.html",
     BASE + "6.9_Multigrid/00_6.9.1_Overview_of_Multigrid_on_Two_Dimensional_Poisson’s_Equation.html",
+    "6_Iterative_Methods_for_Linear_Systems/6.9_Multigrid/01_6.9.2_Detailed_Description_of_Multigrid_on_One_Dimensional_Poisson’s_Equation.html",
+    "6_Iterative_Methods_for_Linear_Systems/6.10_Domain_Decomposition/00_6.10.1_Nonoverlapping_Methods.html",
+    "6_Iterative_Methods_for_Linear_Systems/6.10_Domain_Decomposition/01_6.10.2_Overlapping_Methods.html",
+    "3_Linear_Least_Squares_Problems/00_3.1_Introduction.html",
+    "3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/00_3.2.1_Normal_Equations.html",
+    "3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/01_3.2.2_QR_Decomposition.html",
+    "3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/02_3.2.3_Singular_Value_Decomposition.html",
+    "3_Linear_Least_Squares_Problems/02_3.3_Perturbation_Theory_for_the_Least_Squares_Problem.html",
 ]
 VIEWPORTS = [(1440, 900), (768, 1024), (390, 844), (360, 800)]
 SCREENSHOTS = ROOT / ".artifacts" / "browser"

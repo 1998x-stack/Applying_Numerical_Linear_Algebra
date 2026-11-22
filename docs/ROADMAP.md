@@ -104,3 +104,17 @@
 - 6.9.1 二维 Poisson 的两网格纠错：HTML / Markdown / Python / MATLAB / 原生 MathML / SVG / evidence
 
 全站 48 篇，其中第六章 24 篇；CI/Pages 只按实际成功的 workflow 和 SHA 更新发布状态。强调 PCG 必须保留 SPD 理论条件、GMRES 的真残差与 Arnoldi 内部残差区分、DST-I 与周期 DFT 边界差别、BCR 的 Schur 填充，以及多重网格重新离散与 Galerkin 粗算子的不同。
+
+
+## 第七批：第六章多重网格 / 区域分解，第三章最小二乘（2026-11-22）
+
+- 6.9.2：一维 Poisson 的完整多重网格 V-cycle。
+- 6.10.1：非重叠分解：界面 Schur 补。
+- 6.10.2：重叠 Additive Schwarz 预条件。
+- 3.1：最小二乘的几何投影与残差正交。
+- 3.2.1：正规方程的条件数平方效应。
+- 3.2.2：QR 的正交基与上三角回代。
+- 3.2.3：SVD、伪逆和最小范数解。
+- 3.3：最小二乘扰动理论与观测敏感性。
+
+实现了 8 篇自足内容和 Python/MATLAB 数值案例，累计 56 篇。第六章达到 27 篇，第三章 5 篇。逐项对照教材推导、代码断言和浏览器验收：完整递归 V-cycle、界面 Schur 补、一层 additive Schwarz、最小二乘正交投影、κ(AᵀA)=κ(A)²、QR 与 SVD 最小范数、b-only 扰动界。页面状态需以实际 CI/Pages 工作流确认。
