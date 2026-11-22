@@ -49,6 +49,43 @@
       default: return {description:"未知教学模型",rows:[]};
     }
   }
+
+  function renderDynamicDiagram(kind,v) {
+    const rect=(x,y,w,h,c)=>'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+c+'" stroke="#fff" stroke-width="1.5"/>';
+    const text=(x,y,label,size=16)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-size="'+size+'" fill="#284a51" font-family="sans-serif">'+label+'</text>';
+    let s='';
+    if (kind==='gemm' || kind==='blockedlu') {
+      const b=Math.round(v), n=8, startX=120,startY=28,cell=28;
+      for(let i=0;i<n;i++)for(let k=0;k<n;k++){
+        const color=kind==='gemm'
+          ? ((i<b&&k<b)?'#439d91':(Math.floor(i/b)+Math.floor(k/b))%2?'#e8f1ef':'#cfe6e2')
+          : (i<b&&k<b?'#d9a169':i<b?'#a9cde1':k<b?'#9dcbbd':'#dbe9f1');
+        s+=rect(startX+k*cell,startY+i*cell,cell-1,cell-1,color);
+      }
+      for(let k=0;k<=n;k+=b){
+        s+='<path d="M'+(startX+k*cell)+' '+startY+'V'+(startY+n*cell)+' M'+startX+' '+(startY+k*cell)+'H'+(startX+n*cell)+'" stroke="#486d70" stroke-width="2" fill="none"/>';
+      }
+      s+=text(478,72,'b = '+b,24)+text(478,106,kind==='gemm'?'输出矩阵 C':'黄色：面板 A₁₁',17);
+      s+=text(478,145,kind==='gemm'?'绿色：当前输出块':'蓝色：上方面板',15);
+      s+=text(478,185,kind==='gemm'?'交替色：其余分块':'灰蓝：尾随 A₂₂',15);
+    } else if (kind==='roofline') {
+      const X=x=>70+x/10*500,Y=y=>230-y/225*185,cur=Math.min(200,50*v);
+      s+='<path d="M70 25V230H585" stroke="#526f73" stroke-width="3" fill="none"/>';
+      s+='<path d="M'+X(0)+' '+Y(0)+'L'+X(4)+' '+Y(200)+'H'+X(10)+'" fill="none" stroke="#318c85" stroke-width="4"/>';
+      s+='<circle cx="'+X(v)+'" cy="'+Y(cur)+'" r="9" fill="#c57955"/>';
+      s+='<path d="M'+X(v)+' '+Y(cur)+'V230" stroke="#c57955" stroke-dasharray="5 4"/>';
+      s+=text(332,20,'P ≤ min(200, 50I)',19)+text(395,261,'I='+v+'，屋顶='+cur+' GFLOP/s',14);
+    } else if (kind==='indefinite') {
+      const d=Math.sqrt(v*v+4),plus=(v+d)/2,minus=(v-d)/2,X=x=>322+x/4*250;
+      s+='<path d="M65 137H580" stroke="#526f73" stroke-width="3"/><path d="M322 55V215" stroke="#b2c2c4" stroke-dasharray="7 5" stroke-width="2"/>';
+      s+='<circle cx="'+X(plus)+'" cy="137" r="11" fill="#348f83"/><circle cx="'+X(minus)+'" cy="137" r="11" fill="#c47955"/>';
+      s+=text(X(plus),114,'λ+ '+plus.toFixed(2),15)+text(X(minus),178,'λ− '+minus.toFixed(2),15);
+      s+=text(322,245,'det A = −1：特征值永在零的两侧',18);
+    }
+    if(!s) return '';
+    return '<svg viewBox="0 0 640 282" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="随当前参数重绘的数学示意图"><rect x="0" y="0" width="640" height="282" rx="14" fill="#fbfdfc"/>'+s+'</svg>';
+  }
+
   function draw(root){
     const slider=root.querySelector("[data-lab-slider]");
     const output=root.querySelector("[data-lab-output]");
@@ -68,6 +105,19 @@
       line.append(label,track,value);bars.append(line);
     }
     bars.setAttribute("aria-label",description);
+    const drawing=renderDynamicDiagram(root.dataset.advancedLab,v);
+    if(drawing){
+      let holder=root.querySelector("[data-dynamic-svg]");
+      if(!holder){
+        holder=document.createElement("div");
+        holder.className="model-detail";
+        holder.setAttribute("data-dynamic-svg","");
+        bars.after(holder);
+      }
+      holder.innerHTML=drawing;
+      holder.dataset.modelFingerprint=root.dataset.advancedLab+":"+slider.value;
+    }
+
   }
   document.addEventListener("DOMContentLoaded",()=>{
     document.querySelectorAll("[data-advanced-lab]").forEach(root=>{

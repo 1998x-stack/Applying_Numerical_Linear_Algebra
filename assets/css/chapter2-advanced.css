@@ -17,3 +17,9 @@
 @media(max-width:380px){.model-bars .model-row{grid-template-columns:minmax(0,90px) minmax(0,1fr) minmax(0,74px)}}
 @media(prefers-reduced-motion:reduce){.model-bars .model-fill{transition:none}}
 @media print{.numeric-lab{break-inside:avoid}}
+
+/* A live matrix partition / performance roof / spectral-axis plot. */
+.model-detail{background:white;border:1px solid #e0eae7;border-radius:14px;padding:10px;margin:14px 0;min-width:0}
+.model-detail svg{display:block;width:100%;height:auto;max-height:305px}
+@media(max-width:600px){.model-detail{padding:4px}.model-detail svg{max-height:none}}
+@media print{.model-detail{break-inside:avoid}}
