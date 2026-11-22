@@ -1,0 +1,34 @@
+{
+  "article": "6.5.4",
+  "article_title": "6.5.4 慢模态从何而来：Jacobi、GS 与 SOR 的收敛速度",
+  "primary_source": "Demmel, Applied Numerical Linear Algebra (SIAM, 1997)",
+  "claims": [
+    {
+      "id": "6.5.4-source",
+      "claim": "规则 Poisson 模型下 Jacobi/GS/SOR 的谱半径与渐近复杂度",
+      "kind": "textbook-theorem",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.5.4, Theorems 6.2–6.4；Table 6.1",
+      "notes": "核对教材第 6 章对应公式、算法与适用假设；文章文字与图示独立编写"
+    },
+    {
+      "id": "6.5.4-example",
+      "claim": "在同一类模型的适用排序下，SOR 的最优参数为 ω*=2/[1+sin(π/(N+1))]，相应渐近收敛因子更接近 1−O(1/N) 而非 1−O(1/N²)。这解释了为何调参能显著改善慢模态，但也说明它仍不是多重网格那种跨尺度误差校正。例 N=16 时，Jacobi 模型谱半径为 cos(π/17)，Gauss–Seidel 为其平方，SOR 的最优模型因子为 ω*−1；这些量均为理论计算值，并非真实机器的计时结果。",
+      "kind": "derived-toy-example",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.5.4, Theorems 6.2–6.4；Table 6.1; independent NumPy calculation",
+      "notes": "课堂示例用同名 Python/MATLAB 文件数值复核，不声称实测性能"
+    },
+    {
+      "id": "6.5.4-limit",
+      "claim": "这些特征值与最优参数结论建立在规则 Poisson 模型、零 Dirichlet 边界和适用的扫描排序之上。改变系数、网格、边界条件或排列会改变迭代矩阵。谱半径表征渐近速度，也不能等同于任意初始误差在每一轮都按同一比率衰减；非正规矩阵还可能出现暂时增长。",
+      "kind": "assumptions-and-limitations",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.5.4, Theorems 6.2–6.4；Table 6.1, assumptions and theorem context",
+      "notes": "限定模型适用范围；不能从教科书特例泛化为任意问题"
+    }
+  ]
+}

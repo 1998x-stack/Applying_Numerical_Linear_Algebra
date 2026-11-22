@@ -1,0 +1,34 @@
+{
+  "article": "6.5.6",
+  "article_title": "6.5.6 Chebyshev：用一个多项式同时压低所有误差模态",
+  "primary_source": "Demmel, Applied Numerical Linear Algebra (SIAM, 1997)",
+  "claims": [
+    {
+      "id": "6.5.6-source",
+      "claim": "Chebyshev 最小最大多项式及 SSOR 前后对称扫描的区分",
+      "kind": "textbook-theorem",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.5.6, Chebyshev acceleration and SSOR",
+      "notes": "核对教材第 6 章对应公式、算法与适用假设；文章文字与图示独立编写"
+    },
+    {
+      "id": "6.5.6-example",
+      "claim": "令 a=1，b=9。映射中心是 5、半宽是 4，因此 t(λ)=(5−λ)/4，而 q_k 的分母是 T_k(5/4)。当 k=1 时 T_1(5/4)=1.25，因而整个谱区间的最大因子不超过 0.8。随着 k 增加，T_k(5/4)=cosh(k arcosh(1.25)) 增长，上界随之下降。这个例子展示多项式控制，并不等于一次实际大规模预条件求解的计时实验。",
+      "kind": "derived-toy-example",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.5.6, Chebyshev acceleration and SSOR; independent NumPy calculation",
+      "notes": "课堂示例用同名 Python/MATLAB 文件数值复核，不声称实测性能"
+    },
+    {
+      "id": "6.5.6-limit",
+      "claim": "SSOR（对称逐次超松弛）在一次正向 SOR 扫描后再做一次反向扫描；这构成一个与普通单向 SOR 不同的迭代/预条件结构。Chebyshev 加速与 SSOR 是可以组合的两个概念，不能把“SSOR”等同于“Chebyshev 多项式”。当谱不在已知区间、矩阵不对称或发生严重舍入误差时，上述简单的 SPD 谱界不直接适用。实用预条件 CG 通常比直接手工设置谱区间更便利。",
+      "kind": "assumptions-and-limitations",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.5.6, Chebyshev acceleration and SSOR, assumptions and theorem context",
+      "notes": "限定模型适用范围；不能从教科书特例泛化为任意问题"
+    }
+  ]
+}

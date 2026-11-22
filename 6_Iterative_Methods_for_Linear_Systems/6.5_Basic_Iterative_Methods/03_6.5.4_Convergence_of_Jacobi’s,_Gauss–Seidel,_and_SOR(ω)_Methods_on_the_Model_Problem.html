@@ -1,36 +1,14 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.5.4 Convergence of Jacobi’s, Gauss–Seidel, and SOR(ω) Methods on the Model Problem</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>03_6.5.4_Convergence_of_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods_on_the_Model_Problem</h1>
-<pre><code>Lecture: 6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods
-Content: 03_6.5.4_Convergence_of_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods_on_the_Model_Problem
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 03_6.5.4_Convergence_of_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods_on_the_Model_Problem
-
-"""
-Lecture: 6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods
-Content: 03_6.5.4_Convergence_of_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods_on_the_Model_Problem
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="同样一次扫描，为什么一个方法可能需要 N² 级别的轮次，另一个只需要 N 级别？答案不在于每轮的乘法数量，而在于迭代矩阵对低频误差模态的压缩程度。"><title>6.5.4 慢模态从何而来：Jacobi、GS 与 SOR 的收敛速度 · 应用数值线性代数</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="../../assets/js/course.js"></script></head><body class="article-page"><a class="skip-link" href="#main">跳到正文</a>
+<header class="topbar"><a class="brand" href="../../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · ITERATIVE METHODS</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../../index.html#chapter6-deep-dives">第六章路线</a><a href="../../README.md">README</a></nav></header>
+<div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">第 6 章 · 基础迭代法</p><nav class="sidebar-nav" aria-label="章节导航"><a href="00_6.5.1_Jacobi’s_Method.html">6.5.1 Jacobi</a><a href="01_6.5.2_Gauss–Seidel_Method.html">6.5.2 Gauss–Seidel</a><a href="02_6.5.3_Successive_Overrelaxation.html">6.5.3 SOR</a><a href="03_6.5.4_Convergence_of_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods_on_the_Model_Problem.html" aria-current="page">6.5.4 慢模态从何而来</a><a href="04_6.5.5_Detailed_Convergence_Criteria_for_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods.html">6.5.5 一个反例说明</a><a href="05_6.5.6_Chebyshev_Acceleration_and_Symmetric_SOR_(SSOR).html">6.5.6 Chebyshev</a></nav></aside>
+<main class="article" id="main"><article><header class="article-header"><p class="eyebrow">第六章 / 迭代方法的收敛机制</p><h1>6.5.4 慢模态从何而来：Jacobi、GS 与 SOR 的收敛速度</h1><p class="article-lead">同样一次扫描，为什么一个方法可能需要 N² 级别的轮次，另一个只需要 N 级别？答案不在于每轮的乘法数量，而在于迭代矩阵对低频误差模态的压缩程度。</p><ul class="article-meta"><li>推导与反例</li><li>交互实验</li><li>NumPy / MATLAB</li></ul></header>
+<section id="question"><h2>一个具体的求解难题</h2><p>考虑 N 个内部点的一维 Dirichlet Poisson 模型 T_N=tridiag(−1,2,−1)。它是对称正定的，但当 N 增大，最慢的正弦误差模态会越来越难被简单的局部更新消除。把误差写成 e^(k+1)=B e^(k)，迭代能否收敛取决于 B 的谱半径，而渐近收敛快慢通常被绝对值最大的特征值控制。</p></section>
+<section id="mechanism"><h2>从数学定义拆开每一步</h2><p>Jacobi 的迭代矩阵为 B_J=I−(1/2)T_N，其正弦特征向量 v_j(i)=sin(ijπ/(N+1)) 对应特征值 cos(jπ/(N+1))，所以 ρ(B_J)=cos(π/(N+1))。在本模型一致排序下，Gauss–Seidel 的谱半径是 ρ(B_GS)=ρ(B_J)²。渐近展开 cos(π/(N+1))≈1−π²/[2(N+1)²]，因此降低一个固定比例的最慢误差通常需要 O(N²) 次 Jacobi/GS 扫描，而每轮需 O(N) 工作量。二维 N×N 网格将未知量总数改为 n=N²，不能把 N 与 n 混用。</p><div class="math-equation"><div class="math-scroll" role="region" tabindex="0" aria-label="6.5.4 核心数学公式"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>ρ</mi><mo>(</mo><msub><mi>B</mi><mtext>GS</mtext></msub><mo>)</mo><mo>=</mo><msup><mrow><mi>ρ</mi><mo>(</mo><msub><mi>B</mi><mi>J</mi></msub><mo>)</mo></mrow><mn>2</mn></msup><mo>=</mo><msup><mrow><mi>cos</mi><mo>(</mo><mfrac><mi>π</mi><mrow><mi>N</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>)</mo></mrow><mn>2</mn></msup></mrow></math></div></div><p class="article-note">符号提示：ρ(B_GS) = ρ(B_J)²，ρ(B_J)=cos(π/(N+1))。公式成立的模型、变量和假设在上下文明确给出。</p></section>
+<section id="figure"><h2>把更新关系画成数据流</h2><figure class="figure-card"><svg role="img" viewBox="0 0 720 258" aria-labelledby="flow-6-5-4-title flow-6-5-4-desc"><title id="flow-6-5-4-title">6.5.4 慢模态从何而来：Jacobi、GS 与 SOR 的收敛速度 的运算流程</title><desc id="flow-6-5-4-desc">从 Poisson 的正弦特征模态，经过 Jacobi 谱因子和 GS 的平方关系，再到 SOR 的参数选择；各结论均限于所述模型。</desc><text x="18" y="38" font-size="12" fill="#53716d">从输入假设到可验证的更新关系</text><g><rect x="18" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="96.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">正弦误差模态</text><text x="96.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 1</text></g><path d="M177 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><g><rect x="195" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#c4d7df"/><text x="273.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">Jacobi 缩放</text><text x="273.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 2</text></g><path d="M354 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><g><rect x="372" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="450.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">GS 平方谱因子</text><text x="450.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 3</text></g><path d="M531 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><g><rect x="549" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#c4d7df"/><text x="627.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">SOR 调整 ω</text><text x="627.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 4</text></g></svg><figcaption>从 Poisson 的正弦特征模态，经过 Jacobi 谱因子和 GS 的平方关系，再到 SOR 的参数选择；各结论均限于所述模型。</figcaption></figure></section>
+<section id="worked"><h2>可手算的小例子</h2><p>在同一类模型的适用排序下，SOR 的最优参数为 ω*=2/[1+sin(π/(N+1))]，相应渐近收敛因子更接近 1−O(1/N) 而非 1−O(1/N²)。这解释了为何调参能显著改善慢模态，但也说明它仍不是多重网格那种跨尺度误差校正。例 N=16 时，Jacobi 模型谱半径为 cos(π/17)，Gauss–Seidel 为其平方，SOR 的最优模型因子为 ω*−1；这些量均为理论计算值，并非真实机器的计时结果。</p></section>
+<section id="interactive"><h2>交互实验：动手调整一个参数</h2><div class="interactive-panel" data-demo-panel data-demo-kind="spectral"><h3>观察理论值与示例中的变化</h3><div class="control-row"><label for="slider-spectral">内部网格点 N：</label><input id="slider-spectral" type="range" min="4" max="64" step="4" value="16" data-demo-control></div><p class="demo-output" data-demo-output aria-live="polite">正在计算本地确定性示例……</p><div class="demo-meter" role="presentation"><span data-demo-meter style="display:block;width:48%;height:8px;background:#247b78;border-radius:100px;transition:width .15s"></span></div></div><p>分别对 N=8、16、32 计算解析谱半径和目标误差衰减到 e⁻¹ 所需的最慢模态轮次数估计。实验直接核对三角函数公式，不以未运行的实验数字冒充测量。</p></section>
+<section id="limits"><h2>适用边界：不能从模型推导出什么</h2><p>这些特征值与最优参数结论建立在规则 Poisson 模型、零 Dirichlet 边界和适用的扫描排序之上。改变系数、网格、边界条件或排列会改变迭代矩阵。谱半径表征渐近速度，也不能等同于任意初始误差在每一轮都按同一比率衰减；非正规矩阵还可能出现暂时增长。</p></section>
+<section id="summary"><h2>带走的判断方法</h2><p>先找到误差的慢模态，才能理解迭代收敛为何会随网格细化恶化；阶数比较必须标明 N 与总未知量 n 的关系。</p><h3>自测问题</h3><ol><li>为什么 ρ(B_J) 趋向 1 时，固定比例降误差的轮数会增多？</li><li>什么时候能使用 ρ(B_GS)=ρ(B_J)²？</li><li>二维网格的 N 与 n=N² 怎样改变复杂度表述？</li></ol></section>
+<section id="references" class="references"><h2>核对来源</h2><ol><li>James W. Demmel, <em>Applied Numerical Linear Algebra</em>, 1997, §6.5.4, Theorems 6.2–6.4；Table 6.1. <a href="https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf">书籍 PDF</a> · <a href="https://doi.org/10.1137/1.9781611971446">SIAM DOI</a></li></ol><p>本页的小矩阵计算及示意图均为独立构造；理论陈述与实验输出分别核查。</p></section>
+<footer class="article-footer"><a href="../../index.html#chapter6-deep-dives">← 第六章课程目录</a><a href="../../README.md">代码目录与学习顺序 →</a></footer></article></main></div></body></html>

@@ -1,36 +1,14 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.5.3 Successive Overrelaxation</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>02_6.5.3_Successive_Overrelaxation</h1>
-<pre><code>Lecture: 6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods
-Content: 02_6.5.3_Successive_Overrelaxation
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 02_6.5.3_Successive_Overrelaxation
-
-"""
-Lecture: 6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods
-Content: 02_6.5.3_Successive_Overrelaxation
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Gauss–Seidel 沿坐标逐个修正近似解。若每次修正都保守地走到候选值，低频误差可能衰减得很慢；引入松弛参数 ω，允许沿相同方向多走一段，却也可能因步幅过大而摆动。"><title>6.5.3 SOR：为什么把一步走得更远可能更快 · 应用数值线性代数</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="../../assets/js/course.js"></script></head><body class="article-page"><a class="skip-link" href="#main">跳到正文</a>
+<header class="topbar"><a class="brand" href="../../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · ITERATIVE METHODS</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../../index.html#chapter6-deep-dives">第六章路线</a><a href="../../README.md">README</a></nav></header>
+<div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">第 6 章 · 基础迭代法</p><nav class="sidebar-nav" aria-label="章节导航"><a href="00_6.5.1_Jacobi’s_Method.html">6.5.1 Jacobi</a><a href="01_6.5.2_Gauss–Seidel_Method.html">6.5.2 Gauss–Seidel</a><a href="02_6.5.3_Successive_Overrelaxation.html" aria-current="page">6.5.3 SOR</a><a href="03_6.5.4_Convergence_of_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods_on_the_Model_Problem.html">6.5.4 慢模态从何而来</a><a href="04_6.5.5_Detailed_Convergence_Criteria_for_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods.html">6.5.5 一个反例说明</a><a href="05_6.5.6_Chebyshev_Acceleration_and_Symmetric_SOR_(SSOR).html">6.5.6 Chebyshev</a></nav></aside>
+<main class="article" id="main"><article><header class="article-header"><p class="eyebrow">第六章 / 迭代方法的收敛机制</p><h1>6.5.3 SOR：为什么把一步走得更远可能更快</h1><p class="article-lead">Gauss–Seidel 沿坐标逐个修正近似解。若每次修正都保守地走到候选值，低频误差可能衰减得很慢；引入松弛参数 ω，允许沿相同方向多走一段，却也可能因步幅过大而摆动。</p><ul class="article-meta"><li>推导与反例</li><li>交互实验</li><li>NumPy / MATLAB</li></ul></header>
+<section id="question"><h2>一个具体的求解难题</h2><p>求解一维 Dirichlet Poisson 方程 −u″(x)=f(x) 时，在 N 个内部网格点离散化后得到三对角对称正定矩阵 T_N=tridiag(−1,2,−1)。即使每轮扫过全部未知量，Gauss–Seidel 对平滑误差也可能需要很多次扫描。SOR 不更换求解目标 Ax=b，而是在一次 Gauss–Seidel 更新上加入可调步幅。关键问题不是“更大的 ω 是否总更好”，而是针对哪个矩阵、哪个更新顺序可以证明收敛。</p></section>
+<section id="mechanism"><h2>从数学定义拆开每一步</h2><p>写 A=D+L+U，其中 D 是对角部分，L 和 U 分别是严格下、上三角部分。先按当前扫描顺序求出第 i 个 Gauss–Seidel 候选 g_i=(b_i−Σ_{j&lt;i}a_ij x_j^(k+1)−Σ_{j&gt;i}a_ij x_j^(k))/a_ii，再取 x_i^(k+1)=(1−ω)x_i^(k)+ω g_i。ω=1 恰好退化为 Gauss–Seidel；0&lt;ω&lt;1 是欠松弛；1&lt;ω&lt;2 是超松弛。矩阵形式是 (D+ωL)x^(k+1)=ωb+[(1−ω)D−ωU]x^(k)。这个等式不要求形成逆矩阵，而对应一次原地扫描。</p><div class="math-equation"><div class="math-scroll" role="region" tabindex="0" aria-label="6.5.3 核心数学公式"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msubsup><mi>x</mi><mi>i</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msubsup><mo>=</mo><mo>(</mo><mn>1</mn><mo>−</mo><mi>ω</mi><mo>)</mo><msubsup><mi>x</mi><mi>i</mi><mi>k</mi></msubsup><mo>+</mo><mi>ω</mi><msub><mi>g</mi><mi>i</mi></msub></mrow></math></div></div><p class="article-note">符号提示：xᵢ⁽ᵏ⁺¹⁾ = (1−ω)xᵢ⁽ᵏ⁾ + ωgᵢ。公式成立的模型、变量和假设在上下文明确给出。</p></section>
+<section id="figure"><h2>把更新关系画成数据流</h2><figure class="figure-card"><svg role="img" viewBox="0 0 720 258" aria-labelledby="flow-6-5-3-title flow-6-5-3-desc"><title id="flow-6-5-3-title">6.5.3 SOR：为什么把一步走得更远可能更快 的运算流程</title><desc id="flow-6-5-3-desc">四阶段数据流：原地 Gauss–Seidel 候选与旧分量混合，随后更新的分量读取已经修正的新分量。</desc><text x="18" y="38" font-size="12" fill="#53716d">从输入假设到可验证的更新关系</text><g><rect x="18" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="96.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">旧近似 xᵏ</text><text x="96.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 1</text></g><path d="M177 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><g><rect x="195" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#c4d7df"/><text x="273.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">依次算出 gᵢ</text><text x="273.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 2</text></g><path d="M354 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><g><rect x="372" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="450.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">按 ω 混合</text><text x="450.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 3</text></g><path d="M531 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><g><rect x="549" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#c4d7df"/><text x="627.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">新近似 xᵏ⁺¹</text><text x="627.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 4</text></g></svg><figcaption>四阶段数据流：原地 Gauss–Seidel 候选与旧分量混合，随后更新的分量读取已经修正的新分量。</figcaption></figure></section>
+<section id="worked"><h2>可手算的小例子</h2><p>考虑 T_3 的方程 T_3 x=(1,1,1)^T，初值 x=0。第一个分量的 Gauss–Seidel 候选是 1/2；采用 ω=1.5 时，第一个新分量是 0.75。第二个分量必须读取刚算出的 0.75，得到 g_2=(1+0.75+0)/2=0.875，再更新到 1.3125。步幅影响后续所有分量，因而既要验证代数，也要验证更新顺序。</p></section>
+<section id="interactive"><h2>交互实验：动手调整一个参数</h2><div class="interactive-panel" data-demo-panel data-demo-kind="sor"><h3>观察理论值与示例中的变化</h3><div class="control-row"><label for="slider-sor">松弛参数 ω：</label><input id="slider-sor" type="range" min="0.5" max="1.9" step="0.1" value="1.0" data-demo-control></div><p class="demo-output" data-demo-output aria-live="polite">正在计算本地确定性示例……</p><div class="demo-meter" role="presentation"><span data-demo-meter style="display:block;width:48%;height:8px;background:#247b78;border-radius:100px;transition:width .15s"></span></div></div><p>选择 N=16 的一维 Poisson 系统，右端项全为 1，分别运行 ω=0.8、1、1.5 和模型 ω*。同一初值、同一残差度量下比较收敛过程，检查数值解是否与直接解一致。程序不测量执行时间，不能由扫描次数直接宣称硬件加速。</p></section>
+<section id="limits"><h2>适用边界：不能从模型推导出什么</h2><p>对实对称正定 A，经典 SOR 在 0&lt;ω&lt;2 时收敛；这不是说每一个大于 1 的 ω 都能加速，更不是非对称或不定系统的通用保证。对于规则一维 Poisson 三对角模型，最优松弛参数可写成 ω*=2/[1+sin(π/(N+1))]；这一特例依赖矩阵、排序和边界条件。实际算法以真实残差 ||b−Ax|| 判断进展，不能只用相邻两次迭代的差代替残差。</p></section>
+<section id="summary"><h2>带走的判断方法</h2><p>SOR 是“以新值为基准再控制步幅”的定点迭代。先辨认正定性和问题结构，再选 ω；过松与过猛都可能损害实际效率。</p><h3>自测问题</h3><ol><li>为什么 ω=1 恰好得到 Gauss–Seidel？</li><li>为什么第 2 个分量用到第 1 个分量的新值？</li><li>最优 ω 的公式为何不能直接用于任意稀疏矩阵？</li></ol></section>
+<section id="references" class="references"><h2>核对来源</h2><ol><li>James W. Demmel, <em>Applied Numerical Linear Algebra</em>, 1997, §6.5.3, Algorithm 6.5；§6.5.4. <a href="https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf">书籍 PDF</a> · <a href="https://doi.org/10.1137/1.9781611971446">SIAM DOI</a></li></ol><p>本页的小矩阵计算及示意图均为独立构造；理论陈述与实验输出分别核查。</p></section>
+<footer class="article-footer"><a href="../../index.html#chapter6-deep-dives">← 第六章课程目录</a><a href="../../README.md">代码目录与学习顺序 →</a></footer></article></main></div></body></html>

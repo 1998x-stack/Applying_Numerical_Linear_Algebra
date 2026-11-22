@@ -1,0 +1,34 @@
+{
+  "article": "6.5.5",
+  "article_title": "6.5.5 一个反例说明：正定性为何不能保证 Jacobi 收敛",
+  "primary_source": "Demmel, Applied Numerical Linear Algebra (SIAM, 1997)",
+  "claims": [
+    {
+      "id": "6.5.5-source",
+      "claim": "固定点迭代谱半径判据、SPD 下 GS/SOR 保证与 Jacobi 反例",
+      "kind": "textbook-theorem",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.5.5, convergence criteria；Theorem 6.1",
+      "notes": "核对教材第 6 章对应公式、算法与适用假设；文章文字与图示独立编写"
+    },
+    {
+      "id": "6.5.5-example",
+      "claim": "取 A=I+11ᵀ，维度为 3×3，即对角元都是 2，非对角元都是 1。A 的特征值为 4,1,1，显然 SPD；但 Jacobi 迭代矩阵 B_J=I−D⁻¹A 的特征值为 −1,1/2,1/2，因而 ρ(B_J)=1。特征方向 (1,1,1) 上误差交替变号却不缩小，说明“SPD ⇒ Jacobi 收敛”是错误命题。若把对角元改为 3 而非对角元仍为 1，则 Jacobi 的谱半径降为 2/3。",
+      "kind": "derived-toy-example",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.5.5, convergence criteria；Theorem 6.1; independent NumPy calculation",
+      "notes": "课堂示例用同名 Python/MATLAB 文件数值复核，不声称实测性能"
+    },
+    {
+      "id": "6.5.5-limit",
+      "claim": "不能把 B 的谱半径与 A 的条件数混成一个对象；ρ(B)<1 是固定点迭代的全初值收敛判据，而条件数刻画求解问题对扰动的敏感度。谱半径小并不保证每一步 2-范数单调递减，尤其是非正规 B。计算大型问题时通常不会显式形成 B 的全部特征值，可利用矩阵结构、充分条件和残差监控。",
+      "kind": "assumptions-and-limitations",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.5.5, convergence criteria；Theorem 6.1, assumptions and theorem context",
+      "notes": "限定模型适用范围；不能从教科书特例泛化为任意问题"
+    }
+  ]
+}

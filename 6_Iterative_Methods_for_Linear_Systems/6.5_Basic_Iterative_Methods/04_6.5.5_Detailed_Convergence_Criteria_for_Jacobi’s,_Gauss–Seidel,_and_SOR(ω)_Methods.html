@@ -1,36 +1,14 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.5.5 Detailed Convergence Criteria for Jacobi’s, Gauss–Seidel, and SOR(ω) Methods</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>04_6.5.5_Detailed_Convergence_Criteria_for_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods</h1>
-<pre><code>Lecture: 6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods
-Content: 04_6.5.5_Detailed_Convergence_Criteria_for_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 04_6.5.5_Detailed_Convergence_Criteria_for_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods
-
-"""
-Lecture: 6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods
-Content: 04_6.5.5_Detailed_Convergence_Criteria_for_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="矩阵 A 很好、甚至对称正定，并不意味着所有定点迭代都能收敛。必须考察算法本身的迭代矩阵 B；仅检查原线性系统是否有唯一解远远不够。"><title>6.5.5 一个反例说明：正定性为何不能保证 Jacobi 收敛 · 应用数值线性代数</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="../../assets/js/course.js"></script></head><body class="article-page"><a class="skip-link" href="#main">跳到正文</a>
+<header class="topbar"><a class="brand" href="../../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · ITERATIVE METHODS</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../../index.html#chapter6-deep-dives">第六章路线</a><a href="../../README.md">README</a></nav></header>
+<div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">第 6 章 · 基础迭代法</p><nav class="sidebar-nav" aria-label="章节导航"><a href="00_6.5.1_Jacobi’s_Method.html">6.5.1 Jacobi</a><a href="01_6.5.2_Gauss–Seidel_Method.html">6.5.2 Gauss–Seidel</a><a href="02_6.5.3_Successive_Overrelaxation.html">6.5.3 SOR</a><a href="03_6.5.4_Convergence_of_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods_on_the_Model_Problem.html">6.5.4 慢模态从何而来</a><a href="04_6.5.5_Detailed_Convergence_Criteria_for_Jacobi’s,_Gauss–Seidel,_and_SOR(ω)_Methods.html" aria-current="page">6.5.5 一个反例说明</a><a href="05_6.5.6_Chebyshev_Acceleration_and_Symmetric_SOR_(SSOR).html">6.5.6 Chebyshev</a></nav></aside>
+<main class="article" id="main"><article><header class="article-header"><p class="eyebrow">第六章 / 迭代方法的收敛机制</p><h1>6.5.5 一个反例说明：正定性为何不能保证 Jacobi 收敛</h1><p class="article-lead">矩阵 A 很好、甚至对称正定，并不意味着所有定点迭代都能收敛。必须考察算法本身的迭代矩阵 B；仅检查原线性系统是否有唯一解远远不够。</p><ul class="article-meta"><li>推导与反例</li><li>交互实验</li><li>NumPy / MATLAB</li></ul></header>
+<section id="question"><h2>一个具体的求解难题</h2><p>目标仍是求解 Ax=b，但求解器会重复应用 x^(k+1)=Bx^(k)+c。若真解 x* 满足同一固定点方程，误差必然满足 e^(k+1)=B e^(k)。因此从任意初值收敛到 x* 的充要条件是谱半径 ρ(B)&lt;1；这要求所有特征模态最终衰减，而不只是 A 可逆。</p></section>
+<section id="mechanism"><h2>从数学定义拆开每一步</h2><p>对 Jacobi，B_J=−D^(−1)(L+U)；严格行对角占优（每行 |a_ii|&gt;Σ_{j≠i}|a_ij|）是一个易检查的充分条件，因为它能控制无穷范数。对 Gauss–Seidel，正定的对称矩阵保证收敛；对相同的 SPD A，SOR 的 0&lt;ω&lt;2 参数范围保证收敛。但要注意严格对角占优只是充分条件，不是必要条件；实用中也应结合谱性质与实际残差。</p><div class="math-equation"><div class="math-scroll" role="region" tabindex="0" aria-label="6.5.5 核心数学公式"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mi>e</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msup><mo>=</mo><mi>B</mi><msup><mi>e</mi><mi>k</mi></msup><mspace width="1em"/><mo>⟺</mo><mspace width="1em"/><mi>ρ</mi><mo>(</mo><mi>B</mi><mo>)</mo><mo>&lt;</mo><mn>1</mn></mrow></math></div></div><p class="article-note">符号提示：e⁽ᵏ⁺¹⁾ = B e⁽ᵏ⁾；所有初值收敛 ⇔ ρ(B)&lt;1。公式成立的模型、变量和假设在上下文明确给出。</p></section>
+<section id="figure"><h2>把更新关系画成数据流</h2><figure class="figure-card"><svg role="img" viewBox="0 0 720 258" aria-labelledby="flow-6-5-5-title flow-6-5-5-desc"><title id="flow-6-5-5-title">6.5.5 一个反例说明：正定性为何不能保证 Jacobi 收敛 的运算流程</title><desc id="flow-6-5-5-desc">原线性问题的可解性与所选迭代算法的收敛性属于不同判断；正定性不能替代 Jacobi 的谱半径条件。</desc><text x="18" y="38" font-size="12" fill="#53716d">从输入假设到可验证的更新关系</text><g><rect x="18" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="96.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">判断 A 可逆</text><text x="96.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 1</text></g><path d="M177 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><g><rect x="195" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#c4d7df"/><text x="273.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">构造算法 B</text><text x="273.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 2</text></g><path d="M354 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><g><rect x="372" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="450.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">检验 ρ(B)</text><text x="450.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 3</text></g><path d="M531 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><g><rect x="549" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#c4d7df"/><text x="627.5" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">残差跟踪</text><text x="627.5" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 4</text></g></svg><figcaption>原线性问题的可解性与所选迭代算法的收敛性属于不同判断；正定性不能替代 Jacobi 的谱半径条件。</figcaption></figure></section>
+<section id="worked"><h2>可手算的小例子</h2><p>取 A=I+11ᵀ，维度为 3×3，即对角元都是 2，非对角元都是 1。A 的特征值为 4,1,1，显然 SPD；但 Jacobi 迭代矩阵 B_J=I−D⁻¹A 的特征值为 −1,1/2,1/2，因而 ρ(B_J)=1。特征方向 (1,1,1) 上误差交替变号却不缩小，说明“SPD ⇒ Jacobi 收敛”是错误命题。若把对角元改为 3 而非对角元仍为 1，则 Jacobi 的谱半径降为 2/3。</p></section>
+<section id="interactive"><h2>交互实验：动手调整一个参数</h2><div class="interactive-panel" data-demo-panel data-demo-kind="criteria"><h3>观察理论值与示例中的变化</h3><div class="control-row"><label for="slider-criteria">矩阵对角元 d：</label><input id="slider-criteria" type="range" min="1.5" max="4" step="0.1" value="2" data-demo-control></div><p class="demo-output" data-demo-output aria-live="polite">正在计算本地确定性示例……</p><div class="demo-meter" role="presentation"><span data-demo-meter style="display:block;width:48%;height:8px;background:#247b78;border-radius:100px;transition:width .15s"></span></div></div><p>示例代码分别构造 d=2 和 d=3 的三阶矩阵 A=(d−1)I+11ᵀ，验证 A 的正定性，并从特征值直接核查 Jacobi 在临界点停滞、在 d=3 时收敛。图中“SPD / Jacobi 收敛”是两条不同判断线。</p></section>
+<section id="limits"><h2>适用边界：不能从模型推导出什么</h2><p>不能把 B 的谱半径与 A 的条件数混成一个对象；ρ(B)&lt;1 是固定点迭代的全初值收敛判据，而条件数刻画求解问题对扰动的敏感度。谱半径小并不保证每一步 2-范数单调递减，尤其是非正规 B。计算大型问题时通常不会显式形成 B 的全部特征值，可利用矩阵结构、充分条件和残差监控。</p></section>
+<section id="summary"><h2>带走的判断方法</h2><p>线性系统有唯一解、矩阵是 SPD、某个迭代算法收敛：这是三个不同层级的命题。必须检查选定算法所对应的 B。</p><h3>自测问题</h3><ol><li>为何 A SPD 仍可能有 ρ(B_J)=1？</li><li>严格行对角占优是必要条件还是充分条件？</li><li>为什么 ρ(B) 而不是 ρ(A) 决定固定点迭代的收敛？</li></ol></section>
+<section id="references" class="references"><h2>核对来源</h2><ol><li>James W. Demmel, <em>Applied Numerical Linear Algebra</em>, 1997, §6.5.5, convergence criteria；Theorem 6.1. <a href="https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf">书籍 PDF</a> · <a href="https://doi.org/10.1137/1.9781611971446">SIAM DOI</a></li></ol><p>本页的小矩阵计算及示意图均为独立构造；理论陈述与实验输出分别核查。</p></section>
+<footer class="article-footer"><a href="../../index.html#chapter6-deep-dives">← 第六章课程目录</a><a href="../../README.md">代码目录与学习顺序 →</a></footer></article></main></div></body></html>
