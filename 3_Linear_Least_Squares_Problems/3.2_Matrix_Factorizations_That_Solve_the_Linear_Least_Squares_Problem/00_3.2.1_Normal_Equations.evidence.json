@@ -1,0 +1,29 @@
+{
+  "article": "3.2.1",
+  "title": "3.2.1 正规方程：为什么计算 AᵀA 会把条件数平方",
+  "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+  "locator": "§3.2.1 (pp.106–107), normal equations and squared condition number",
+  "claims": [
+    {
+      "claim": "展开 f(x)=xᵀAᵀAx−2xᵀAᵀb+bᵀb，对 x 求梯度得 ∇f=2Aᵀ(Ax−b)，令它为零得到 AᵀAx=Aᵀb。A 满列秩时 AᵀA 对称正定，可用 Cholesky 但应通过 `solve` 而非显式逆矩阵实现。在精确算术中，A 的奇异值 σ₁≥…≥σ_n>0，AᵀA 的特征值为 σ_i²，因此 κ₂(AᵀA)=κ₂(A)²。该恒等式是问题和变换的性质，不意味着任意数据必然恰好损失固定的位数；实际误差还取决于浮点舍入和 b 的方向。",
+      "status": "verified",
+      "kind": "textbook",
+      "location": "§3.2.1 (pp.106–107), normal equations and squared condition number"
+    },
+    {
+      "claim": "构造 A=[[1,1],[1,1+ε],[1,1+2ε]]。ε>0 时 A 满列秩，但两列逐渐接近。取 ε=10⁻³，计算 κ₂(A) 与 κ₂(AᵀA) 并核查二者近似平方关系；随后再把 ε 调小至 10⁻⁴，观察条件数分别约按 10 倍和 100 倍扩大。对有噪声的 b，直接正规方程和 `lstsq` 可能在非常病态的情况下出现不同的参数，但不能把某一次具体机器的偏差作为定理。",
+      "status": "derived",
+      "kind": "toy_example",
+      "evidence": "python and MATLAB code numerical assertions"
+    },
+    {
+      "claim": "该推导仅在 A 满列秩时保证正规方程解唯一以及 AᵀA SPD；若 A 秩亏，AᵀA 奇异，不应套用 Cholesky 得到唯一解。正规方程能在条件良好、构造矩阵可控时高效，但对病态、稀疏且可能发生填充的场景，QR/SVD 或迭代 LSQR 常更可靠。切勿因为“残差小”就认为参数必然准确。",
+      "status": "verified",
+      "kind": "scope"
+    }
+  ],
+  "api_urls": [
+    "https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html",
+    "https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html"
+  ]
+}

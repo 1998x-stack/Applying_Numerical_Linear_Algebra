@@ -1,0 +1,29 @@
+{
+  "article": "3.2.2",
+  "title": "3.2.2 QR 分解：旋转坐标系后如何解最小二乘",
+  "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+  "locator": "§3.2.2 (pp.107–109), QR least squares and Gram–Schmidt caveats",
+  "claims": [
+    {
+      "claim": "缩减型 QR 把 A 分解为 A=QR，其中 Q∈Rᵐˣⁿ 满足 QᵀQ=I_n，R∈Rⁿˣⁿ 为非奇异上三角矩阵。把观测 b 分为列空间分量 QQᵀb 与垂直分量 (I−QQᵀ)b。由于 Q 保长度，||Ax−b||₂²=||Rx−Qᵀb||₂²+||(I−QQᵀ)b||₂²。后一项与 x 无关，所以解 R x=Qᵀb，即求得最小二乘解。QR 中的 Q 可以由 Householder 反射稳定生成；经典 Gram–Schmidt 在列几乎相关时可能失去正交性。`numpy.linalg.qr` 的 reduced 模式可以构造验证案例；高性能软件通常不会显式存储所有反射对应的稠密 Q。",
+      "status": "verified",
+      "kind": "textbook",
+      "location": "§3.2.2 (pp.107–109), QR least squares and Gram–Schmidt caveats"
+    },
+    {
+      "claim": "仍以 A=[[1,0],[1,1],[1,2]]，b=(1,2,2)ᵀ 为例。调用 reduced QR 得到 Q 的两列与 2×2 R；验证 QᵀQ≈I、QR≈A，然后用 R 的上三角系统求 x，得到 (7/6,1/2)。比较 ||b−Ax||₂²=1/6 与正交补 ||(I−QQᵀ)b||₂²，两者应一致。由于 QR 分解的列符号约定不唯一，应比较代数恒等式而不是逐元素固定 Q 的符号。",
+      "status": "derived",
+      "kind": "toy_example",
+      "evidence": "python and MATLAB code numerical assertions"
+    },
+    {
+      "claim": "满列秩使 R 可逆；若列秩不足，直接求 R x=Qᵀb 可能失败，需要列主元 QR 或 SVD。Q 的列正交不意味着总数值误差为零，反射与回代仍在浮点中进行。不要把 QR 的 Householder 实现等同于经典 Gram–Schmidt；后者在接近相关时可能需要重正交。",
+      "status": "verified",
+      "kind": "scope"
+    }
+  ],
+  "api_urls": [
+    "https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html",
+    "https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html"
+  ]
+}
