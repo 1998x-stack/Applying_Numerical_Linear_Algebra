@@ -6,6 +6,6 @@ fprintf('size(A) = %d x %d\n', size(A,1), size(A,2));
 fprintf('size(x) = %d x %d\n', size(x,1), size(x,2));
 disp('A*x ='); disp(y);
 C = [1+2i, 3-1i];
-disp('C'' is transpose; C'' with conjugation in MATLAB syntax C'' is conjugate transpose.');
+disp('C prime is conjugate transpose; C dot-prime is non-conjugating transpose.');
 disp(C');
 disp('Elementwise absolute value:'); disp(abs(C));
