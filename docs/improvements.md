@@ -24,3 +24,5 @@
 - CI second attempt: static validation passed; one Python test exposed an API keyword mismatch (`np.linalg.cond` accepts `p`, not `ord`). Updated the wrapper to use `p=ord`; rerun pending.
 
 - CI browser QA found a 390/360 px overflow caused by the responsive grid's automatic min-content track sizing. Changed the mobile track to minmax(0, 1fr), set grid children to min-width:0, and allowed TOC links to wrap. Also clarified MATLAB's conjugate-transpose vs non-conjugating-transpose notation.
+
+- CI browser QA: mobile page overflow fixed; wide MathML formula keyboard-scroll check initially failed with ArrowRight. QA now tests End-to-scroll-end first, then ArrowRight, and ignores sub-8px rounding differences.

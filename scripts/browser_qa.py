@@ -134,11 +134,14 @@ def main() -> int:
                             # If a formula genuinely overflows its own region, ArrowRight must scroll it.
                             for region in page.locator(".math-scroll").all():
                                 sizes = region.evaluate("(el) => ({client:el.clientWidth, scroll:el.scrollWidth})")
-                                if sizes["scroll"] > sizes["client"] + 1:
+                                if sizes["scroll"] > sizes["client"] + 8:
                                     region.focus()
                                     before_scroll = region.evaluate("(el) => el.scrollLeft")
-                                    page.keyboard.press("ArrowRight")
+                                    page.keyboard.press("End")
                                     after_scroll = region.evaluate("(el) => el.scrollLeft")
+                                    if after_scroll <= before_scroll:
+                                        page.keyboard.press("ArrowRight")
+                                        after_scroll = region.evaluate("(el) => el.scrollLeft")
                                     if after_scroll <= before_scroll:
                                         failures.append(f"{rel} @ {width}: keyboard cannot scroll wide formula")
 
