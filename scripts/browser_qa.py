@@ -136,14 +136,22 @@ def main() -> int:
                                 sizes = region.evaluate("(el) => ({client:el.clientWidth, scroll:el.scrollWidth})")
                                 if sizes["scroll"] > sizes["client"] + 8:
                                     region.focus()
+                                    # Focusing a partially visible MathML element may auto-scroll its
+                                    # container to the far end; reset before exercising the keyboard.
+                                    region.evaluate("(el) => { el.scrollLeft = 0; }")
+                                    page.wait_for_timeout(80)
                                     before_scroll = region.evaluate("(el) => el.scrollLeft")
-                                    page.keyboard.press("End")
-                                    after_scroll = region.evaluate("(el) => el.scrollLeft")
-                                    if after_scroll <= before_scroll:
+                                    for _ in range(3):
                                         page.keyboard.press("ArrowRight")
-                                        after_scroll = region.evaluate("(el) => el.scrollLeft")
-                                    if after_scroll <= before_scroll:
-                                        failures.append(f"{rel} @ {width}: keyboard cannot scroll wide formula")
+                                    # Chromium processes default keyboard scrolling on animation frames.
+                                    page.wait_for_timeout(300)
+                                    after_scroll = region.evaluate("(el) => el.scrollLeft")
+                                    if after_scroll <= before_scroll + 1:
+                                        failures.append(
+                                            f"{rel} @ {width}: keyboard cannot scroll wide formula; "
+                                            f"client={sizes['client']} scroll={sizes['scroll']} "
+                                            f"before={before_scroll} after={after_scroll}"
+                                        )
 
                         if page_errors:
                             failures.append(f"{rel} @ {width}: JS page errors {page_errors}")
