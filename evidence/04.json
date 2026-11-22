@@ -1,0 +1,20 @@
+[
+  {
+    "id": "cond-1",
+    "claim": "线性系统的范数条件数为 ||A||·||A^-1||，且依赖范数选择。",
+    "kind": "theory",
+    "source_url": "https://doi.org/10.1137/1.9781611971446",
+    "locator": "Chapter 1 §1.3.2",
+    "status": "verified",
+    "notes": "示例使用 NumPy cond 独立数值计算。"
+  },
+  {
+    "id": "cond-2",
+    "claim": "条件数描述问题敏感性，不等同于算法稳定性。",
+    "kind": "theory",
+    "source_url": "https://doi.org/10.1137/1.9780898718027",
+    "locator": "Higham, Accuracy and Stability of Numerical Algorithms, 2nd ed.",
+    "status": "verified",
+    "notes": "将问题条件与算法误差分开说明。"
+  }
+]

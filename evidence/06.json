@@ -1,0 +1,20 @@
+[
+  {
+    "id": "speed-1",
+    "claim": "Roofline 上界将峰值计算能力、算术强度和内存带宽联系起来。",
+    "kind": "research",
+    "source_url": "https://doi.org/10.1145/1498765.1498785",
+    "locator": "Williams, Waterman & Patterson (2009)",
+    "status": "verified",
+    "notes": "本页公式为模型的标准表达。"
+  },
+  {
+    "id": "speed-2",
+    "claim": "算法速度分析应考虑数据移动和内存层次结构。",
+    "kind": "theory",
+    "source_url": "https://doi.org/10.1137/1.9781611971446",
+    "locator": "Chapter 1 §1.3.4",
+    "status": "verified",
+    "notes": "性能例子区分理论工作量和硬件实测。"
+  }
+]

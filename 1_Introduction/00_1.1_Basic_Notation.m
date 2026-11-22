@@ -1,8 +1,11 @@
-% 00_1.1_Basic_Notation
-
-%
-
-%Lecture: /1_Introduction
-%Content: 00_1.1_Basic_Notation
-
-%
+% Basic matrix/vector shape and complex adjoint conventions.
+A = [1 2 3; 4 5 6];
+x = [1; -1; 2];
+y = A*x;
+fprintf('size(A) = %d x %d\n', size(A,1), size(A,2));
+fprintf('size(x) = %d x %d\n', size(x,1), size(x,2));
+disp('A*x ='); disp(y);
+C = [1+2i, 3-1i];
+disp('C'' is transpose; C'' with conjugation in MATLAB syntax C'' is conjugate transpose.');
+disp(C');
+disp('Elementwise absolute value:'); disp(abs(C));
