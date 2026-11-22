@@ -1,0 +1,34 @@
+{
+  "article": "6.6.4",
+  "article_title": "6.6.4 CG 为什么快：条件数界与实际谱分布",
+  "primary_source": "Demmel, Applied Numerical Linear Algebra (1997)",
+  "claims": [
+    {
+      "id": "6.6.4-theory",
+      "claim": "CG 的 A-范数误差收敛界、条件数依赖及其适用范围",
+      "kind": "textbook-theory",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.6.4, Chebyshev bound and conjugate-gradient convergence",
+      "notes": "以对应章节的定义/证明限定适用假设，原文图表不复制"
+    },
+    {
+      "id": "6.6.4-example",
+      "claim": "考虑 κ=100，此时 √κ=10，q=(10−1)/(10+1)=9/11。即使不知道 A 的全部特征值，仍可写出第 k 步 A-范数误差的通用上界 2(9/11)^k。这个上界在初始几步可能大于 1，并不是错误：它只是宽松的上界而不是单调性预测。若真实特征值只聚成少数几簇，CG 的实际曲线通常可远快于该只依赖端点的表达式。",
+      "kind": "worked-example",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.6.4, Chebyshev bound and conjugate-gradient convergence; independently computed matrix example",
+      "notes": "随页面同名 Python 和 MATLAB 脚本给出数值核查"
+    },
+    {
+      "id": "6.6.4-scope",
+      "claim": "CG 理论界依赖 SPD、确切的 λ_min>0 与 λ_max、精确算术以及 A-范数；有限精度会使残差递推与重新计算的真实残差出现偏差。若使用预条件器 M，速度应由对称变换后预条件算子的有效谱/条件数决定，而不是直接把原始 κ 当作预条件 CG 的最终收敛率。条件数界不提供对具体硬件时延的承诺，也不能代替不同矩阵/预条件器的实验。",
+      "kind": "scope-and-assumptions",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.6.4, Chebyshev bound and conjugate-gradient convergence",
+      "notes": "数学上界、真实残差、有限精度与实际性能分别说明"
+    }
+  ]
+}

@@ -1,36 +1,9 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.6.2 Solving Ax =b Using the Krylov Subspace Kk</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>01_6.6.2_Solving_Ax_=b_Using_the_Krylov_Subspace_Kk</h1>
-<pre><code>Lecture: 6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods
-Content: 01_6.6.2_Solving_Ax_=b_Using_the_Krylov_Subspace_Kk
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 01_6.6.2_Solving_Ax_=b_Using_the_Krylov_Subspace_Kk
-
-"""
-Lecture: 6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods
-Content: 01_6.6.2_Solving_Ax_=b_Using_the_Krylov_Subspace_Kk
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="有了由 A 和初始残差生成的小维子空间，怎样从中选出一个真正有意义的近似解？核心不是枚举候选向量，而是用低维投影条件把高维方程缩小。"><title>6.6.2 从 Krylov 子空间求解 Ax=b：为什么要让残差正交 · 应用数值线性代数</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="../../assets/js/course.js"></script></head><body class="article-page"><a class="skip-link" href="#main">跳到正文</a>
+<header class="topbar"><a class="brand" href="../../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · KRYLOV SUBSPACES</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../../index.html#chapter6-deep-dives">第六章路线</a><a href="../../README.md">README</a></nav></header><div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">第 6 章 · Krylov 与 CG</p><nav class="sidebar-nav" aria-label="章节导航"><a href="../6.5_Basic_Iterative_Methods/05_6.5.6_Chebyshev_Acceleration_and_Symmetric_SOR_(SSOR).html">6.5.6 Chebyshev</a><a href="00_6.6.1_Extracting_Information_about_A_via_Matrix_Vector_Multiplication.html">6.6.1 只会计算 Av，为什么仍能读出矩阵的结构</a><a href="01_6.6.2_Solving_Ax_=b_Using_the_Krylov_Subspace_Kk.html" aria-current="page">6.6.2 从 Krylov 子空间求解 Ax=b</a><a href="02_6.6.3_Conjugate_Gradient_Method.html">6.6.3 共轭梯度法</a><a href="03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method.html">6.6.4 CG 为什么快</a><a href="04_6.6.5_Preconditioning.html">6.6.5 预条件（后续）</a></nav></aside>
+<main id="main" class="article"><article><header class="article-header"><p class="eyebrow">第六章 · KRYLOV SUBSPACE METHODS</p><h1>6.6.2 从 Krylov 子空间求解 Ax=b：为什么要让残差正交</h1><p class="article-lead">有了由 A 和初始残差生成的小维子空间，怎样从中选出一个真正有意义的近似解？核心不是枚举候选向量，而是用低维投影条件把高维方程缩小。</p><ul class="article-meta"><li>独立推导</li><li>原创示意</li><li>可验证的数值实验</li></ul></header>
+<section id="question"><h2>为何需要这个计算机制</h2><p>设 A∈R^(n×n) 是对称正定矩阵，b∈R^n，取初值 x₀ 与残差 r₀=b−Ax₀。经过若干次矩阵—向量乘法，我们得到 K_k(A,r₀)，并通过正交化构造列正交矩阵 V_k∈R^(n×k)。现在寻找 x_k=x₀+V_k y，使得它只在可达的 k 维空间里变化。约束究竟该选成什么，才能让子空间内没有可进一步降低误差的方向？</p></section><section id="derivation"><h2>数学机制与维度</h2><p>对 SPD A，把二次能量函数 φ(x)=1/2 xᵀAx−bᵀx 限制在仿射空间 x₀+span(V_k) 上。对 y 求导，得到 V_kᵀ(Ax_k−b)=0，即 V_kᵀr_k=0。这称为 Galerkin 正交条件，化成 k×k 的 SPD 小系统 (V_kᵀ A V_k)y=V_kᵀr₀。在 A 正定时，该解最小化 A-范数误差 ||x*−x||_A；并非最小化普通欧几里得残差 ||r||₂。对一般非对称 A，GMRES 则用 Arnoldi 关系和小型最小二乘问题最小化残差，二者不能混同。</p><div class="math-equation"><div class="math-scroll" role="region" tabindex="0" aria-label="6.6.2 核心公式"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msubsup><mi>V</mi><mi>k</mi><mi>T</mi></msubsup><mo>(</mo><mi>b</mi><mo>−</mo><mi>A</mi><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo><mo>=</mo><mn>0</mn><mspace width="1em"/><mo>⇒</mo><mspace width="1em"/><mo>(</mo><msubsup><mi>V</mi><mi>k</mi><mi>T</mi></msubsup><mi>A</mi><msub><mi>V</mi><mi>k</mi></msub><mo>)</mo><mi>y</mi><mo>=</mo><msubsup><mi>V</mi><mi>k</mi><mi>T</mi></msubsup><msub><mi>r</mi><mn>0</mn></msub></mrow></math></div></div></section>
+<section id="figure"><h2>追踪一次计算的数据流</h2><figure class="figure-card"><svg role="img" viewBox="0 0 720 258" aria-labelledby="flow-6-6-2-title flow-6-6-2-desc"><title id="flow-6-6-2-title">6.6.2 从 Krylov 子空间求解 Ax=b：为什么要让残差正交 运算过程</title><desc id="flow-6-6-2-desc">从初始残差生成子空间，再用 Galerkin 条件求出小型正定系统；最终残差与试探空间正交。</desc><text x="18" y="38" font-size="12" fill="#53716d">矩阵—向量乘法如何构造一个可检验的近似解</text><rect x="18" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="96" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">残差 r₀</text><text x="96" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 1</text><path d="M177 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><rect x="195" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#b9d3c7"/><text x="273" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">正交基 Vₖ</text><text x="273" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 2</text><path d="M354 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><rect x="372" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="450" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">k×k 投影</text><text x="450" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 3</text><path d="M531 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><rect x="549" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#b9d3c7"/><text x="627" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">残差正交</text><text x="627" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 4</text></svg><figcaption>从初始残差生成子空间，再用 Galerkin 条件求出小型正定系统；最终残差与试探空间正交。</figcaption></figure></section><section id="example"><h2>从一个小矩阵亲手推导</h2><p>令 A=diag(1,2,3,4)，b=(1,1,1,1)^T，x₀=0。第一层 Krylov 空间只有 span(b)，所以 x₁=αb。条件 bᵀ(b−αAb)=0 给出 α=(bᵀb)/(bᵀAb)=4/10=0.4。残差为 (0.6,0.2,−0.2,−0.6)^T，确实与 b 正交：四个分量的和为 0。但残差并非零，且其 2-范数在这个投影准则下并不保证对任意问题都最小。</p></section>
+<section id="demo"><h2>交互：改变子空间或收敛参数</h2><div class="interactive-panel" data-demo-panel data-demo-kind="projection"><h3>在确定性模型上观察变化</h3><div class="control-row"><label for="slider-projection">投影子空间维数 k：</label><input id="slider-projection" type="range" min="1" max="4" step="1" value="2" data-demo-control></div><p class="demo-output" data-demo-output aria-live="polite">正在计算……</p><div class="demo-meter" role="presentation"><span data-demo-meter style="display:block;width:44%;height:8px;background:#247b78;border-radius:100px;transition:width .15s"></span></div></div><p>程序在同一个 4×4 SPD 对角例子上逐步构造 Krylov 基 V_k，求解低维投影方程，检查 ||V_kᵀr_k||₂ 与 A-范数误差，并验证 k=4 时的解在舍入精度内等于直接求解结果。</p></section>
+<section id="limits"><h2>边界：哪些结论不能直接推广</h2><p>若 V_k 未正交化，投影系统可能受严重病态影响；因此 Arnoldi/Lanczos 不是可有可无的优化。SPD 保证小矩阵 V_kᵀAV_k 正定，非对称或不定矩阵不能直接套用这一能量最小化证明。精确算术下 K_n 覆盖相关不变子空间可得到精确解；浮点计算需要重新正交化、真实残差检查和可能的重启策略。</p></section>
+<section id="takeaway"><h2>最后记住什么</h2><p>Krylov 迭代是“选择可达方向 + 指定投影准则”的组合；正交残差和最小残差是不同的方法设计。</p><h3>自检问题</h3><ol><li>Galerkin 条件为何使一个 n 维方程变成 k 维小系统？</li><li>为什么 A 必须 SPD 才能把该投影解释成 A-范数误差最小化？</li><li>CG 与 GMRES 的投影目标有什么区别？</li></ol></section><section class="references" id="references"><h2>核查来源</h2><ol><li>James W. Demmel, <em>Applied Numerical Linear Algebra</em>, 1997, §6.6.2, Galerkin projection and small projected systems. <a href="https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf">原始书籍 PDF</a> · <a href="https://doi.org/10.1137/1.9781611971446">SIAM DOI</a></li></ol><p>示例输出由同名程序重现；图形与叙述为独立制作，未复刻原书插图。</p></section>
+<footer class="article-footer"><a href="../../index.html#chapter6-deep-dives">← 章节导航</a><a href="../../README.md">代码与学习路线 →</a></footer></article></main></div></body></html>

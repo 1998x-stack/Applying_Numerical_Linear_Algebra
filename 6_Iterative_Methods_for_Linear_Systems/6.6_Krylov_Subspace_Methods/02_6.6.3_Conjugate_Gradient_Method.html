@@ -1,36 +1,9 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.6.3 Conjugate Gradient Method</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>02_6.6.3_Conjugate_Gradient_Method</h1>
-<pre><code>Lecture: 6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods
-Content: 02_6.6.3_Conjugate_Gradient_Method
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 02_6.6.3_Conjugate_Gradient_Method
-
-"""
-Lecture: 6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods
-Content: 02_6.6.3_Conjugate_Gradient_Method
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="若 A 对称正定，每一步都能用一次矩阵—向量乘法和几个向量内积构造新的搜索方向。CG 的关键不是“每次朝梯度方向走”，而是让方向在 A 的几何下彼此共轭。"><title>6.6.3 共轭梯度法：不存 Krylov 基也能沿正确方向前进 · 应用数值线性代数</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="../../assets/js/course.js"></script></head><body class="article-page"><a class="skip-link" href="#main">跳到正文</a>
+<header class="topbar"><a class="brand" href="../../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · KRYLOV SUBSPACES</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../../index.html#chapter6-deep-dives">第六章路线</a><a href="../../README.md">README</a></nav></header><div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">第 6 章 · Krylov 与 CG</p><nav class="sidebar-nav" aria-label="章节导航"><a href="../6.5_Basic_Iterative_Methods/05_6.5.6_Chebyshev_Acceleration_and_Symmetric_SOR_(SSOR).html">6.5.6 Chebyshev</a><a href="00_6.6.1_Extracting_Information_about_A_via_Matrix_Vector_Multiplication.html">6.6.1 只会计算 Av，为什么仍能读出矩阵的结构</a><a href="01_6.6.2_Solving_Ax_=b_Using_the_Krylov_Subspace_Kk.html">6.6.2 从 Krylov 子空间求解 Ax=b</a><a href="02_6.6.3_Conjugate_Gradient_Method.html" aria-current="page">6.6.3 共轭梯度法</a><a href="03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method.html">6.6.4 CG 为什么快</a><a href="04_6.6.5_Preconditioning.html">6.6.5 预条件（后续）</a></nav></aside>
+<main id="main" class="article"><article><header class="article-header"><p class="eyebrow">第六章 · KRYLOV SUBSPACE METHODS</p><h1>6.6.3 共轭梯度法：不存 Krylov 基也能沿正确方向前进</h1><p class="article-lead">若 A 对称正定，每一步都能用一次矩阵—向量乘法和几个向量内积构造新的搜索方向。CG 的关键不是“每次朝梯度方向走”，而是让方向在 A 的几何下彼此共轭。</p><ul class="article-meta"><li>独立推导</li><li>原创示意</li><li>可验证的数值实验</li></ul></header>
+<section id="question"><h2>为何需要这个计算机制</h2><p>求解大型 SPD 系统 Ax=b 时，显式存储完整 Krylov 基会耗费内存，而每次重新求一个投影小系统也显得昂贵。对称正定性给了更强的结构：φ(x)=1/2 xᵀAx−bᵀx 有唯一最小点 x*=A⁻¹b，残差 r=b−Ax 正是负梯度。单纯最速下降每一步都追逐当前局部最陡方向，可能反复损失之前取得的进展；CG 要在低存储条件下保留历史信息。</p></section><section id="derivation"><h2>数学机制与维度</h2><p>取 x₀ 任意，r₀=b−Ax₀，p₀=r₀。每轮先计算 α_k=(r_kᵀr_k)/(p_kᵀAp_k)，再更新 x_(k+1)=x_k+α_k p_k，r_(k+1)=r_k−α_k A p_k。令 β_k=(r_(k+1)ᵀr_(k+1))/(r_kᵀr_k)，取 p_(k+1)=r_(k+1)+β_k p_k。准确算术下，不同 p_i,p_j 满足 p_iᵀA p_j=0（i≠j），因此每一轮都消除新的 A-共轭误差分量。实际实现常用预条件版本，但其约束另需单独说明。</p><div class="math-equation"><div class="math-scroll" role="region" tabindex="0" aria-label="6.6.3 核心公式"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>α</mi><mi>k</mi></msub><mo>=</mo><mfrac><mrow><msubsup><mi>r</mi><mi>k</mi><mi>T</mi></msubsup><msub><mi>r</mi><mi>k</mi></msub></mrow><mrow><msubsup><mi>p</mi><mi>k</mi><mi>T</mi></msubsup><mi>A</mi><msub><mi>p</mi><mi>k</mi></msub></mrow></mfrac><mspace width="1em"/><msub><mi>β</mi><mi>k</mi></msub><mo>=</mo><mfrac><mrow><msubsup><mi>r</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow><mi>T</mi></msubsup><msub><mi>r</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><mrow><msubsup><mi>r</mi><mi>k</mi><mi>T</mi></msubsup><msub><mi>r</mi><mi>k</mi></msub></mrow></mfrac></mrow></math></div></div></section>
+<section id="figure"><h2>追踪一次计算的数据流</h2><figure class="figure-card"><svg role="img" viewBox="0 0 720 258" aria-labelledby="flow-6-6-3-title flow-6-6-3-desc"><title id="flow-6-6-3-title">6.6.3 共轭梯度法：不存 Krylov 基也能沿正确方向前进 运算过程</title><desc id="flow-6-6-3-desc">每轮只保留当前解、残差、搜索方向及一次 Ap；通过 α、β 维护 SPD 情形的 A-共轭方向。</desc><text x="18" y="38" font-size="12" fill="#53716d">矩阵—向量乘法如何构造一个可检验的近似解</text><rect x="18" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="96" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">残差 rₖ</text><text x="96" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 1</text><path d="M177 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><rect x="195" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#b9d3c7"/><text x="273" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">计算 αₖ</text><text x="273" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 2</text><path d="M354 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><rect x="372" y="91" width="157" height="88" rx="16" fill="#e7f2ed" stroke="#b9d3c7"/><text x="450" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">更新 x、r</text><text x="450" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 3</text><path d="M531 135 h14 l-5 -5 m5 5 l-5 5" stroke="#287b78" fill="none" stroke-width="2"/><rect x="549" y="91" width="157" height="88" rx="16" fill="#eef2f4" stroke="#b9d3c7"/><text x="627" y="124" text-anchor="middle" font-size="12" fill="#1c4644" font-weight="700">构造共轭方向</text><text x="627" y="153" text-anchor="middle" font-size="11" fill="#5b7074">阶段 4</text></svg><figcaption>每轮只保留当前解、残差、搜索方向及一次 Ap；通过 α、β 维护 SPD 情形的 A-共轭方向。</figcaption></figure></section><section id="example"><h2>从一个小矩阵亲手推导</h2><p>取 A=diag(1,2,3,4)、b=全 1 向量、x₀=0。首轮 p₀=r₀=b，α₀=(4)/(10)=0.4，故 x₁=(0.4,0.4,0.4,0.4)^T，r₁=(0.6,0.2,−0.2,−0.6)^T。r₁ᵀr₁=0.8，因此 β₀=0.8/4=0.2，第二个搜索方向 p₁=r₁+0.2p₀=(0.8,0.4,0,−0.4)^T。这个方向不是简单的负梯度，却与 p₀ 在 A 内积下共轭。</p></section>
+<section id="demo"><h2>交互：改变子空间或收敛参数</h2><div class="interactive-panel" data-demo-panel data-demo-kind="cgsteps"><h3>在确定性模型上观察变化</h3><div class="control-row"><label for="slider-cgsteps">CG 迭代步数 k：</label><input id="slider-cgsteps" type="range" min="0" max="4" step="1" value="1" data-demo-control></div><p class="demo-output" data-demo-output aria-live="polite">正在计算……</p><div class="demo-meter" role="presentation"><span data-demo-meter style="display:block;width:44%;height:8px;background:#247b78;border-radius:100px;transition:width .15s"></span></div></div><p>Python 和 MATLAB 脚本从零实现无预条件 CG，对 4×4 对角 SPD 系统输出每轮真实残差并与直接解比对。Python 还以已知解析解验证最终误差；这是最小自检，不替代对极端病态矩阵的鲁棒性测试。</p></section>
+<section id="limits"><h2>边界：哪些结论不能直接推广</h2><p>CG 的标准三项递推要求实对称正定（复数情形为 Hermitian 正定），否则 pᵀAp 可能为非正或零，能量最小化证明不成立。理论上的“最多 n 步”基于精确算术；浮点舍入会破坏完全正交/共轭，不能把它当成生产环境的固定迭代上限。实际停止要检查真实残差 ||b−Ax||，若使用 SciPy 当前 cg 接口，容差是 max(rtol||b||₂,atol)，并通过 info 判断是否收敛。</p></section>
+<section id="takeaway"><h2>最后记住什么</h2><p>CG 用短递推实现的是 SPD 能量最小化的 Krylov 投影，不只是“加快的梯度下降”；矩阵结构和实际残差必须一起检查。</p><h3>自检问题</h3><ol><li>为什么 p_kᵀ A p_k 在 SPD 条件下严格为正？</li><li>为什么 β_k p_k 项能保留先前方向的信息？</li><li>为何精确算术 n 步结论不能直接转成浮点计算的迭代承诺？</li></ol></section><section class="references" id="references"><h2>核查来源</h2><ol><li>James W. Demmel, <em>Applied Numerical Linear Algebra</em>, 1997, §6.6.3, Algorithm 6.10 (CG) and A-conjugacy. <a href="https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf">原始书籍 PDF</a> · <a href="https://doi.org/10.1137/1.9781611971446">SIAM DOI</a></li><li>SciPy v1.18.0, <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.cg.html">cg 现行 API 与停止准则</a>。</li></ol><p>示例输出由同名程序重现；图形与叙述为独立制作，未复刻原书插图。</p></section>
+<footer class="article-footer"><a href="../../index.html#chapter6-deep-dives">← 章节导航</a><a href="../../README.md">代码与学习路线 →</a></footer></article></main></div></body></html>

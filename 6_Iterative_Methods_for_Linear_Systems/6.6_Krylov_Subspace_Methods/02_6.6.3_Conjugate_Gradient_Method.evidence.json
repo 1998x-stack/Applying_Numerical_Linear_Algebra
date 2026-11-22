@@ -1,0 +1,43 @@
+{
+  "article": "6.6.3",
+  "article_title": "6.6.3 共轭梯度法：不存 Krylov 基也能沿正确方向前进",
+  "primary_source": "Demmel, Applied Numerical Linear Algebra (1997)",
+  "claims": [
+    {
+      "id": "6.6.3-theory",
+      "claim": "CG 标准三项递推、SPD 假设和精确算术有限步性质",
+      "kind": "textbook-theory",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.6.3, Algorithm 6.10 (CG) and A-conjugacy",
+      "notes": "以对应章节的定义/证明限定适用假设，原文图表不复制"
+    },
+    {
+      "id": "6.6.3-example",
+      "claim": "取 A=diag(1,2,3,4)、b=全 1 向量、x₀=0。首轮 p₀=r₀=b，α₀=(4)/(10)=0.4，故 x₁=(0.4,0.4,0.4,0.4)^T，r₁=(0.6,0.2,−0.2,−0.6)^T。r₁ᵀr₁=0.8，因此 β₀=0.8/4=0.2，第二个搜索方向 p₁=r₁+0.2p₀=(0.8,0.4,0,−0.4)^T。这个方向不是简单的负梯度，却与 p₀ 在 A 内积下共轭。",
+      "kind": "worked-example",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.6.3, Algorithm 6.10 (CG) and A-conjugacy; independently computed matrix example",
+      "notes": "随页面同名 Python 和 MATLAB 脚本给出数值核查"
+    },
+    {
+      "id": "6.6.3-scope",
+      "claim": "CG 的标准三项递推要求实对称正定（复数情形为 Hermitian 正定），否则 pᵀAp 可能为非正或零，能量最小化证明不成立。理论上的“最多 n 步”基于精确算术；浮点舍入会破坏完全正交/共轭，不能把它当成生产环境的固定迭代上限。实际停止要检查真实残差 ||b−Ax||，若使用 SciPy 当前 cg 接口，容差是 max(rtol||b||₂,atol)，并通过 info 判断是否收敛。",
+      "kind": "scope-and-assumptions",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.6.3, Algorithm 6.10 (CG) and A-conjugacy",
+      "notes": "数学上界、真实残差、有限精度与实际性能分别说明"
+    },
+    {
+      "id": "6.6.3-scipy",
+      "claim": "SciPy cg 当前 rtol/atol 停止阈值与 info 返回状态",
+      "kind": "official-API",
+      "status": "verified",
+      "source_url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.cg.html",
+      "locator": "Parameters: rtol, atol; Returns: info",
+      "notes": "当前软件接口补充，非 1997 原书原文"
+    }
+  ]
+}
