@@ -1,36 +1,27 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.3.3 Expressing Poisson’s Equation with Kronecker Products</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products</h1>
-<pre><code>Lecture: 6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation
-Content: 02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products
-
-"""
-Lecture: 6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation
-Content: 02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="二维网格上的五点模板可以看成两个一维二阶差分算子的和。Kronecker 积把这个结构写成一个大矩阵；理解 vec 的堆叠顺序，才能保证矩阵块的位置和代码索引一致。"><title>6.3.3 用 Kronecker 积表达二维 Poisson 算子 · 应用数值线性代数</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="../../assets/js/course.js"></script></head>
+<body class="article-page"><a class="skip-link" href="#main">跳到正文</a><header class="topbar"><a class="brand" href="../../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · ITERATIVE LINEAR SOLVERS</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../../index.html#curriculum">课程地图</a><a href="../../README.md">README</a></nav></header>
+<div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">CHAPTER 06 / 章节导航</p><nav class="sidebar-nav" aria-label="第六章模块"><a href="../00_6.1_Introduction.html"><span>6.1</span> 迭代法与停止准则</a>
+<a href="../01_6.2_On_line_Help_for_Iterative_Methods.html"><span>6.2</span> 求解器选择</a>
+<a href="00_6.3.1_Poisson’s_Equation_in_One_Dimension.html"><span>6.3.1</span> 一维 Poisson</a>
+<a href="01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html"><span>6.3.2</span> 二维五点模板</a>
+<a href="02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html" aria-current="page"><span>6.3.3</span> Kronecker 积</a>
+<a href="../03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html"><span>6.4</span> 算法比较</a>
+<a href="../6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html"><span>6.5.1</span> Jacobi</a>
+<a href="../6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html"><span>6.5.2</span> Gauss–Seidel</a></nav></aside><main id="main" class="article"><header class="article-header"><p class="eyebrow">第六章 · ITERATIVE METHODS FOR LINEAR SYSTEMS</p><h1>6.3.3 用 Kronecker 积表达二维 Poisson 算子</h1><p class="article-lead">二维网格上的五点模板可以看成两个一维二阶差分算子的和。Kronecker 积把这个结构写成一个大矩阵；理解 vec 的堆叠顺序，才能保证矩阵块的位置和代码索引一致。</p><ul class="article-meta"><li>独立完整讲解</li><li>可视化推导</li><li>Python / MATLAB</li><li>证据清单随页附带</li></ul></header><div class="callout"><strong>核心思想：</strong>二维离散算子不是一个毫无结构的巨大矩阵，而是两个一维差分算子的 Kronecker 和。</div>
+<section id="vectorize"><h2>先固定 vec 的堆叠约定</h2><p>令 <span class="math-inline">V∈Rⁿˣ×ⁿʸ</span>，行索引沿 x，列索引沿 y。<code>vec(V)</code> 按列堆叠：第一列全部元素先进入向量，然后是第二列。若使用行主序，后续 Kronecker 因子的顺序也会改变。</p>
+<div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="vec 运算恒等式"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable columnalign="center"><mtr><mtd><mrow><mi>vec</mi><mo>(</mo><mi>A</mi><mi>X</mi><mo>)</mo><mo>=</mo><mo>(</mo><mi>I</mi><mo>⊗</mo><mi>A</mi><mo>)</mo><mi>vec</mi><mo>(</mo><mi>X</mi><mo>)</mo></mrow></mtd></mtr><mtr><mtd><mrow><mi>vec</mi><mo>(</mo><mi>X</mi><mi>B</mi><mo>)</mo><mo>=</mo><mo>(</mo><msup><mi>B</mi><mi>T</mi></msup><mo>⊗</mo><mi>I</mi><mo>)</mo><mi>vec</mi><mo>(</mo><mi>X</mi><mo>)</mo></mrow></mtd></mtr></mtable></math></div></div>
+</section>
+<section id="sum"><h2>二维算子是两个方向的 Kronecker 和</h2><p>令 <span class="math-inline">Tₓ</span> 和 <span class="math-inline">Tᵧ</span> 为两个方向的一维三对角差分矩阵。对正算子 <span class="math-inline">−Δ</span>，矩阵形式为 <span class="math-inline">TₓV/hₓ² + VTᵧ/hᵧ²</span>。使用上面的 vec 恒等式，得到：</p>
+<div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="Kronecker 和表达式"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>A</mi><mo>=</mo><mfrac><mrow><msub><mi>I</mi><mi>y</mi></msub><mo>⊗</mo><msub><mi>T</mi><mi>x</mi></msub></mrow><msup><msub><mi>h</mi><mi>x</mi></msub><mn>2</mn></msup></mfrac><mo>+</mo><mfrac><mrow><msub><mi>T</mi><mi>y</mi></msub><mo>⊗</mo><msub><mi>I</mi><mi>x</mi></msub></mrow><msup><msub><mi>h</mi><mi>y</mi></msub><mn>2</mn></msup></mfrac></mrow></math></div></div>
+<p>由于中心差分矩阵 <span class="math-inline">Tᵧ</span> 对称，转置项可以省略。方形等距网格时，公式简化为 <span class="math-inline">A=h⁻²(I⊗T+T⊗I)</span>。</p>
+<figure class="figure-card"><svg viewBox="0 0 700 300" role="img" aria-labelledby="kron-title kron-desc"><title id="kron-title">Kronecker 和的块矩阵结构</title><desc id="kron-desc">I 乘 Kronecker T 形成重复的三对角块，T 乘 Kronecker I 形成相邻块之间的负单位矩阵，二者相加构成二维算子。</desc>
+<g transform="translate(36 38)"><text class="small" x="0" y="-10">Iᵧ ⊗ Tₓ</text><g fill="#dcece5" stroke="#7da89a"><rect x="0" y="0" width="74" height="58" rx="5"/><rect x="88" y="0" width="74" height="58" rx="5"/><rect x="176" y="0" width="74" height="58" rx="5"/></g><g class="label" text-anchor="middle"><text x="37" y="34">Tₓ</text><text x="125" y="34">Tₓ</text><text x="213" y="34">Tₓ</text></g><text class="small" x="264" y="36">块对角</text></g>
+<g transform="translate(36 142)"><text class="small" x="0" y="-10">Tᵧ ⊗ Iₓ</text><g fill="#f7eae4" stroke="#c9917a"><rect x="0" y="0" width="74" height="58" rx="5"/><rect x="88" y="0" width="74" height="58" rx="5"/><rect x="176" y="0" width="74" height="58" rx="5"/></g><g class="label" text-anchor="middle"><text x="37" y="34">2I</text><text x="125" y="34">−I</text><text x="213" y="34">2I</text></g><text class="small" x="264" y="36">相邻块耦合</text></g>
+<path d="M370 115H420" stroke="#477c79" stroke-width="2"/><text class="label" x="395" y="101" text-anchor="middle">+</text><g transform="translate(438 72)"><text class="small" x="0" y="-12">二维算子 A</text><g fill="#e9efed" stroke="#7da89a"><rect x="0" y="0" width="74" height="58" rx="5"/><rect x="88" y="0" width="74" height="58" rx="5"/><rect x="176" y="0" width="74" height="58" rx="5"/></g><g class="label" text-anchor="middle"><text x="37" y="34">Tₓ+2I</text><text x="125" y="34">−I</text><text x="213" y="34">Tₓ+2I</text></g></g><text class="small" x="350" y="258" text-anchor="middle">块的尺寸由 Nₓ 决定；块数由 Nᵧ 决定。</text></svg><figcaption>图 5：一个方向产生块对角结构，另一个方向连接相邻块；两者相加恢复五点模板的邻接关系。</figcaption></figure>
+</section>
+<section id="dimensions"><h2>维度检查：一个常被忽略的步骤</h2><p><span class="math-inline">Iᵧ⊗Tₓ</span> 和 <span class="math-inline">Tᵧ⊗Iₓ</span> 都是 <span class="math-inline">(NₓNᵧ)×(NₓNᵧ)</span> 矩阵。右端向量也必须按同一 vec 顺序排列。下面的控件改变两个方向的网格数，检查系统维度。</p>
+<div class="interactive-panel" data-demo-panel data-demo-kind="kronecker"><h3>交互：改变网格形状</h3><div class="control-row"><label for="kron-dims">内部网格 (Nₓ × Nᵧ)：</label><select id="kron-dims" data-demo-control><option value="4x4">4 × 4</option><option value="8x4">8 × 4</option><option value="16x8">16 × 8</option><option value="24x12">24 × 12</option></select></div><p class="demo-output" data-demo-output aria-live="polite">维度将由脚本计算。</p></div>
+</section>
+<section id="matrix-free"><h2>Kronecker 表示不要求显式构造大矩阵</h2><p>Python 示例分别沿 x 与 y 方向应用一维三点差分，再将结果相加；测试会把它与另一份五点模板实现逐元素比较。这样验证的是算子作用是否一致，而不是两个函数是否使用了同一段代码。</p></section>
+<section id="references" class="references"><h2>参考来源</h2><ol><li>Demmel, <em>Applied Numerical Linear Algebra</em>, SIAM, 1997, §6.3.3, pp. 274–277. <a href="https://doi.org/10.1137/1.9781611971446">书目 DOI</a></li></ol></section><section class="callout warm"><strong>代码与页面：</strong>本页同名 Markdown、Python、MATLAB 和 evidence 文件位于当前目录。运行示例前请先阅读输入约束与边界条件。</section><footer class="article-footer"><a href="01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html">← 6.3.2 二维五点模板</a><a href="../03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html">6.4 算法比较 →</a></footer></main></div></body></html>

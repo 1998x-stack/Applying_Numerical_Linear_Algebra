@@ -1,0 +1,32 @@
+{
+  "article": "6.2",
+  "claims": [
+    {
+      "id": "6.2-a",
+      "claim": "原书 §6.2 将 NETLIB/templates 作为迭代方法在线帮助与软件入口。",
+      "kind": "definition",
+      "source_url": "https://epubs.siam.org/doi/10.1137/1.9781611971446.ch6",
+      "locator": "Chapter 6 abstract; §6.2 in 1997 edition",
+      "status": "verified",
+      "notes": "现代页面保留历史语境并补充当前软件文档。"
+    },
+    {
+      "id": "6.2-b",
+      "claim": "CG 需要对称/Hermitian 正定矩阵。",
+      "kind": "implementation",
+      "source_url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.cg.html",
+      "locator": "A parameter description",
+      "status": "verified",
+      "notes": "不能把 CG 的适用条件推广到一般方阵。"
+    },
+    {
+      "id": "6.2-c",
+      "claim": "SciPy sparse.linalg 提供 CG、GMRES、MINRES、LSQR 等稀疏求解接口。",
+      "kind": "implementation",
+      "source_url": "https://docs.scipy.org/doc/scipy/reference/sparse.linalg.html",
+      "locator": "Solving linear problems",
+      "status": "verified",
+      "notes": "页面把算法作为候选，不承诺性能排名。"
+    }
+  ]
+}

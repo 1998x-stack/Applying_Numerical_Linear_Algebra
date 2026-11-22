@@ -1,36 +1,25 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.1 Introduction</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>00_6.1_Introduction</h1>
-<pre><code>Lecture: /6_Iterative_Methods_for_Linear_Systems
-Content: 00_6.1_Introduction
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 00_6.1_Introduction
-
-"""
-Lecture: /6_Iterative_Methods_for_Linear_Systems
-Content: 00_6.1_Introduction
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="当直接分解的时间、内存或填充成本不可接受时，迭代法从一个初始猜测出发，逐步降低残差。真正的算法设计问题，是让每轮足够便宜、误差下降足够快，并且知道何时可以停。"><title>6.1 迭代法解决什么问题？ · 应用数值线性代数</title>
+<link rel="stylesheet" href="../assets/css/course.css"><script defer src="../assets/js/course.js"></script></head>
+<body class="article-page"><a class="skip-link" href="#main">跳到正文</a>
+<header class="topbar"><a class="brand" href="../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · ITERATIVE LINEAR SOLVERS</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../index.html#curriculum">课程地图</a><a href="../README.md">README</a></nav></header>
+<div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">CHAPTER 06 / 章节导航</p><nav class="sidebar-nav" aria-label="第六章模块"><a href="00_6.1_Introduction.html" aria-current="page"><span>6.1</span> 迭代法与停止准则</a>
+<a href="01_6.2_On_line_Help_for_Iterative_Methods.html"><span>6.2</span> 求解器选择</a>
+<a href="6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.html"><span>6.3.1</span> 一维 Poisson</a>
+<a href="6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html"><span>6.3.2</span> 二维五点模板</a>
+<a href="6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html"><span>6.3.3</span> Kronecker 积</a>
+<a href="03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html"><span>6.4</span> 算法比较</a>
+<a href="6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html"><span>6.5.1</span> Jacobi</a>
+<a href="6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html"><span>6.5.2</span> Gauss–Seidel</a></nav></aside>
+<main id="main" class="article"><header class="article-header"><p class="eyebrow">第六章 · ITERATIVE METHODS FOR LINEAR SYSTEMS</p><h1>6.1 迭代法解决什么问题？</h1><p class="article-lead">当直接分解的时间、内存或填充成本不可接受时，迭代法从一个初始猜测出发，逐步降低残差。真正的算法设计问题，是让每轮足够便宜、误差下降足够快，并且知道何时可以停。</p><ul class="article-meta"><li>独立完整讲解</li><li>可视化推导</li><li>Python / MATLAB</li><li>证据清单随页附带</li></ul></header>
+<div class="callout"><strong>本页要回答：</strong>为什么要用迭代法、怎样判断它正在变好，以及计算机如何知道可以停止。</div>
+<section id="problem"><h2>从线性系统到近似解</h2><p>考虑大型线性系统 <span class="math-inline">Ax=b</span>。带主元的 LU 分解等直接法通过有限次消元得到数值解；但稀疏矩阵的分解可能产生 <em>fill-in</em>，使因子比原矩阵密得多。若矩阵规模很大、只能执行矩阵向量乘法，或内存无法容纳分解因子，逐步改进近似解往往更合适。</p><p>迭代法从初值 <span class="math-inline">x₀</span> 出发，生成 <span class="math-inline">x₁,x₂,…</span>。每轮只做局部更新、稀疏矩阵向量乘法或小规模子问题，直到达到应用所需的精度。</p></section>
+<section id="residual"><h2>残差不是前向误差</h2><div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="残差和前向误差的定义"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable columnalign="center"><mtr><mtd><mrow><msub><mi>r</mi><mi>k</mi></msub><mo>=</mo><mi>b</mi><mo>−</mo><mi>A</mi><msub><mi>x</mi><mi>k</mi></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>e</mi><mi>k</mi></msub><mo>=</mo><msub><mi>x</mi><mo>*</mo></msub><mo>−</mo><msub><mi>x</mi><mi>k</mi></msub></mrow></mtd></mtr><mtr><mtd><mrow><mi>A</mi><msub><mi>e</mi><mi>k</mi></msub><mo>=</mo><msub><mi>r</mi><mi>k</mi></msub><mo>,</mo><mspace width="0.5em"/><mo>∴</mo><mspace width="0.5em"/><msub><mi>e</mi><mi>k</mi></msub><mo>=</mo><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><msub><mi>r</mi><mi>k</mi></msub></mrow></mtd></mtr></mtable></math></div></div><p>残差是把当前答案代回方程后的不平衡量；前向误差是当前答案离真实解的距离。由 <span class="math-inline">eₖ=A⁻¹rₖ</span> 可知，病态矩阵会放大残差对应的解误差。因而“残差小”是重要证据，却不是所有应用都足够的精度证明。</p><div class="callout warm"><strong>常见误区：</strong>把残差直接称为“解误差”。当条件数很大时，两者可能相差很多个数量级。</div></section>
+<section id="fixed-point"><h2>固定点迭代：每轮怎样改变误差</h2><div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="固定点迭代与误差递推"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable columnalign="center"><mtr><mtd><mrow><msub><mi>x</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>R</mi><msub><mi>x</mi><mi>k</mi></msub><mo>+</mo><mi>c</mi></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>e</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>R</mi><msub><mi>e</mi><mi>k</mi></msub><mo>,</mo><mspace width="0.5em"/><msub><mi>e</mi><mi>k</mi></msub><mo>=</mo><msup><mi>R</mi><mi>k</mi></msup><msub><mi>e</mi><mn>0</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><mi>ρ</mi><mo>(</mo><mi>R</mi><mo>)</mo><mo>&lt;</mo><mn>1</mn></mrow></mtd></mtr></mtable></math></div></div><p>对任意初值都收敛到固定点的充要条件是 <span class="math-inline">ρ(R)&lt;1</span>。谱半径是迭代矩阵所有特征值模长的最大值；它控制最慢衰减的误差模态。</p>
+<figure class="figure-card"><svg viewBox="0 0 700 260" role="img" aria-labelledby="flow-title flow-desc"><title id="flow-title">迭代求解的闭环</title><desc id="flow-desc">初值进入迭代器，生成新近似解，计算残差并与停止阈值比较；不满足时返回迭代器。</desc><defs><marker id="flow-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="#477c79" stroke-width="1.5"/></marker></defs><rect class="node" x="20" y="82" width="120" height="74" rx="12"/><text class="label" x="80" y="111" text-anchor="middle">初值 x₀</text><text class="small" x="80" y="134" text-anchor="middle">初始猜测</text><path class="edge" d="M140 119H190" marker-end="url(#flow-arrow)"/><rect class="accent-node" x="198" y="82" width="142" height="74" rx="12"/><text class="label" x="269" y="111" text-anchor="middle">迭代更新</text><text class="small" x="269" y="134" text-anchor="middle">xₖ → xₖ₊₁</text><path class="edge" d="M340 119H390" marker-end="url(#flow-arrow)"/><rect class="node" x="398" y="82" width="120" height="74" rx="12"/><text class="label" x="458" y="111" text-anchor="middle">计算残差</text><text class="small" x="458" y="134" text-anchor="middle">rₖ = b − Axₖ</text><path class="edge" d="M518 119H556" marker-end="url(#flow-arrow)"/><path d="M608 70L660 119L608 168L556 119Z" fill="#f7eee8" stroke="#c9917a" stroke-width="1.5"/><text class="small" x="608" y="115" text-anchor="middle">达标？</text><text class="tiny" x="608" y="131" text-anchor="middle">阈值</text><path class="edge" d="M608 70V35H269V82" marker-end="url(#flow-arrow)"/><text class="tiny" x="440" y="26" text-anchor="middle">否：继续</text><path class="edge" d="M660 119H686" marker-end="url(#flow-arrow)"/><text class="tiny" x="644" y="190" text-anchor="middle">是：返回近似解</text></svg><figcaption>图 1：迭代法不是盲目循环。每轮都要把当前近似解带回原方程，计算一个可检查的停止指标。</figcaption></figure></section>
+<section id="stopping"><h2>用残差定义可执行的停止准则</h2><div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="相对与绝对容差停止准则"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mrow><mo>∥</mo><mi>r</mi><mo>∥</mo></mrow><mn>2</mn></msub><mo>≤</mo><mi>max</mi><mo>(</mo><mi>rtol</mi><msub><mrow><mo>∥</mo><mi>b</mi><mo>∥</mo></mrow><mn>2</mn></msub><mo>,</mo><mi>atol</mi><mo>)</mo></mrow></math></div></div><p><code>rtol</code> 是相对阈值，<code>atol</code> 是绝对阈值。若右端向量为零或极小，只用相对阈值会使停止逻辑失去意义。迭代上限 <code>maxiter</code> 只是防止无限运行的保护措施，不代表达到上限就已收敛。</p><div class="interactive-panel" data-demo-panel data-demo-kind="tolerance"><h3>交互：调整停止阈值</h3><p>选择不同的相对容差，观察软件需要满足的条件如何变化。</p><div class="control-row"><label for="tol-control">rtol = 10 的指数：</label><input id="tol-control" type="range" min="-10" max="-2" step="1" value="-6" data-demo-control></div><p class="demo-output" data-demo-output aria-live="polite">当前阈值将由脚本计算。</p></div></section>
+<section id="cost"><h2>每轮便宜，不等于总成本低</h2><p>稀疏矩阵向量乘法每轮通常与 <span class="math-inline">nnz(A)</span> 成正比，但总时间还取决于迭代轮数、预条件器构造、内存访问和并行通信。应同时记录最终残差、迭代次数、运行时间和预处理成本；只比较单轮速度会得出错误结论。</p><h3>自检</h3><ol><li>为什么小残差不必然意味着小前向误差？</li><li>谱半径控制固定点迭代的哪个性质？</li><li>当 <span class="math-inline">b=0</span> 时，绝对阈值有什么作用？</li></ol></section>
+<section id="references" class="references"><h2>参考来源</h2><ol><li>James W. Demmel, <em>Applied Numerical Linear Algebra</em>, SIAM, 1997, Chapter 6, §§6.1, 6.5. <a href="https://doi.org/10.1137/1.9781611971446">书目 DOI</a></li><li>SciPy, <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.cg.html"><code>scipy.sparse.linalg.cg</code></a>：相对与绝对残差停止条件。</li></ol></section>
+<section class="callout warm"><strong>代码与页面：</strong>本页同名 Markdown、Python、MATLAB 和 evidence 文件位于当前目录。运行示例前请先阅读输入约束与边界条件。</section>
+<footer class="article-footer"><a href="../index.html">← 课程首页</a><a href="01_6.2_On_line_Help_for_Iterative_Methods.html">6.2 求解器选择 →</a></footer></main></div></body></html>

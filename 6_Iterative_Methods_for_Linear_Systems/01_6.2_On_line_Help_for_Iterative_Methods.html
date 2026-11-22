@@ -1,36 +1,29 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="求解器不是按名字挑选的。先判断矩阵是否对称、正定、稀疏或只能矩阵自由访问，再把这些结构映射到算法的数学前提和软件 API。"><title>6.2 如何选择迭代求解器？ · 应用数值线性代数</title>
+<link rel="stylesheet" href="../assets/css/course.css"><script defer src="../assets/js/course.js"></script></head>
+<body class="article-page"><a class="skip-link" href="#main">跳到正文</a>
+<header class="topbar"><a class="brand" href="../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · ITERATIVE LINEAR SOLVERS</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../index.html#curriculum">课程地图</a><a href="../README.md">README</a></nav></header>
+<div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">CHAPTER 06 / 章节导航</p><nav class="sidebar-nav" aria-label="第六章模块"><a href="00_6.1_Introduction.html"><span>6.1</span> 迭代法与停止准则</a>
+<a href="01_6.2_On_line_Help_for_Iterative_Methods.html" aria-current="page"><span>6.2</span> 求解器选择</a>
+<a href="6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.html"><span>6.3.1</span> 一维 Poisson</a>
+<a href="6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html"><span>6.3.2</span> 二维五点模板</a>
+<a href="6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html"><span>6.3.3</span> Kronecker 积</a>
+<a href="03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html"><span>6.4</span> 算法比较</a>
+<a href="6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html"><span>6.5.1</span> Jacobi</a>
+<a href="6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html"><span>6.5.2</span> Gauss–Seidel</a></nav></aside>
+<main id="main" class="article"><header class="article-header"><p class="eyebrow">第六章 · ITERATIVE METHODS FOR LINEAR SYSTEMS</p><h1>6.2 如何选择迭代求解器？</h1><p class="article-lead">求解器不是按名字挑选的。先判断矩阵是否对称、正定、稀疏或只能矩阵自由访问，再把这些结构映射到算法的数学前提和软件 API。</p><ul class="article-meta"><li>独立完整讲解</li><li>可视化推导</li><li>Python / MATLAB</li><li>证据清单随页附带</li></ul></header>
+<div class="callout"><strong>先问矩阵是什么，再问软件有什么。</strong>同一个求解器在满足假设时是高效工具，在不满足假设时可能没有收敛保证。</div>
+<section id="classify"><h2>五个结构问题决定算法候选集</h2><ol><li>是方阵系统，还是矩形最小二乘问题？</li><li>矩阵是否对称（复数情形为 Hermitian）？</li><li>是否正定，还是可能不定或奇异？</li><li>矩阵是否稀疏？是否只能提供矩阵向量乘法？</li><li>精度目标是什么，能否构造有效预条件器？</li></ol><p>这些不是软件选项，而是算法的数学前提。把一般矩阵交给 CG，不是简单地“收敛慢一点”，而是违反了 CG 的适用条件。</p>
+<figure class="figure-card"><svg viewBox="0 0 700 300" role="img" aria-labelledby="solver-title solver-desc"><title id="solver-title">按矩阵结构筛选求解器</title><desc id="solver-desc">从问题类型开始，分别判断最小二乘、对称正定、对称不定和一般非对称矩阵，再得到算法候选。</desc><rect class="node" x="245" y="12" width="210" height="48" rx="10"/><text class="label" x="350" y="42" text-anchor="middle">描述矩阵与目标</text><path class="edge" d="M350 60V84H112V110M350 84V110M350 84H588V110"/><rect class="warm-node" x="24" y="110" width="176" height="72" rx="10"/><text class="label" x="112" y="139" text-anchor="middle">矩形最小二乘</text><text class="small" x="112" y="161" text-anchor="middle">LSQR / LSMR</text><rect class="accent-node" x="262" y="110" width="176" height="72" rx="10"/><text class="label" x="350" y="139" text-anchor="middle">对称方阵</text><text class="small" x="350" y="161" text-anchor="middle">再检查正定性</text><rect class="node" x="500" y="110" width="176" height="72" rx="10"/><text class="label" x="588" y="139" text-anchor="middle">一般非对称方阵</text><text class="small" x="588" y="161" text-anchor="middle">GMRES / BiCGSTAB</text><path class="edge" d="M350 182V214H264V238M350 214H436V238"/><rect class="node" x="184" y="238" width="160" height="50" rx="10"/><text class="label" x="264" y="268" text-anchor="middle">正定：CG</text><rect class="node" x="356" y="238" width="160" height="50" rx="10"/><text class="label" x="436" y="268" text-anchor="middle">不定：MINRES</text></svg><figcaption>图 2：求解器选择是一棵带有数学前提的决策树。矩阵结构未确认前，不应直接套用算法。</figcaption></figure></section>
+<section id="software"><h2>从 NETLIB/templates 到现代 API</h2><p>Demmel 原书在 1997 年的语境下指向 NETLIB/templates，帮助用户比较迭代算法和软件。今天可从 SciPy 的 <code>scipy.sparse.linalg</code>、PETSc 等官方文档开始。关键不是记住一个函数名，而是核对矩阵前提、停止条件、预条件器约定和返回状态。</p><div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="线性系统和 CG 停止条件"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>A</mi><mi>x</mi><mo>=</mo><mi>b</mi><mo>,</mo><mspace width="1em"/><mi>A</mi><mo>=</mo><msup><mi>A</mi><mi>T</mi></msup><mo>≻</mo><mn>0</mn></mrow></math></div></div><div class="interactive-panel" data-demo-panel data-demo-kind="solver"><h3>交互：按问题类型查看候选算法</h3><div class="control-row"><label for="solver-kind">问题结构：</label><select id="solver-kind" data-demo-control><option value="spd">对称正定方阵</option><option value="symmetric">对称不定方阵</option><option value="general">一般非对称方阵</option><option value="least">矩形最小二乘</option></select></div><p class="demo-output" data-demo-output aria-live="polite">选择一种结构以查看建议。</p></div></section>
+<section id="api"><h2>读 API 时的四项检查</h2><ul><li><strong>适用矩阵：</strong>CG 要求对称/Hermitian 正定；GMRES 可用于一般方阵系统。</li><li><strong>停止准则：</strong>看清使用的是相对残差、绝对残差还是预条件残差。</li><li><strong>预条件器：</strong>CG 的预条件器也必须满足相应的对称正定条件；通常传入近似逆的作用，而不是显式求逆矩阵。</li><li><strong>返回状态：</strong>达到迭代上限不等于收敛；检查 <code>info</code> 并独立计算真实残差。</li></ul><pre><code>from scipy.sparse.linalg import cg
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.2 On line Help for Iterative Methods</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>01_6.2_On-line_Help_for_Iterative_Methods</h1>
-<pre><code>Lecture: /6_Iterative_Methods_for_Linear_Systems
-Content: 01_6.2_On-line_Help_for_Iterative_Methods
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 01_6.2_On-line_Help_for_Iterative_Methods
-
-"""
-Lecture: /6_Iterative_Methods_for_Linear_Systems
-Content: 01_6.2_On-line_Help_for_Iterative_Methods
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+x, info = cg(A, b, rtol=1e-8, atol=1e-12, maxiter=500, M=M)
+true_residual = norm(b - A @ x)
+if info != 0:
+    raise RuntimeError(f"CG did not converge: info={info}")
+</code></pre><p class="article-note">示例展示 API 的使用结构；运行前必须确认 A 与 M 满足所安装 SciPy 版本文档中的约束。</p></section>
+<section id="references" class="references"><h2>参考来源</h2><ol><li>Demmel, <em>Applied Numerical Linear Algebra</em>, SIAM, 1997, §6.2. <a href="https://doi.org/10.1137/1.9781611971446">书目 DOI</a></li><li>SciPy, <a href="https://docs.scipy.org/doc/scipy/reference/sparse.linalg.html">Sparse linear algebra</a>.</li><li>SciPy, <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.cg.html">CG API</a> and <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.gmres.html">GMRES API</a>.</li></ol></section>
+<section class="callout warm"><strong>代码与页面：</strong>本页同名 Markdown、Python、MATLAB 和 evidence 文件位于当前目录。运行示例前请先阅读输入约束与边界条件。</section>
+<footer class="article-footer"><a href="00_6.1_Introduction.html">← 6.1 迭代法与停止准则</a><a href="6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.html">6.3.1 一维 Poisson →</a></footer></main></div></body></html>

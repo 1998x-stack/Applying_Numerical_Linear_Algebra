@@ -1,0 +1,32 @@
+{
+  "article": "6.3.1",
+  "claims": [
+    {
+      "id": "6.3.1-a",
+      "claim": "一维 -v''=f 的中心差分产生主对角为 2、相邻对角为 -1 的三对角矩阵。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.3.1, equations 6.1–6.5",
+      "status": "verified",
+      "notes": "本页明确区分 T_N v=h²f 与 (T_N/h²)v=f 两种等价缩放。"
+    },
+    {
+      "id": "6.3.1-b",
+      "claim": "光滑解的中心差分截断误差为 O(h²)。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.3.1, equation 6.2",
+      "status": "verified",
+      "notes": "误差阶依赖解具有足够高阶导数。"
+    },
+    {
+      "id": "6.3.1-c",
+      "claim": "T_N 对称正定，且三对角非零元数量为 3N-2。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.3.1; direct quadratic-form derivation",
+      "status": "derived",
+      "notes": "正定性用离散能量恒等式独立推导。"
+    }
+  ]
+}

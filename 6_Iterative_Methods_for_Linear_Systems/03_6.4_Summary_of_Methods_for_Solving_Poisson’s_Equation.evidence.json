@@ -1,0 +1,32 @@
+{
+  "article": "6.4",
+  "claims": [
+    {
+      "id": "6.4-a",
+      "claim": "二维 Poisson 模型在固定误差目标下的经典渐近复杂度包括 Jacobi/GS O(n²)、CG/SOR O(n^(3/2))、FFT O(n log n)、Multigrid O(n)。",
+      "kind": "complexity",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.4, Table 6.1, pp. 277–278",
+      "status": "verified",
+      "notes": "n=N² 是二维网格内部未知量数；仅是模型与串行假设下的阶次。"
+    },
+    {
+      "id": "6.4-b",
+      "claim": "FFT 的快速模型求解依赖规则且可分离的 Poisson 算子结构。",
+      "kind": "complexity",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.4 and §6.7",
+      "status": "verified",
+      "notes": "不推广到任意几何、变系数或边界条件。"
+    },
+    {
+      "id": "6.4-c",
+      "claim": "多重网格通过多尺度处理不同频率误差，在合适椭圆问题上可达到近线性工作量。",
+      "kind": "complexity",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.4 and §6.9",
+      "status": "verified",
+      "notes": "依赖平滑、限制、延拓和粗网格求解设计。"
+    }
+  ]
+}

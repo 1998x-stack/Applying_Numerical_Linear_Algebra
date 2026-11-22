@@ -1,0 +1,32 @@
+{
+  "article": "6.1",
+  "claims": [
+    {
+      "id": "6.1-a",
+      "claim": "迭代方法逐步降低近似解误差；直接法与迭代法的终止行为不同。",
+      "kind": "definition",
+      "source_url": "https://epubs.siam.org/doi/10.1137/1.9781611971446.ch6",
+      "locator": "Chapter 6 abstract; §6.1",
+      "status": "verified",
+      "notes": "以 SIAM 官方章节摘要和原书章节结构核对。"
+    },
+    {
+      "id": "6.1-b",
+      "claim": "固定点迭代对任意初值收敛的充要条件是迭代矩阵谱半径小于 1。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.5, Theorem 6.1",
+      "status": "verified",
+      "notes": "本页用误差递推 e(k)=R^k e(0) 解释。"
+    },
+    {
+      "id": "6.1-c",
+      "claim": "SciPy CG 使用 max(rtol*||b||, atol) 作为残差停止界。",
+      "kind": "implementation",
+      "source_url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.cg.html",
+      "locator": "Parameters / Notes",
+      "status": "verified",
+      "notes": "API 参数可能随版本演进，部署时以已安装版本为准。"
+    }
+  ]
+}

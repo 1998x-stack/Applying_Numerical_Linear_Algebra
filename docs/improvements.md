@@ -14,3 +14,11 @@
 - Follow-up: Run python -m unittest discover -s tests -p 'test_polynomial_bisection.py' on full checkout, then fix polynomial_condition_number coefficient ordering with independent tests.
 - Commit: a64c74968587536f0892e70c0a4ae2b98412b2a9; a9684103d316951c8069690bf5dc1fbe1994e6cb
 - PR: https://github.com/1998x-stack/Applying_Numerical_Linear_Algebra/pull/1
+
+### 2026-11-22 — Chapter 6 foundations and course portal
+- Scope: repository navigation, course homepage, README, authoring standards, quality gates, GitHub Pages workflow, and eight independent modules in Chapter 6.
+- Content modules: 6.1 iterative-solver problem and stopping rules; 6.2 solver/software selection; 6.3.1 one-dimensional Poisson discretization; 6.3.2 two-dimensional five-point stencil; 6.3.3 Kronecker representation; 6.4 model-problem method comparison; 6.5.1 Jacobi; 6.5.2 Gauss–Seidel.
+- Technical review: signs and scaling for the `-Δ` operator; Dirichlet boundary conditions; interior-grid dimensions; column-major `vec` convention; Kronecker-sum identity; stationary-iteration spectral-radius criterion; model-specific red-black Gauss–Seidel relationship.
+- Cross-validation plan: Python regression tests compare the matrix-free two-dimensional stencil with the Kronecker-sum operator, verify residual reduction for Jacobi and Gauss–Seidel, and check stopping-rule/solver-selection behavior. Browser QA covers 1440, 768, 390 and 360 CSS-pixel viewports, SVG geometry and one live interaction per article.
+- Publishing: branch `anla/iterative-methods-foundations`; merge only after code and browser checks are reviewed. Pages deployment is considered live only after the GitHub Actions deployment succeeds.
+- Validation status at authoring time: not yet executed; final release record must be updated with actual CI/browser results and commit SHA.

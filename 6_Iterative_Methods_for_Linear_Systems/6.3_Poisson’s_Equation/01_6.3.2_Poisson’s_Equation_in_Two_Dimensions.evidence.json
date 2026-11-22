@@ -1,0 +1,32 @@
+{
+  "article": "6.3.2",
+  "claims": [
+    {
+      "id": "6.3.2-a",
+      "claim": "二维 -Delta 的等距网格中心差分形成五点模板。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.3.2, equation 6.10",
+      "status": "verified",
+      "notes": "符号按正算子 -Delta 书写。"
+    },
+    {
+      "id": "6.3.2-b",
+      "claim": "N×N 内部网格共有 N² 个未知量和 5N²-4N 个非零元。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.3.2; count diagonal and undirected neighbor pairs",
+      "status": "derived",
+      "notes": "每个方向边数为 N(N-1)，对称矩阵计入双向非零元。"
+    },
+    {
+      "id": "6.3.2-c",
+      "claim": "非等距网格需要分别使用 h_x^-2 与 h_y^-2 缩放两个方向的二阶差分。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Finite-difference derivation generalized to rectangular mesh",
+      "status": "derived",
+      "notes": "通过对两个坐标方向分别使用中心差分得到。"
+    }
+  ]
+}

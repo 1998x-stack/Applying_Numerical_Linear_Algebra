@@ -1,0 +1,32 @@
+{
+  "article": "6.5.1",
+  "claims": [
+    {
+      "id": "6.5.1-a",
+      "claim": "Jacobi 的矩阵迭代为 x(k+1)=D^-1(b-(L+U)x(k))。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.5.1, Algorithm 6.1",
+      "status": "verified",
+      "notes": "本页约定 A=D+L+U。"
+    },
+    {
+      "id": "6.5.1-b",
+      "claim": "一维 Dirichlet Poisson 的 Jacobi 谱半径为 cos(pi/(N+1))。",
+      "kind": "derivation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.5.4",
+      "status": "verified",
+      "notes": "用于说明网格加密后收敛变慢。"
+    },
+    {
+      "id": "6.5.1-c",
+      "claim": "Jacobi 的所有新分量仅读取旧向量，因此可并行更新。",
+      "kind": "implementation",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "Chapter 6, §6.5.1, Algorithm 6.1",
+      "status": "derived",
+      "notes": "双缓冲实现直接体现同步更新依赖。"
+    }
+  ]
+}
