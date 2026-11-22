@@ -95,7 +95,7 @@ class EighthBatchTests(unittest.TestCase):
         self.assertLess(rq,1e-12)
         self.assertGreater(k,1e8)
         rotation=load(STEMS[6]).rotate(30)
-        np.testing.assert_allclose(rotation.T@rotation,np.eye(2))
+        np.testing.assert_allclose(rotation.T@rotation,np.eye(2),atol=1e-14)
         A=np.array([[5.,0.,0.],[0.,.02,0.],[0.,0.,0.],[0.,0.,0.]])
         b=np.array([5.,.02,.1,0.])
         t=load(STEMS[7]);x,s=t.truncated_svd(A,b,0);y,_=t.truncated_svd(A,b,.05)
