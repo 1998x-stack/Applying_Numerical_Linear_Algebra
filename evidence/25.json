@@ -1,0 +1,28 @@
+{
+  "chapter": "2.7.3",
+  "article": "带状矩阵：让解算成本跟着带宽而不是 n² 走",
+  "claims": [
+    {
+      "id": "ch25-0",
+      "source": "Demmel §2.7.3",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "scope": "mathematical assumptions / algorithm API",
+      "verification": "derivation and deterministic tests"
+    },
+    {
+      "id": "ch25-1",
+      "source": "LAPACK DGBTRF",
+      "url": "https://netlib.org/lapack/explore-html/df/dd6/group__gbtrf_ga725ad1dfee52c0dff571566d64e30ae8.html",
+      "scope": "mathematical assumptions / algorithm API",
+      "verification": "derivation and deterministic tests"
+    },
+    {
+      "id": "ch25-2",
+      "source": "SciPy solve_banded",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.solve_banded.html",
+      "scope": "mathematical assumptions / algorithm API",
+      "verification": "derivation and deterministic tests"
+    }
+  ],
+  "media_notice": "diagram is didactic rather than benchmark evidence"
+}

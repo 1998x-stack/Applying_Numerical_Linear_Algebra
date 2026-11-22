@@ -1,0 +1,25 @@
+{
+  "chapter": "3.2.2",
+  "title": "QR 分解：用正交变换而不是条件数平方来求最小二乘",
+  "evidence": [
+    {
+      "id": "c30-0",
+      "label": "Demmel §3.2.2",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "status": "source-grounded theoretical reference"
+    },
+    {
+      "id": "c30-1",
+      "label": "NumPy QR reduced mode",
+      "url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.qr.html",
+      "status": "source-grounded theoretical reference"
+    },
+    {
+      "id": "c30-2",
+      "label": "LAPACK DGELS",
+      "url": "https://www.netlib.org/lapack/explore-html/d8/d83/group__gels_gaa65298f8ef218a625e40d0da3c95803c.html",
+      "status": "source-grounded theoretical reference"
+    }
+  ],
+  "numerical_note": "hypothetical condition sliders are not measured error rates"
+}

@@ -1,0 +1,25 @@
+{
+  "chapter": "3.2.3",
+  "title": "SVD 最小二乘：哪些方向能够辨认，哪些方向只能放弃",
+  "evidence": [
+    {
+      "id": "c31-0",
+      "label": "Demmel §3.2.3",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "status": "source-grounded theoretical reference"
+    },
+    {
+      "id": "c31-1",
+      "label": "LAPACK DGELSD SVD minimum norm least squares",
+      "url": "https://netlib.org/lapack/explore-html/db/d6a/dgelsd_8f_source.html",
+      "status": "source-grounded theoretical reference"
+    },
+    {
+      "id": "c31-2",
+      "label": "NumPy lstsq singular value cutoff",
+      "url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html",
+      "status": "source-grounded theoretical reference"
+    }
+  ],
+  "numerical_note": "Interactive geometry is computed from models rather than measured benchmarks"
+}

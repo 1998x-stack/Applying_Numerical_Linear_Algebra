@@ -115,3 +115,12 @@
 - 关键跨检查：PCG 对称变换；Arnoldi 正交化及真残差；Parseval 和逆 DFT；连续/离散正弦特征值；补零长度至少 m+n−1；radix-2 直接与库 FFT 对照；Schur 补与直接求解；两网格残差前后比较。
 - 纳入静态完整性、24 篇第六章的 Chromium 四视口交互与资源验证；测试结果以最新 Actions 为准。
 - MATLAB/Octave 同名脚本仅做算法对照，若未在 MATLAB 环境运行，标为 not verified。
+
+
+## 第七批 2.7.3–3.3 数值与图形验收
+
+- 8 篇独立 HTML/MD、8 张主题专用 SVG 和 8 个带原生滑块的动态 SVG；无外部运行时依赖。
+- 8 份 Python 与 8 份 MATLAB 对照脚本；新增 tests/test_chapter23_next.py（21 项测试），MATLAB 未经实机测试不标记通过。
+- 关键数学断言：band nnz=3n-2；星形 Cholesky 中心先/后 fill 比较 21 vs 11；Woodbury 解 [.8,-.2,-.2,-.2]；常数拟合 7/3；Gram κ²；经济 QR；SVD 最小范数；残差导致的 LS 矩阵扰动。
+- Chromium 扩展到首页加前 32 篇，四种视口 1440/768/390/360，增加参数变化后数值、SVG 几何和绘图指纹的检查。第六章已有单独的浏览器质量门禁保持启用。
+- CI 通过前不标注已验证；Pages 发布必须以部署 job 成功为准。

@@ -1,0 +1,25 @@
+{
+  "chapter": "3.3",
+  "title": "最小二乘扰动理论：为什么非零残差会再引入一个 κ² 放大项",
+  "evidence": [
+    {
+      "id": "c32-0",
+      "label": "Demmel §3.3 least squares perturbation theory",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "status": "source-grounded theoretical reference"
+    },
+    {
+      "id": "c32-1",
+      "label": "Higham, Accuracy and Stability of Numerical Algorithms",
+      "url": "https://doi.org/10.1137/1.9780898718027",
+      "status": "source-grounded theoretical reference"
+    },
+    {
+      "id": "c32-2",
+      "label": "NumPy least squares semantics",
+      "url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html",
+      "status": "source-grounded theoretical reference"
+    }
+  ],
+  "numerical_note": "Interactive geometry is computed from models rather than measured benchmarks"
+}

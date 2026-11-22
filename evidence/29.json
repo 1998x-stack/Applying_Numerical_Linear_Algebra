@@ -1,0 +1,25 @@
+{
+  "chapter": "3.2.1",
+  "title": "正规方程：为什么最直接的最小二乘公式会平方条件数",
+  "evidence": [
+    {
+      "id": "c29-0",
+      "label": "Demmel §3.2.1",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "status": "source-grounded theoretical reference"
+    },
+    {
+      "id": "c29-1",
+      "label": "NumPy condition number",
+      "url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.cond.html",
+      "status": "source-grounded theoretical reference"
+    },
+    {
+      "id": "c29-2",
+      "label": "LAPACK Cholesky DPOTRF",
+      "url": "https://www.netlib.org/lapack/explore-html/d2/d09/group__potrf_ga84e90859b02139934b166e579dd211d4.html",
+      "status": "source-grounded theoretical reference"
+    }
+  ],
+  "numerical_note": "hypothetical condition sliders are not measured error rates"
+}

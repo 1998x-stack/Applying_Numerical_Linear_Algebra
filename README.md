@@ -183,3 +183,21 @@ python scripts/browser_check.py
 **连续阅读路线：** 6.6.5 的 PCG 谱改善 → 6.6.6 的非对称 GMRES → 6.7.1 DFT 符号约定 → 6.7.2 零 Dirichlet 边界的离散正弦变换 → 6.7.3 补零避免循环混叠 → 6.7.4 FFT 蝶形 → 6.8 Schur 补块约化 → 6.9.1 二维多重网格误差校正。
 
 **质量复现：** `python -m unittest discover -s tests -v`，`python scripts/validate_site.py`，`python scripts/browser_check.py`，`python main.py --check`。浏览器检查首页与第六章 24 篇、4 个视口，检查局部资源、交互、脚本异常、原生 MathML 和可访问 SVG。NumPy 算例只运行小规模确定性问题，结果不构成硬件性能 benchmark。MATLAB 对照提供数值断言，但未在 MATLAB 实机执行时必须标记为未验证。
+
+
+## 第七批：带状、稀疏、结构化稠密系统到第三章最小二乘
+
+从 2.7.3–2.7.5 连续进入 3.1、3.2.1–3.2.3 和 3.3。每篇是独立论证：定义、推导、手算反例、SVG、可调数学图，以及 NumPy/MATLAB 对照。保留旧链接和并行完成的第六章全部 24 篇。
+
+| 节次 | 深入主题 | HTML | Python | MATLAB |
+|---|---|---|---|---|
+| 2.7.3 | 带状矩阵与压缩存储 | [网页](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/02_2.7.3_Band_Matrices.html) | [Python](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/02_2.7.3_Band_Matrices.py) | [MATLAB](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/02_2.7.3_Band_Matrices.m) |
+| 2.7.4 | 稀疏消元与图填充 | [网页](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/03_2.7.4_General_Sparse_Matrices.html) | [Python](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/03_2.7.4_General_Sparse_Matrices.py) | [MATLAB](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/03_2.7.4_General_Sparse_Matrices.m) |
+| 2.7.5 | Woodbury 低秩更新 | [网页](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/04_2.7.5_Dense_Matrices_Depending_on_Fewer_Than_O(n²)_Parameters.html) | [Python](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/04_2.7.5_Dense_Matrices_Depending_on_Fewer_Than_O(n²)_Parameters.py) | [MATLAB](2_Linear_Equation_Solving/2.7_Special_Linear_Systems/04_2.7.5_Dense_Matrices_Depending_on_Fewer_Than_O(n²)_Parameters.m) |
+| 3.1 | 最小二乘几何投影 | [网页](3_Linear_Least_Squares_Problems/00_3.1_Introduction.html) | [Python](3_Linear_Least_Squares_Problems/00_3.1_Introduction.py) | [MATLAB](3_Linear_Least_Squares_Problems/00_3.1_Introduction.m) |
+| 3.2.1 | 正规方程与 κ² | [网页](3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/00_3.2.1_Normal_Equations.html) | [Python](3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/00_3.2.1_Normal_Equations.py) | [MATLAB](3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/00_3.2.1_Normal_Equations.m) |
+| 3.2.2 | 薄 QR 与正交残差 | [网页](3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/01_3.2.2_QR_Decomposition.html) | [Python](3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/01_3.2.2_QR_Decomposition.py) | [MATLAB](3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/01_3.2.2_QR_Decomposition.m) |
+| 3.2.3 | SVD 与最小范数解 | [网页](3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/02_3.2.3_Singular_Value_Decomposition.html) | [Python](3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/02_3.2.3_Singular_Value_Decomposition.py) | [MATLAB](3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/02_3.2.3_Singular_Value_Decomposition.m) |
+| 3.3 | 残差相关的扰动理论 | [网页](3_Linear_Least_Squares_Problems/02_3.3_Perturbation_Theory_for_the_Least_Squares_Problem.html) | [Python](3_Linear_Least_Squares_Problems/02_3.3_Perturbation_Theory_for_the_Least_Squares_Problem.py) | [MATLAB](3_Linear_Least_Squares_Problems/02_3.3_Perturbation_Theory_for_the_Least_Squares_Problem.m) |
+
+科学审计重点：Thomas 无主元的条件；DGBTRF 与 SciPy 带存储区别；稀疏 Cholesky 填充随排序变化；Woodbury 小系统要求可逆；正规方程条件数平方；经济 QR 的矩阵形状；SVD 最小范数解的秩阈值；最小二乘扰动中的残差相关项。MATLAB 示例在真实 MATLAB 环境执行前仍视为未运行。

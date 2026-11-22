@@ -14,13 +14,14 @@
       "title": "Linear Equation Solving",
       "path": "2_Linear_Equation_Solving/00_2.1_Introduction.html",
       "status": "in-progress",
-      "deepened": 16
+      "deepened": 19
     },
     {
       "id": 3,
       "title": "Linear Least Squares Problems",
       "path": "3_Linear_Least_Squares_Problems/00_3.1_Introduction.html",
-      "status": "legacy"
+      "status": "in-progress",
+      "deepened": 5
     },
     {
       "id": 4,
@@ -192,6 +193,54 @@
       "title": "对称不定：LDLᵀ 与 2×2 主元",
       "path": "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices.html",
       "figure": "assets/diagrams/24-advanced.svg"
+    },
+    {
+      "id": "25",
+      "title": "带状矩阵与压缩存储",
+      "path": "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/02_2.7.3_Band_Matrices.html",
+      "figure": "assets/diagrams/25-next.svg"
+    },
+    {
+      "id": "26",
+      "title": "稀疏消元与图填充",
+      "path": "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/03_2.7.4_General_Sparse_Matrices.html",
+      "figure": "assets/diagrams/26-next.svg"
+    },
+    {
+      "id": "27",
+      "title": "Woodbury 低秩更新",
+      "path": "2_Linear_Equation_Solving/2.7_Special_Linear_Systems/04_2.7.5_Dense_Matrices_Depending_on_Fewer_Than_O(n²)_Parameters.html",
+      "figure": "assets/diagrams/27-next.svg"
+    },
+    {
+      "id": "28",
+      "title": "最小二乘几何投影",
+      "path": "3_Linear_Least_Squares_Problems/00_3.1_Introduction.html",
+      "figure": "assets/diagrams/28-next.svg"
+    },
+    {
+      "id": "29",
+      "title": "正规方程与 κ²",
+      "path": "3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/00_3.2.1_Normal_Equations.html",
+      "figure": "assets/diagrams/29-next.svg"
+    },
+    {
+      "id": "30",
+      "title": "薄 QR 与正交残差",
+      "path": "3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/01_3.2.2_QR_Decomposition.html",
+      "figure": "assets/diagrams/30-next.svg"
+    },
+    {
+      "id": "31",
+      "title": "SVD 与最小范数解",
+      "path": "3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem/02_3.2.3_Singular_Value_Decomposition.html",
+      "figure": "assets/diagrams/31-next.svg"
+    },
+    {
+      "id": "32",
+      "title": "残差相关的扰动理论",
+      "path": "3_Linear_Least_Squares_Problems/02_3.3_Perturbation_Theory_for_the_Least_Squares_Problem.html",
+      "figure": "assets/diagrams/32-next.svg"
     }
   ],
   "chapter6_modules": [
