@@ -1,0 +1,25 @@
+{
+  "chapter": "3.1",
+  "article": "最小二乘的几何原理：让数据落到模型的列空间",
+  "claims": [
+    {
+      "id": "ch28-0",
+      "source": "Demmel §3.1",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "verification": "assumptions and numerical examples"
+    },
+    {
+      "id": "ch28-1",
+      "source": "NumPy lstsq API",
+      "url": "https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html",
+      "verification": "assumptions and numerical examples"
+    },
+    {
+      "id": "ch28-2",
+      "source": "LAPACK DGELS",
+      "url": "https://www.netlib.org/lapack/explore-html/d8/d83/group__gels_gaa65298f8ef218a625e40d0da3c95803c.html",
+      "verification": "assumptions and numerical examples"
+    }
+  ],
+  "media_notice": "diagram is didactic rather than benchmark evidence"
+}

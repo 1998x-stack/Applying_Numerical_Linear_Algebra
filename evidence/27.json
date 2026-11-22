@@ -1,0 +1,25 @@
+{
+  "chapter": "2.7.5",
+  "article": "结构化稠密矩阵：元素全非零，为什么仍只需少量参数",
+  "claims": [
+    {
+      "id": "ch27-0",
+      "source": "Demmel §2.7.5",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "verification": "assumptions and numerical examples"
+    },
+    {
+      "id": "ch27-1",
+      "source": "LinearSolve Woodbury method",
+      "url": "https://docs.sciml.ai/LinearSolve/stable/tutorials/low_rank_updates/",
+      "verification": "assumptions and numerical examples"
+    },
+    {
+      "id": "ch27-2",
+      "source": "Berkeley numerical linear algebra notes",
+      "url": "https://stat243.berkeley.edu/fall-2024/units/unit10-linalg.html",
+      "verification": "assumptions and numerical examples"
+    }
+  ],
+  "media_notice": "diagram is didactic rather than benchmark evidence"
+}

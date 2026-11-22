@@ -1,0 +1,11 @@
+.next-lab{padding:20px;margin-top:20px;background:#fff;border:1px solid #c9ddd7;border-radius:16px;min-width:0}
+.next-lab label{display:block;font-weight:750;font-size:.94rem;margin:0 0 14px;color:#31565a}
+.next-lab input[type=range]{display:block;width:100%;max-width:620px;accent-color:#297c76;margin:15px 0;cursor:pointer}
+.next-lab input[type=range]:focus-visible{outline:3px solid #c9815b;outline-offset:4px}
+.next-lab output{display:block;font-size:.9rem;line-height:1.8;color:#2e585c;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.next-visual{margin:16px 0 12px;padding:8px;background:#fff;border:1px solid #d9e5e1;border-radius:13px;min-width:0}
+.next-visual svg{width:100%;height:auto;max-height:380px;display:block}
+.next-lab .source-note{font-size:.76rem;margin-bottom:0}
+@media(max-width:600px){.next-lab{padding:13px}.next-visual{padding:3px}.next-visual svg{max-height:none}}
+@media print{.next-lab{break-inside:avoid}}
+@media(prefers-reduced-motion:reduce){.next-lab *, .next-visual *{transition:none!important}}

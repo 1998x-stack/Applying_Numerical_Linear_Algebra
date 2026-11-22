@@ -1,0 +1,28 @@
+{
+  "chapter": "2.7.4",
+  "article": "稀疏消元的秘密：输入很稀疏，因子为什么会变稠密",
+  "claims": [
+    {
+      "id": "ch26-0",
+      "source": "Demmel §2.7.4",
+      "url": "https://doi.org/10.1137/1.9781611971446",
+      "scope": "mathematical assumptions / algorithm API",
+      "verification": "derivation and deterministic tests"
+    },
+    {
+      "id": "ch26-1",
+      "source": "SciPy splu + COLAMD",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.linalg.splu.html",
+      "scope": "mathematical assumptions / algorithm API",
+      "verification": "derivation and deterministic tests"
+    },
+    {
+      "id": "ch26-2",
+      "source": "Davis, Direct Methods for Sparse Linear Systems",
+      "url": "https://doi.org/10.1137/1.9780898718881",
+      "scope": "mathematical assumptions / algorithm API",
+      "verification": "derivation and deterministic tests"
+    }
+  ],
+  "media_notice": "diagram is didactic rather than benchmark evidence"
+}

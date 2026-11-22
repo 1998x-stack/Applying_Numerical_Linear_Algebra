@@ -1,8 +1,10 @@
-% 01_3.2.2_QR_Decomposition
-
-%
-
-%Lecture: 3_Linear_Least_Squares_Problems/3.2_Matrix_Factorizations_That_Solve_the_Linear_Least_Squares_Problem
-%Content: 01_3.2.2_QR_Decomposition
-
-%
+% Economy QR and projection for m>n.
+A=[1 0;1 1;1 2];b=[1;2;2];
+[Q,R]=qr(A,0);x=R\(Q'*b);
+r=b-A*x;
+fprintf('shapeQ=%dx%d, shapeR=%dx%d, orth=%.3e\n',size(Q),size(R),norm(Q'*Q-eye(2)));
+assert(isequal(size(Q),[3 2]));
+assert(isequal(size(R),[2 2]));
+assert(norm(Q*R-A)<1e-12);
+assert(norm(Q'*r)<1e-12);
+assert(norm(x-[7/6;1/2])<1e-12);
