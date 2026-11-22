@@ -1,36 +1,8 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>6.10.2 Overlapping Methods</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../../markdown.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>01_6.10.2_Overlapping_Methods</h1>
-<pre><code>Lecture: 6_Iterative_Methods_for_Linear_Systems/6.10_Domain_Decomposition
-Content: 01_6.10.2_Overlapping_Methods
-</code></pre>
-
-    <h3>Python 文件</h3>
-    <pre><code># 01_6.10.2_Overlapping_Methods
-
-"""
-Lecture: 6_Iterative_Methods_for_Linear_Systems/6.10_Domain_Decomposition
-Content: 01_6.10.2_Overlapping_Methods
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="允许多个子域共同拥有一部分自由度，可以把局部求解结果并行汇集成全局预条件修正。交叠区必须明确处理重复贡献，才能正确理解收敛与并行权衡。"><title>6.10.2 重叠区域分解：Additive Schwarz 如何组合局部校正 · 应用数值线性代数</title><link rel="stylesheet" href="../../assets/css/course.css"><script defer src="../../assets/js/course.js"></script></head><body class="article-page"><a href="#main" class="skip-link">跳到正文</a><header class="topbar"><a class="brand" href="../../index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>CHAPTER 06 · MULTIGRID &amp; DOMAIN DECOMPOSITION</small></span></a><nav class="top-nav" aria-label="主导航"><a href="../../index.html#chapter6-tail">学习路线</a><a href="../../README.md">README</a></nav></header><div class="reading-layout"><aside class="page-sidebar"><p class="sidebar-label">第六章 / 从 PDE 到子域</p><nav class="sidebar-nav" aria-label="本批文章"><a href="../6.9_Multigrid/01_6.9.2_Detailed_Description_of_Multigrid_on_One_Dimensional_Poisson’s_Equation.html">6.9.2 6.9.2 一维 Poisson 的完整多重网格 V-cycle</a><a href="../6.10_Domain_Decomposition/00_6.10.1_Nonoverlapping_Methods.html">6.10.1 6.10.1 非重叠区域分解</a><a href="../6.10_Domain_Decomposition/01_6.10.2_Overlapping_Methods.html" aria-current="page">6.10.2 6.10.2 重叠区域分解</a><a href="../../index.html#chapter3-least-squares">第三章：最小二乘</a></nav></aside><main class="article" id="main"><article><header class="article-header"><p class="eyebrow">独立推导 · 真实残差 · 数值实验</p><h1>6.10.2 重叠区域分解：Additive Schwarz 如何组合局部校正</h1><p class="article-lead">允许多个子域共同拥有一部分自由度，可以把局部求解结果并行汇集成全局预条件修正。交叠区必须明确处理重复贡献，才能正确理解收敛与并行权衡。</p></header>
+<section id="problem"><h2>问题从哪里来？</h2><p>把大线性系统切成不相交的块时，块间耦合只能经界面传递。重叠 Schwarz 则允许相邻子域共享节点：局部求解时包含一些“邻居”的信息，使每次局部修正越过原来的硬边界。与此同时，共享节点会收到多个子域的修正，未经考虑的累加可能改变步长，甚至使定点更新发散。</p></section>
+<section id="theory"><h2>推导：变量、算子和求解顺序</h2><p>对 SPD A∈Rⁿˣⁿ，令 R_i 为从全局向量抽取第 i 个子域自由度的限制矩阵，A_i=R_i A R_iᵀ 是局部主子矩阵。Additive Schwarz 预条件算子 M_AS⁻¹=Σ_i R_iᵀ A_i⁻¹ R_i；作用在真实残差 r=b−Ax 上，相当于并行求解 A_i z_i=R_i r 并将 R_iᵀ z_i 累加。由于每个主子矩阵 A_i SPD 且子域覆盖所有自由度，M_AS⁻¹ 也是 SPD；但无阻尼的 x←x+M_AS⁻¹r 未必收敛。数值示例采用固定的 ω=1/2，检查该具体模型的预条件谱与实测残差，而不把 ω=1/2 声称为通用选择。</p><div class="math-equation"><div class="math-scroll" role="region" aria-label="6.10.2 的数学关系式" tabindex="0"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msubsup><mi>M</mi><mtext>AS</mtext><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><msubsup><mi>R</mi><mi>i</mi><mi>T</mi></msubsup><msubsup><mi>A</mi><mi>i</mi><mrow><mo>−</mo><mn>1</mn></mrow></msubsup><msub><mi>R</mi><mi>i</mi></msub></mrow></math></div></div><figure class="figure-card"><svg viewBox="0 0 750 285" role="img" aria-labelledby="fig-6-10-2-title fig-6-10-2-desc"><title id="fig-6-10-2-title">6.10.2 重叠区域分解：Additive Schwarz 如何组合局部校正：流程与结构</title><desc id="fig-6-10-2-desc">Ω₁ 覆盖 0…4 → 重叠 2…4 → Ω₂ 覆盖 2…6 → 局部求解并相加，下方为离散结构的原创示意，不表示实测时间。</desc><path d="M174 121h25m-7-7 7 7-7 7" stroke="#238178" fill="none" stroke-width="2"/><path d="M355 121h25m-7-7 7 7-7 7" stroke="#238178" fill="none" stroke-width="2"/><path d="M536 121h25m-7-7 7 7-7 7" stroke="#238178" fill="none" stroke-width="2"/><rect x="22" y="83" width="150" height="78" rx="14" fill="#e2f0e9" stroke="#9ab8ae"/><text x="97" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="#2f5955">Ω₁ 覆盖 0…4</text><text x="97" y="144" text-anchor="middle" font-size="11" fill="#67817e">阶段 1</text><rect x="203" y="83" width="150" height="78" rx="14" fill="#e7eef8" stroke="#9ab8ae"/><text x="278" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="#2f5955">重叠 2…4</text><text x="278" y="144" text-anchor="middle" font-size="11" fill="#67817e">阶段 2</text><rect x="384" y="83" width="150" height="78" rx="14" fill="#e2f0e9" stroke="#9ab8ae"/><text x="459" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="#2f5955">Ω₂ 覆盖 2…6</text><text x="459" y="144" text-anchor="middle" font-size="11" fill="#67817e">阶段 3</text><rect x="565" y="83" width="150" height="78" rx="14" fill="#e7eef8" stroke="#9ab8ae"/><text x="640" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="#2f5955">局部求解并相加</text><text x="640" y="144" text-anchor="middle" font-size="11" fill="#67817e">阶段 4</text><g transform="translate(72,210)"><rect x="0" y="4" width="70" height="34" fill="#dcece6" stroke="#aac2b9"/><text x="35" y="26" text-anchor="middle">0</text><rect x="93" y="4" width="70" height="34" fill="#dcece6" stroke="#aac2b9"/><text x="128" y="26" text-anchor="middle">1</text><rect x="186" y="4" width="70" height="34" fill="#e5cab7" stroke="#aac2b9"/><text x="221" y="26" text-anchor="middle">2</text><rect x="279" y="4" width="70" height="34" fill="#e5cab7" stroke="#aac2b9"/><text x="314" y="26" text-anchor="middle">3</text><rect x="372" y="4" width="70" height="34" fill="#e5cab7" stroke="#aac2b9"/><text x="407" y="26" text-anchor="middle">4</text><rect x="465" y="4" width="70" height="34" fill="#dcece6" stroke="#aac2b9"/><text x="500" y="26" text-anchor="middle">5</text><rect x="558" y="4" width="70" height="34" fill="#dcece6" stroke="#aac2b9"/><text x="593" y="26" text-anchor="middle">6</text></g></svg><figcaption>Ω₁ 覆盖 0…4 → 重叠 2…4 → Ω₂ 覆盖 2…6 → 局部求解并相加。下方结构图与正文算例对应，颜色表示局部操作或不同子域，不表示无条件速度提升。</figcaption></figure></section>
+<section id="case"><h2>可复算的小型案例</h2><p>在 7×7 的一维三对角 SPD 系统（7 个未知量）取子域 Ω₁={0,1,2,3,4}，Ω₂={2,3,4,5,6}，交叠为三个自由度 {2,3,4}。使用局部 A_i 求解并累加每个残差校正，形成一个 7×7 对称预条件算子；计算 M_AS⁻¹ A 的全部特征值以确认本例 ω=1/2 的定点迭代满足 |1−ωλ|&lt;1。由 x=0 出发重复若干次，对比真实残差，并与直接解交叉验证；所有数据都是明确可复算的小型教学算例。</p></section>
+<section id="experiment"><h2>交互图解与代码验证</h2><div class="interactive-panel" data-demo-panel data-demo-kind="schwarz"><h3>改变参数，观察数学机制</h3><div class="control-row"><label for="demo-schwarz">重叠节点数</label><input id="demo-schwarz" data-demo-control type="range" min="1" max="5" step="1" value="3"></div><p class="demo-output" aria-live="polite" data-demo-output>正在计算示例……</p><div class="demo-meter"><span data-demo-meter style="display:block;height:8px;width:40%;background:#247b78;border-radius:8px"></span></div></div><p>改变两个子域的交叠节点数，观察被覆盖两次的自由度及预条件更新中的累加规模。该交互描述离散结构，不对所有系数和子域数的收敛速度作保证。</p><p>独立运行同名 Python 和 MATLAB/Octave 脚本，将真实残差及解析或直接求解结果作比较；本页的交互数值不代替严格的性能基准。</p></section>
+<section id="limits"><h2>什么时候不应直接套用？</h2><p>Additive Schwarz 在重叠节点处累加局部修正，若直接作为固定点迭代需控制阻尼；用作 CG 预条件时必须满足正定要求。交叠变宽并不总能让总运行时间更短：局部矩阵更大，通信和重合计算也会增加。大型问题还常需要全局粗空间来抑制跨子域的低频误差；单层方法的迭代次数可能随全局规模增长。</p></section>
+<section id="summary"><h2>总结</h2><p>重叠法把“共同看见邻近自由度”的能力转化为更强的局部信息传递，却不会自动免除对步长、通信和全局误差模式的分析。</p><h3>自我核对</h3><ol><li>为什么 A_i=R_i A R_iᵀ 不是直接截取原始方程的整个右端不变？</li><li>共享自由度会怎样影响加性更新？</li><li>单层 Schwarz 为什么可能需要再增加粗空间？</li></ol></section>
+<section id="references" class="references"><h2>来源与适用范围</h2><ol><li>James Demmel, <em>Applied Numerical Linear Algebra</em>, §6.10.2 (pp.352–357), overlapping domain decomposition / Schwarz methods；<a href="https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf">原书 PDF</a> 和 <a href="https://doi.org/10.1137/1.9781611971446">SIAM DOI</a>。</li></ol></section><footer class="article-footer"><a href="../../index.html#chapter6-tail">← 章节路线</a><a href="../../index.html#chapter3-least-squares">下一个专题 →</a></footer></article></main></div></body></html>
