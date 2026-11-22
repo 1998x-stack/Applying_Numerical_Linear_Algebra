@@ -176,6 +176,60 @@
         " 轮：最低二维正弦模态因子绝对值≈"+low.toFixed(5)+
         "，最高模态≈"+high.toExponential(3)+
         "。低频仍顽固，故需要粗网格校正；非两网格实测残差。";
+
+    } else if(kind==="vcycle"){
+      const cycles=Number(value),n=15;
+      function Ap(x){const h=1/(x.length+1),h2=h*h;return x.map((v,i)=>(2*v-(i?x[i-1]:0)-(i+1<x.length?x[i+1]:0))/h2);}
+      function mg(b,x){
+        const n=b.length,h=1/(n+1);
+        if(n===1)return [b[0]*h*h/2];
+        const smooth=a=>{const aa=Ap(a);return a.map((v,i)=>v+(2/3)*(h*h/2)*(b[i]-aa[i]));};
+        x=smooth(smooth(x));const aa=Ap(x),r=b.map((v,i)=>v-aa[i]),rc=[];
+        for(let j=1;j<n;j+=2)rc.push((r[j-1]+2*r[j]+r[j+1])/4);
+        const ec=mg(rc,Array(rc.length).fill(0)),e=Array(n).fill(0);
+        ec.forEach((v,i)=>e[2*i+1]=v);
+        for(let i=0;i<n;i+=2)e[i]=((i>0?e[i-1]:0)+(i+1<n?e[i+1]:0))/2;
+        return smooth(smooth(x.map((v,i)=>v+e[i])));
+      }
+      const truth=Array.from({length:n},(_,i)=>Math.sin(Math.PI*(i+1)/(n+1))),b=Ap(truth);
+      let x=Array(n).fill(0);for(let k=0;k<cycles;k++)x=mg(b,x);
+      const Ax=Ap(x),res=Math.sqrt(b.reduce((acc,v,i)=>acc+(v-Ax[i])**2,0));
+      output.textContent="1D Poisson 15→7→3→1 四层 V-cycle 执行 "+cycles+
+        " 次；真实残差 ||b−Ax||₂≈"+res.toExponential(5)+
+        "（b=A sin(πih)，每层前、后各两次加权 Jacobi）。";
+    } else if(kind==="substructure"){
+      const n=Number(value),k=(n-1)/2,S=2/(k+1);
+      output.textContent="一维 Poisson 共 "+n+" 个内部点，两子域各 "+k+" 个内部点，界面 1 个节点；Schur S=2/(k+1)≈"+
+      S.toFixed(6)+"。这是指定三对角模型的解析式。";
+    } else if(kind==="schwarz"){
+      const q=Number(value),last=3+Math.floor((q-1)/2),first=4-Math.ceil((q+1)/2);
+      output.textContent="n=7，Ω₁={0,…,"+last+"}、Ω₂={"+first+",…,6}；重叠节点序号 "+first+" 到 "+last+
+        " 共 "+q+" 个。Additive Schwarz 叠加局部修正，还需检查步长和谱。";
+    } else if(kind==="householder"){
+      const b=Number(value),r=Math.hypot(3,b);
+      output.textContent="x=(3,"+b.toFixed(1)+")，||x||₂="+r.toFixed(5)+
+        "；取 v=x+||x||e₁，反射 Hx=(−"+r.toFixed(5)+",0)，2-范数保持（精确算术）。";
+    } else if(kind==="givens"){
+      const b=Number(value),r=Math.hypot(3,b),c=3/r,s=b/r;
+      output.textContent="a=3、b="+b+"，r=hypot(a,b)="+r.toFixed(5)+"，c="+c.toFixed(5)+
+        "，s="+s.toFixed(5)+"；[[c,s],[−s,c]](a,b)ᵀ=(r,0)ᵀ。";
+    } else if(kind==="orthround"){
+      const p=Number(value),epsilon=10**(-p),approx=Math.sqrt(64/(20*epsilon*epsilon));
+      output.textContent="A=[1,1+εt]、ε=10⁻"+p+
+        " 的 κ₂(A) 小 ε 渐近估算≈"+approx.toExponential(4)+
+        "；正交 Q 的 κ₂(Q)=1；真实 ηQ 和 ηA 必须运行数值代码测量。";
+    } else if(kind==="orthogonal"){
+      const th=Number(value)*Math.PI/180,c=Math.cos(th),s=Math.sin(th);
+      const x=3*c-4*s,y=3*s+4*c;
+      output.textContent="旋转角 "+value+"°：Q(3,4)ᵀ≈("+x.toFixed(4)+","+y.toFixed(4)+
+        ")ᵀ；||Qx||₂=5、κ₂(Q)=1。";
+    } else if(kind==="tsvd"){
+      const tau=Number(value),keep=tau<0.02;
+      const length=keep?Math.sqrt(2):1,residual=keep?.1:Math.hypot(.1,.02);
+      output.textContent="Σ=(5,0.02,0)，阈值 τ="+tau.toFixed(2)+"：保留 "+
+        (keep?2:1)+" 个有效模态，||xτ||₂="+length.toFixed(5)+
+        "，真实 ||b−Axτ||₂="+residual.toFixed(5)+
+        "。保留规则是严格 σ>τ，τ=0.02 时不保留第二模态。";
     }
   }
 
