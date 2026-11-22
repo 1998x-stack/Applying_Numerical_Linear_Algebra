@@ -1,0 +1,34 @@
+{
+  "article": "3.4.1",
+  "article_title": "3.4.1 Householder 反射：用一次正交变换消掉整列的尾部",
+  "source": "James W. Demmel, Applied Numerical Linear Algebra",
+  "claims": [
+    {
+      "id": "3.4.1-textbook",
+      "claim": "对非零 x∈Rᵖ，令 α=sign(x₁)||x||₂（约定 x₁=0 时 sign 取 +1），v=x+αe₁，u=v/||v||₂。构造 Householder 矩阵 H=I−2uuᵀ。因为 uᵀu=1，所以 Hᵀ=H、H²=I，因而 HᵀH=I；进一步 Hx=−αe₁，尾部 p−1 个分量全为 0。选择与 x₁ 同号的 α 是为了避免 v=x−||x||e₁ 在 x 接近该方向时严重相消。对 A 的第一列先反射，再在余下行列的子矩阵递归进行，便获得 Householder QR；实际程序通常储存紧凑反射向量而不是显式构建完整 H。",
+      "kind": "textbook",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§3.4.1 (pp.119–121), Householder transformations and stable reflection construction",
+      "status": "verified",
+      "notes": "对照原书，完整推导和文字由本教程独立创作"
+    },
+    {
+      "id": "3.4.1-example",
+      "claim": "对 x=(3,4,0)ᵀ，||x||₂=5，取 v=x+5e₁=(8,4,0)ᵀ，u=(2/√5,1/√5,0)ᵀ。于是 H=I−2uuᵀ，满足 Hx=(−5,0,0)ᵀ、HᵀH=I 和 ||Hx||₂=||x||₂=5。数值代码使用矩阵断言验证上述三个等式，并测试再应用 H 一次能恢复 x。",
+      "kind": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§3.4.1 (pp.119–121), Householder transformations and stable reflection construction",
+      "status": "derived",
+      "notes": "配套 Python/MATLAB 小型确定性数值算例，包含断言"
+    },
+    {
+      "id": "3.4.1-scope",
+      "claim": "H 的构造要求 x 非零；对零向量无需构造反射。为避免极大或极小输入在计算范数时溢出/下溢，实际库通常使用缩放的稳定范数算法。复数情形要用共轭转置并调整相位，不可机械沿用实数 sign。Householder QR 一般数值稳定，但在接近秩亏时参数敏感度仍由问题本身决定。",
+      "kind": "scope",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§3.4.1 (pp.119–121), Householder transformations and stable reflection construction",
+      "status": "verified",
+      "notes": "限定输入条件和浮点环境，不冒充硬件实测"
+    }
+  ]
+}

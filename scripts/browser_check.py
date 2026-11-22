@@ -9,6 +9,7 @@ from __future__ import annotations
 import http.server
 import socket
 import threading
+from urllib.parse import quote
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -40,6 +41,14 @@ ARTICLES = [
     BASE + "6.7_Fast_Fourier_Transform/03_6.7.4_Computing_the_Fast_Fourier_Transform.html",
     BASE + "07_6.8_Block_Cyclic_Reduction.html",
     BASE + "6.9_Multigrid/00_6.9.1_Overview_of_Multigrid_on_Two_Dimensional_Poisson’s_Equation.html",
+    "6_Iterative_Methods_for_Linear_Systems/6.9_Multigrid/01_6.9.2_Detailed_Description_of_Multigrid_on_One_Dimensional_Poisson’s_Equation.html",
+    "6_Iterative_Methods_for_Linear_Systems/6.10_Domain_Decomposition/00_6.10.1_Nonoverlapping_Methods.html",
+    "6_Iterative_Methods_for_Linear_Systems/6.10_Domain_Decomposition/01_6.10.2_Overlapping_Methods.html",
+    "3_Linear_Least_Squares_Problems/3.4_Orthogonal_Matrices/00_3.4.1_Householder_Transformations.html",
+    "3_Linear_Least_Squares_Problems/3.4_Orthogonal_Matrices/01_3.4.2_Givens_Rotations.html",
+    "3_Linear_Least_Squares_Problems/3.4_Orthogonal_Matrices/02_3.4.3_Roundoff_Error_Analysis_for_Orthogonal_Matrices.html",
+    "3_Linear_Least_Squares_Problems/3.4_Orthogonal_Matrices/03_3.4.4_Why_Orthogonal_Matrices?.html",
+    "3_Linear_Least_Squares_Problems/3.5_Rank_Deficient_Least_Squares_Problems/00_3.5.1_Solving_Rank_Deficient_Least_Squares_Problems_Using_the_SVD.html",
 ]
 VIEWPORTS = [(1440, 900), (768, 1024), (390, 844), (360, 800)]
 SCREENSHOTS = ROOT / ".artifacts" / "browser"
@@ -75,7 +84,7 @@ def main() -> int:
                 bad_responses: list[str] = []
                 page.on("pageerror", lambda error: page_errors.append(str(error)))
                 page.on("response", lambda response: bad_responses.append(f"{response.status} {response.url}") if response.status >= 400 else None)
-                url = f"http://127.0.0.1:{server.server_port}/{article}"
+                url = f"http://127.0.0.1:{server.server_port}/{quote(article, safe='/')}"
                 response = page.goto(url, wait_until="networkidle")
                 if response is None or not response.ok:
                     errors.append(f"{article}: failed to load ({response.status if response else 'no response'})")

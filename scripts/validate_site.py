@@ -3,6 +3,7 @@
 from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 import re
 import sys
 
@@ -78,7 +79,7 @@ def check_file(path: Path, require_math: bool = True) -> list[str]:
             if target.startswith(("http://", "https://")) and ("cdnjs" in target or "polyfill.io" in target or "mathjax" in target.lower()):
                 errors.append(f"{path.name}: remote runtime dependency {target}")
             continue
-        local = (path.parent / target.split("#",1)[0]).resolve()
+        local = (path.parent / unquote(urlsplit(target).path)).resolve()
         if target and not local.exists(): errors.append(f"{path.name}: missing local target {target}")
     if re.search(r"讲义(介绍|指出|提到)|本节主要讨论|原创图解.*单文件", text):
         errors.append(f"{path.name}: process narration or banned boilerplate")
