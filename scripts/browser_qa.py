@@ -159,6 +159,20 @@ def main() -> int:
                                         failures.append(f"{rel}: numeric model failed to draw comparison bars")
                                     elif not rows.first.locator(".model-fill").get_attribute("style"):
                                         failures.append(f"{rel}: numeric model bar has no computed geometry")
+                                # The four graphical deep dives must redraw SVG geometry.
+                                lab_kind = lab.get_attribute("data-advanced-lab")
+                                if lab_kind in ("gemm", "blockedlu", "roofline", "indefinite"):
+                                    drawing = lab.locator("[data-dynamic-svg]")
+                                    if drawing.count() != 1 or drawing.locator("svg").count() != 1:
+                                        failures.append(f"{rel}: missing live domain-specific SVG")
+                                    else:
+                                        fingerprint = drawing.get_attribute("data-model-fingerprint")
+                                        if fingerprint != f"{lab_kind}:{slider.get_attribute('max')}":
+                                            failures.append(f"{rel}: SVG did not redraw with changed parameter")
+                                        bbox = drawing.locator("svg").bounding_box()
+                                        if bbox is None or bbox["width"] <= 0 or bbox["height"] <= 0:
+                                            failures.append(f"{rel}: live SVG geometry is empty")
+
 
                             # Keyboard focus must move through native controls.
                             first = page.locator("[data-demo-control]").first
