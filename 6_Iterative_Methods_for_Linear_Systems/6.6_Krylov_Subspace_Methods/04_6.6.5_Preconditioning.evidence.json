@@ -1,0 +1,33 @@
+{
+  "article": "6.6.5",
+  "article_title": "6.6.5 预条件：让难解的方程拥有更好的谱",
+  "claims": [
+    {
+      "id": "6.6.5-theory",
+      "claim": "引入对称正定 M，令 C=M^(−1/2) A M^(−1/2)，y=M^(1/2)x。于是 Cy=M^(−1/2)b 是与原问题等价的 SPD 系统。虽然常写成 M^(−1)Ax=M^(−1)b，但 M^(−1)A 一般不对称，不能在它上面直接套普通 Euclidean-CG。预条件 CG 使用 r=b−Ax，解 Mz=r，再令搜索方向基于 z 而非 r，内积使用 rᵀz。理想 M≈A，但 M=A 会令每轮的辅助求解与原问题同样困难；M=I 则完全没有改善。有效预条件器必须同时兼顾谱与辅助求解代价。",
+      "kind": "textbook",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.6.5, Algorithm 6.12 and SPD equivalence",
+      "notes": "限定原书陈述的假设，文章为独立中文叙事"
+    },
+    {
+      "id": "6.6.5-demo",
+      "claim": "取 A=diag(1,100,4,400)，b=(1,1,1,1)ᵀ。原矩阵的 2-范数条件数是 400；选 Jacobi 预条件器 M=diag(A)=A，则 M^(−1/2)AM^(−1/2)=I，理论条件数成为 1。这个例子故意极端：预条件步骤恰好把对角系统直接解掉，因而只用来核查预条件的代数，不意味着同样手段对带强非对角耦合的大矩阵有相同效果。",
+      "kind": "derived",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.6.5, Algorithm 6.12 and SPD equivalence",
+      "notes": "独立可复算微型例子，同名 Python/MATLAB 附有断言"
+    },
+    {
+      "id": "6.6.5-limits",
+      "claim": "一般 SPD 矩阵使用 SPD 预条件器可保留预条件 CG 的理论基础；非对称或不定 M 不能套用标准 PCG。不要在实际代码中形成 M 的逆矩阵，使用求解器或算子实现 Mz=r。条件数小并非充分的运行时性能指标；预条件建立成本、并行程度和内存同样重要。",
+      "kind": "scope",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.6.5, Algorithm 6.12 and SPD equivalence",
+      "notes": "不把理论收敛/复杂度冒充真实硬件测量"
+    }
+  ]
+}

@@ -90,3 +90,17 @@
 - 2.7.2 对称不定：LDLᵀ 与 2×2 主元：HTML / MD / Python / MATLAB / SVG 与 evidence/24.json，路径 2_Linear_Equation_Solving/2.7_Special_Linear_Systems/01_2.7.2_Symmetric_Indefinite_Matrices
 
 本批深度门禁：每篇对照数学假设、可调可视化和代码测试；新增 tests/test_chapter2_advanced.py（18 项）。原 Chapter 6 的 16 篇深化成果保留。合并后的课程合计 40 篇深度文章。Pages/CI 须按对应 SHA 的结果记录。
+
+
+## 第六批：第六章 6.6.5–6.9.1（2026-11-22）
+
+- 6.6.5 预条件：让困难的 SPD 系统拥有更好的谱：HTML / Markdown / Python / MATLAB / 原生 MathML / SVG / evidence
+- 6.6.6 GMRES：非对称系统的残差最小化：HTML / Markdown / Python / MATLAB / 原生 MathML / SVG / evidence
+- 6.7.1 离散 Fourier 变换 DFT 的方向与能量：HTML / Markdown / Python / MATLAB / 原生 MathML / SVG / evidence
+- 6.7.2 连续/离散 Poisson 的正弦谱求解：HTML / Markdown / Python / MATLAB / 原生 MathML / SVG / evidence
+- 6.7.3 卷积定理、线性卷积和补零：HTML / Markdown / Python / MATLAB / 原生 MathML / SVG / evidence
+- 6.7.4 radix-2 FFT 与蝶形递归：HTML / Markdown / Python / MATLAB / 原生 MathML / SVG / evidence
+- 6.8 块循环约化与 Schur 补：HTML / Markdown / Python / MATLAB / 原生 MathML / SVG / evidence
+- 6.9.1 二维 Poisson 的两网格纠错：HTML / Markdown / Python / MATLAB / 原生 MathML / SVG / evidence
+
+全站 48 篇，其中第六章 24 篇；CI/Pages 只按实际成功的 workflow 和 SHA 更新发布状态。强调 PCG 必须保留 SPD 理论条件、GMRES 的真残差与 Arnoldi 内部残差区分、DST-I 与周期 DFT 边界差别、BCR 的 Schur 填充，以及多重网格重新离散与 Galerkin 粗算子的不同。

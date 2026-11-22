@@ -39,7 +39,7 @@
       "title": "Iterative Methods for Linear Systems",
       "path": "6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html",
       "status": "in-progress",
-      "deepened": 16
+      "deepened": 24
     },
     {
       "id": 7,
@@ -289,6 +289,54 @@
       "id": "6.6.4",
       "title": "CG 的 A-范数误差界",
       "path": "6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods/03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.6.5",
+      "title": "预条件：让困难的 SPD 系统拥有更好的谱",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods/04_6.6.5_Preconditioning.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.6.6",
+      "title": "GMRES：非对称系统的残差最小化",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.6_Krylov_Subspace_Methods/05_6.6.6_Other_Krylov_Subspace_Algorithms_for_Solving_Ax_=b.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.7.1",
+      "title": "离散 Fourier 变换 DFT 的方向与能量",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.7_Fast_Fourier_Transform/00_6.7.1_The_Discrete_Fourier_Transform.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.7.2",
+      "title": "连续/离散 Poisson 的正弦谱求解",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.7_Fast_Fourier_Transform/01_6.7.2_Solving_the_Continuous_Model_Problem_Using_Fourier_Series.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.7.3",
+      "title": "卷积定理、线性卷积和补零",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.7_Fast_Fourier_Transform/02_6.7.3_Convolutions.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.7.4",
+      "title": "radix-2 FFT 与蝶形递归",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.7_Fast_Fourier_Transform/03_6.7.4_Computing_the_Fast_Fourier_Transform.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.8",
+      "title": "块循环约化与 Schur 补",
+      "path": "6_Iterative_Methods_for_Linear_Systems/07_6.8_Block_Cyclic_Reduction.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.9.1",
+      "title": "二维 Poisson 的两网格纠错",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.9_Multigrid/00_6.9.1_Overview_of_Multigrid_on_Two_Dimensional_Poisson’s_Equation.html",
       "status": "enhanced"
     }
   ]

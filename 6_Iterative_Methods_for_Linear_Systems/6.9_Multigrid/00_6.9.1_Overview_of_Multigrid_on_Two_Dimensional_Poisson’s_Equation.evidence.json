@@ -1,0 +1,33 @@
+{
+  "article": "6.9.1",
+  "article_title": "6.9.1 多重网格：让细网格难消除的误差在粗网格上变简单",
+  "claims": [
+    {
+      "id": "6.9.1-theory",
+      "claim": "两网格步骤包括：(1) 在细网格做少量加权 Jacobi 平滑，去掉高频误差；(2) 计算细网格真实残差 r_h=b_h−A_h x_h；(3) 用全加权限制 R 把残差传至粗网格 r_H=Rr_h，在粗网格求解 A_H e_H=r_H；(4) 使用双线性插值 P 把粗网格误差延拓回细网格，x_h←x_h+Pe_H；(5) 再做平滑。对于二维规则五点模板，中心 4/16、四条轴向邻居各 2/16、四角各 1/16 是常见 full-weighting 限制；本文代码取直接重新离散得到的 A_H，而不是与 Galerkin 算子 R A_h P 混为一谈。",
+      "kind": "textbook",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.9.1, two-dimensional Poisson multigrid overview and Figures 6.9–6.12",
+      "notes": "依据教材对应章节数学结构，图示和文字独立创作"
+    },
+    {
+      "id": "6.9.1-demo",
+      "claim": "选细网格 N=7（内部点 7×7），h=1/8；与之嵌套的粗网格 N_H=3，H=1/4。令真离散解的网格值为 u*(x_i,y_j)=sin(πx_i)sin(πy_j)，先通过五点模板构造 b_h=A_h u*，确保“真实离散解”有明确基准。从零初值出发做两轮 ω=2/3 的加权 Jacobi，限制残差、求解 3×3 粗网格误差、延拓，再做两轮平滑。记录操作前后 ||b_h−A_hx_h||₂，并与直接解或 u* 核对；这是一个可复算的两网格 cycle，不是完整多级 V-cycle 的性能实验。",
+      "kind": "derived",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.9.1, two-dimensional Poisson multigrid overview and Figures 6.9–6.12",
+      "notes": "NumPy 数值断言验证指定算例，不宣称 benchmark"
+    },
+    {
+      "id": "6.9.1-limits",
+      "claim": "多重网格的好坏取决于算子、平滑器、粗网格定义、限制/延拓及粗解精度；“O(n)”是对合适模型、收敛因子和算法配置的复杂度目标，而不是所有 PDE 或非结构网格的保证。代码用 NumPy 的稠密粗网格矩阵解小型 3×3 问题，只说明几何两网格机制。泛化到大规模问题应使用稀疏矩阵、真正的多级循环与必要的边界处理。",
+      "kind": "scope",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.9.1, two-dimensional Poisson multigrid overview and Figures 6.9–6.12",
+      "notes": "准确区分推广条件和算法复杂度"
+    }
+  ]
+}

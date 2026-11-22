@@ -1,0 +1,33 @@
+{
+  "article": "6.7.2",
+  "article_title": "6.7.2 从连续 Fourier 正弦级数到离散 Poisson 快速求解",
+  "claims": [
+    {
+      "id": "6.7.2-theory",
+      "claim": "在连续模型中，把 f(x)=Σ_{j≥1} f_j sin(jπx)，其中 f_j=2∫₀¹f(x)sin(jπx)dx。由于 −d²/dx² sin(jπx)=j²π²sin(jπx)，所以 u(x)=Σ_{j≥1}[f_j/(j²π²)]sin(jπx)。离散时令内部点 i=1,…,N，h=1/(N+1)，T_N=tridiag(−1,2,−1)，A_h=T_N/h²；离散正弦模态 s_j(i)=sin(ijπ/(N+1)) 对应特征值 λ_{j,h}=4h⁻²sin²(jπ/(2(N+1)))。逐模态除以 λ_{j,h}，再逆变换即可求解离散系统。零 Dirichlet 对应正弦变换 DST-I，而不是直接使用周期 DFT 的特征值。",
+      "kind": "textbook",
+      "status": "verified",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.7.2, equations (6.48)–(6.49) and §6.7 Poisson eigendecomposition",
+      "notes": "限定原书陈述的假设，文章为独立中文叙事"
+    },
+    {
+      "id": "6.7.2-demo",
+      "claim": "令真实连续解 u(x)=sin(πx)，于是 f(x)=π²sin(πx)。对 N 个网格点，右端 f_h=π² s₁；离散算子作用于同一向量得到 A_h s₁=λ_{1,h}s₁，所以离散解精确地等于 (π²/λ_{1,h})s₁。它一般不等于 s₁，但当 h→0，λ_{1,h}→π²，振幅误差按 O(h²) 缩小。这也清楚区分了“离散系统求解误差”和“PDE 离散化误差”。",
+      "kind": "derived",
+      "status": "derived",
+      "source_url": "https://www.stat.uchicago.edu/~lekheng/courses/309/books/Demmel.pdf",
+      "locator": "§6.7.2, equations (6.48)–(6.49) and §6.7 Poisson eigendecomposition",
+      "notes": "独立可复算微型例子，同名 Python/MATLAB 附有断言"
+    },
+    {
+      "id": "6.7.2-limits",
+      "claim": "连续正弦级数的正确性要求给定的边界条件以及适当的 f 函数空间与展开意义；数值实验使用光滑的单模态输入。若边界是周期或 Neumann 条件，要换不同的变换与零模态处理；若系数变化或网格不规则，算子不再简单被同一正弦基对角化。SciPy 的 scipy.fft.dst(type=1,norm='ortho') 可计算该离散正弦基的正交变换；脚本仅使用 NumPy 构造显式基核查数学，不声称它具备 FFT 的复杂度。",
+      "kind": "scope",
+      "status": "verified",
+      "source_url": "https://doi.org/10.1137/1.9781611971446",
+      "locator": "§6.7.2, equations (6.48)–(6.49) and §6.7 Poisson eigendecomposition",
+      "notes": "不把理论收敛/复杂度冒充真实硬件测量"
+    }
+  ]
+}
