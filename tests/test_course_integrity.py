@@ -26,6 +26,14 @@ STEMS = [
     "6.6_Krylov_Subspace_Methods/01_6.6.2_Solving_Ax_=b_Using_the_Krylov_Subspace_Kk",
     "6.6_Krylov_Subspace_Methods/02_6.6.3_Conjugate_Gradient_Method",
     "6.6_Krylov_Subspace_Methods/03_6.6.4_Convergence_Analysis_of_the_Conjugate_Gradient_Method",
+    "6.6_Krylov_Subspace_Methods/04_6.6.5_Preconditioning",
+    "6.6_Krylov_Subspace_Methods/05_6.6.6_Other_Krylov_Subspace_Algorithms_for_Solving_Ax_=b",
+    "6.7_Fast_Fourier_Transform/00_6.7.1_The_Discrete_Fourier_Transform",
+    "6.7_Fast_Fourier_Transform/01_6.7.2_Solving_the_Continuous_Model_Problem_Using_Fourier_Series",
+    "6.7_Fast_Fourier_Transform/02_6.7.3_Convolutions",
+    "6.7_Fast_Fourier_Transform/03_6.7.4_Computing_the_Fast_Fourier_Transform",
+    "07_6.8_Block_Cyclic_Reduction",
+    "6.9_Multigrid/00_6.9.1_Overview_of_Multigrid_on_Two_Dimensional_Poisson’s_Equation",
 ]
 
 

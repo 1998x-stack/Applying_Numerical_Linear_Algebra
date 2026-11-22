@@ -107,3 +107,11 @@
 - GEMM C←AB+C 理想强制流量四个 double 矩阵读写流：32n² 字节，理论强度 n/16 FLOP/byte，相关文本、公式、JS、Python 同步。
 - 保留并行合并的第六章 SOR / Krylov / CG 内容及 16 篇独立验收，不覆盖它们的首页和课程索引。
 - 最终 CI 和 Pages 成功与否须通过 Actions 核验。
+
+
+## Chapter 6 PCG / GMRES / FFT / BCR / MG 第六批验收
+
+- 8 篇在原章节路径的 HTML、MD、Python、MATLAB 和独立证据文件；首页、README 和 courses.json 同步统计 48 篇。
+- 关键跨检查：PCG 对称变换；Arnoldi 正交化及真残差；Parseval 和逆 DFT；连续/离散正弦特征值；补零长度至少 m+n−1；radix-2 直接与库 FFT 对照；Schur 补与直接求解；两网格残差前后比较。
+- 纳入静态完整性、24 篇第六章的 Chromium 四视口交互与资源验证；测试结果以最新 Actions 为准。
+- MATLAB/Octave 同名脚本仅做算法对照，若未在 MATLAB 环境运行，标为 not verified。

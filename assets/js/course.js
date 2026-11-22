@@ -133,6 +133,49 @@
       output.textContent="假设 SPD 条件数 κ="+kappa+"，取 k=10：CG 的 A-范数误差比最坏界 2q¹⁰ ≈ "+
         (2*Math.pow(q,10)).toFixed(6)+"，其中 q="+q.toFixed(5)+
         "。这是理论上界，不是普通残差 2-范数比，也不是任何特定矩阵的实测值。";
+
+    } else if (kind==="pcg") {
+      const max=Number(value);
+      output.textContent="对角 SPD 示例 A=diag(1,4,10,"+max+")：κ₂(A)="+Math.max(max,10)+
+        "；取 M=diag(A) 后 C=I，κ₂(C)=1。该等式只在此对角案例中成立。";
+    } else if (kind==="gmres") {
+      const k=Number(value),vals=[3.7416573868,2.1340611208,1.4852213145,0];
+      output.textContent="非对称上三角 3×3 模型，满 GMRES 的 Krylov 维数 k="+k+
+        "，真实残差 ||b−Axₖ||₂≈"+vals[k].toFixed(6)+
+        "。这些值取自对应微型算例，不代表重启 GMRES 的通用曲线。";
+    } else if (kind==="dft") {
+      const k=Number(value),cs=["3","1−2i","−1","1+2i"],amp=[3,Math.sqrt(5),1,Math.sqrt(5)];
+      output.textContent="x=(1,2,0,0)，N=4；频率 j="+k+" 的 Xⱼ="+cs[k]+
+        "，|Xⱼ|="+amp[k].toFixed(5)+"。Σ|Xⱼ|²/N=5=Σ|xₖ|²。";
+    } else if (kind==="sine") {
+      const n=Number(value),h=1/(n+1),lambda=4*Math.sin(Math.PI/(2*(n+1)))**2/h**2;
+      output.textContent="N="+n+"，h="+h.toFixed(5)+
+        "：首个离散正弦模态的 λ₁,h="+lambda.toFixed(6)+
+        "；连续 π²="+(Math.PI*Math.PI).toFixed(6)+
+        "；振幅相对差 |π²/λ−1|="+Math.abs(Math.PI**2/lambda-1).toExponential(4)+"。";
+    } else if (kind==="convolution") {
+      const n=Number(value),sequence=n===3?"(0, 1, −1)":"(1, 1, −1, −1)";
+      output.textContent="a=(1,2,1)，b=(1,−1)，L="+n+
+        "。"+(n>=4?"补零足够：IFFT/FFT 的前 4 项是线性卷积 ":"补零不足：末端的 −1 回绕，循环卷积变为 ")+sequence+
+        "。线性结果始终是 (1,1,−1,−1)。";
+    } else if (kind==="fft") {
+      const m=Number(value),n=2**m;
+      output.textContent="radix-2 的 N=2^"+m+"="+n+
+        "；递归层数="+m+"；每层 N/2="+n/2+
+        " 个蝶形，总数="+n*m/2+"。这是运算图计数，不是实际用时。";
+    } else if (kind==="bcr") {
+      const n=Number(value),blocks=Math.floor(n/2);
+      output.textContent="二维 N×N 内部网格，N="+n+"，原有 "+n*n+
+        " 个未知量。一次交替块行消元保留 "+blocks+
+        " 个宽度 N 的块，即 "+n*blocks+" 个未知量。Schur 块可能变稠密。";
+    } else if (kind==="mg") {
+      const nu=Number(value),c=Math.cos(Math.PI/8);
+      const low=Math.abs(1-(2/3)*(1-c))**nu;
+      const high=Math.abs(1-(2/3)*(1+c))**nu;
+      output.textContent="N=7 Dirichlet Poisson、ω=2/3 加权 Jacobi 作用 "+nu+
+        " 轮：最低二维正弦模态因子绝对值≈"+low.toFixed(5)+
+        "，最高模态≈"+high.toExponential(3)+
+        "。低频仍顽固，故需要粗网格校正；非两网格实测残差。";
     }
   }
 
