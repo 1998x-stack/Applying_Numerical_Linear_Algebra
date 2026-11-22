@@ -16,3 +16,7 @@
 - Numerical correction: for p(x)=2x^3−6x^2+2x−1 at x=3, the correctly indexed coefficient sum is 115, |p(3)|=5, so κ_p(3)=23.
 - Validation status: awaiting pull-request Actions. MATLAB scripts are not claimed as executed in MATLAB; Pages is not claimed published until deployment and live URL are checked.
 - PR/commit: pending.
+
+
+- CI first attempt: workflow run 44982406159 failed because the static validator incorrectly required MathML on the course homepage. The homepage intentionally has no mathematical formula. Validator scope corrected; rerun pending.
+- QR least-squares explanation clarified: distinguish full QR from economy QR and include the orthogonal-complement residual term Q₂* b.
