@@ -96,9 +96,9 @@ def main() -> int:
                     page.screenshot(path=str(SCREENSHOTS / f"{index:02d}_{width}.png"), full_page=True)
 
                 if article == "index.html":
-                    search = page.locator("[data-course-search]")
-                    search.fill("6.5.1")
-                    if page.locator("[data-course-list] a:visible").count() != 1:
+                    search = page.locator("[data-search]")
+                    search.fill("Gauss–Seidel")
+                    if page.locator("[data-filter-item]:visible").count() != 1:
                         errors.append("homepage: search filtering did not narrow to one entry")
                 else:
                     control = page.locator("[data-demo-control]").first

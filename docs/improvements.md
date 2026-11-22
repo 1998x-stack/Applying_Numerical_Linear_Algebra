@@ -3,22 +3,36 @@
 ### 2026-11-05 13:17 UTC — ChatGPT Portfolio Iteration
 - Run ID: 20261105T131752Z-anla-8246
 - Repo / Base SHA: 1998x-stack/Applying_Numerical_Linear_Algebra @ a4b0858e7d085216e0dd3db5a96075b4f8865aeb
-- Historical context: First initialization; default-branch docs/improvements.md returned GitHub 404; no prior PRs returned by search. Default branch last observed 2026-10-01.
-- Product problem & expected user value: Numerical linear algebra learners calling bisection on an interval without a sign change receive a plausible but false root, and endpoint roots can be missed. Fail explicitly instead of teaching incorrect answers.
-- Engineering diagnosis & evidence: 1_Introduction/03_1.4_Example:_Polynomial_Evaluation.py: polynomial_root_bisection omitted bracket validation and endpoint handling; old [1,0,1] on [0,3] returned approximately 3 despite no real root, and [1,-1] on [1,3] returned approximately 3 instead of 1. Secondary candidate: polynomial_condition_number pairs descending coefficients with ascending powers (unfixed). Third candidate: horner_method empty coefficients raises IndexError without explicit contract (unfixed).
-- Options & decision: Bracket validation (user 5 + correctness 5 + evidence 5 + testability 5 - cost 1 - risk 1 = 18); condition number coefficient order (5+5+4+4-2-2=14); empty coefficients contract (3+3+5+5-1-1=14). Selected bracket fix as isolated correctness defect.
-- Changes: 1_Introduction/03_1.4_Example:_Polynomial_Evaluation.py validates positive tolerance and ordered interval, handles roots at endpoints, requires sign change, maintains cached f_low. tests/test_polynomial_bisection.py adds four regression scenarios. Public function signature unchanged; invalid inputs now raise ValueError.
-- Validation: B — original logic locally reproduced wrong outputs for nonbracketing and endpoint cases. A (limited) — local Python unittest executed four equivalent isolated cases, all passed; repository test file was not executed against a full checkout, so classify it D pending checkout verification. C — GitHub branch source and test files read back successfully. No CI or browser E2E claimed.
-- Security & regression review: No dependencies, credentials, workflow, permissions, deployment, or production data changed. Review of isolated patch shows no unrelated edits; branch integration tests remain outstanding.
-- Risk & rollback: Callers relying on silent invalid-bracket results will now receive ValueError, an intentional correctness contract change. Revert PR/commit before merge to restore old behavior.
-- Follow-up: Run python -m unittest discover -s tests -p 'test_polynomial_bisection.py' on full checkout, then fix polynomial_condition_number coefficient ordering with independent tests.
-- Commit: a64c74968587536f0892e70c0a4ae2b98412b2a9; a9684103d316951c8069690bf5dc1fbe1994e6cb
-- PR: https://github.com/1998x-stack/Applying_Numerical_Linear_Algebra/pull/1
+- Product problem & expected user value: invalid polynomial bisection brackets could return false roots and endpoint roots could be missed.
+- Changes: validate ordered endpoints, positive tolerance, endpoint roots and sign-changing bracket; add regression tests.
+- Validation: isolated tests passed; full checkout/CI was not verified in that iteration.
+- Follow-up: correct polynomial_condition_number coefficient ordering with independent tests.
+- PR: https://github.com/1998x-stack/Applying_Numerical_Linear_Algebra/pull/1 (merged 2026-11-06).
 
-### 2026-11-22 — Chapter 6 foundations and course portal
-- Scope: repository navigation, course homepage, README, authoring standards, quality gates, GitHub Pages workflow, and eight independent modules in Chapter 6.
-- Content modules: 6.1 iterative-solver problem and stopping rules; 6.2 solver/software selection; 6.3.1 one-dimensional Poisson discretization; 6.3.2 two-dimensional five-point stencil; 6.3.3 Kronecker representation; 6.4 model-problem method comparison; 6.5.1 Jacobi; 6.5.2 Gauss–Seidel.
-- Technical review: signs and scaling for the `-Δ` operator; Dirichlet boundary conditions; interior-grid dimensions; column-major `vec` convention; Kronecker-sum identity; stationary-iteration spectral-radius criterion; model-specific red-black Gauss–Seidel relationship.
-- Cross-validation plan: Python regression tests compare the matrix-free two-dimensional stencil with the Kronecker-sum operator, verify residual reduction for Jacobi and Gauss–Seidel, and check stopping-rule/solver-selection behavior. Browser QA covers 1440, 768, 390 and 360 CSS-pixel viewports, SVG geometry and one live interaction per article.
-- Publishing: branch `anla/iterative-methods-foundations`; merge only after code and browser checks are reviewed. Pages deployment is considered live only after the GitHub Actions deployment succeeds.
-- Validation status at authoring time: not yet executed; final release record must be updated with actual CI/browser results and commit SHA.
+### 2026-11-22 — First chapter content and engineering upgrade
+- Scope: first eight Chapter 1 lessons (1.1, 1.2, 1.3.1–1.3.5, 1.4), course portal, README, AGENTS.md, evidence ledgers, Python/MATLAB examples, validation and Pages workflows.
+- Diagnosis: legacy pages depended on remote MathJax/polyfill/CDN; several Python and MATLAB examples were placeholders; polynomial condition number paired descending coefficients with ascending powers; introductory explanations overgeneralized LU, SVD and roundoff claims.
+- Changes: preserve public lesson paths; add native MathML, eight original SVG diagrams, interactive demos, Python/MATLAB counterparts, per-lesson evidence JSON, tests, static/browser QA scripts, and a Pages-only build excluding PDF and executable source files.
+- Numerical correction: for p(x)=2x^3−6x^2+2x−1 at x=3, the correctly indexed coefficient sum is 115, |p(3)|=5, so κ_p(3)=23.
+- Validation status: awaiting pull-request Actions. MATLAB scripts are not claimed as executed in MATLAB; Pages is not claimed published until deployment and live URL are checked.
+- PR/commit: pending.
+
+
+- CI first attempt: workflow run 44982406159 failed because the static validator incorrectly required MathML on the course homepage. The homepage intentionally has no mathematical formula. Validator scope corrected; rerun pending.
+- QR least-squares explanation clarified: distinguish full QR from economy QR and include the orthogonal-complement residual term Q₂* b.
+
+- CI second attempt: static validation passed; one Python test exposed an API keyword mismatch (`np.linalg.cond` accepts `p`, not `ord`). Updated the wrapper to use `p=ord`; rerun pending.
+
+- CI browser QA found a 390/360 px overflow caused by the responsive grid's automatic min-content track sizing. Changed the mobile track to minmax(0, 1fr), set grid children to min-width:0, and allowed TOC links to wrap. Also clarified MATLAB's conjugate-transpose vs non-conjugating-transpose notation.
+
+- CI browser QA: mobile page overflow fixed; wide MathML formula keyboard-scroll check initially failed with ArrowRight. QA now tests End-to-scroll-end first, then ArrowRight, and ignores sub-8px rounding differences.
+
+### 2026-11-22 — Second batch: Chapter 6 iterative solvers
+
+- Scope: eight standalone Chapter 6 lessons (6.1–6.5.2), Markdown/HTML/Python/MATLAB parity, independent original SVG, offline MathML and per-article evidence files.
+- Integration: preserve the concurrently completed eight Chapter 1 lessons, homepage layout, existing build/QA workflows, and public URLs. Append Chapter 6 to the canonical portal instead of replacing Chapter 1.
+- Numerical evidence: checked against Demmel Chapter 6 §§6.1–6.5 (including Table 6.1, Theorem 6.1 and Lemma 6.2) and SciPy CG/GMRES API references.
+- Cross-checks: two independently written 2D stencil vs Kronecker-sum kernels, one-dimensional Poisson sign and scaling, residual histories for Jacobi and Gauss–Seidel, solver preconditions, and content/evidence parity.
+- QA: unittest regression suite and Playwright multi-viewport audit are included; GitHub Actions run status determines actual pass/fail. No MATLAB execution is claimed.
+- Publishing: CI-gated GitHub Pages workflow is retained from the main branch. Public availability will be confirmed separately.
+- Work branch / PR: anla/iterative-methods-foundations, #3.

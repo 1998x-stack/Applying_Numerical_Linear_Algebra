@@ -1,135 +1,34 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="应用数值线性代数：从数值稳定性、线性方程组到特征值与迭代算法的交互式课程门户。">
-  <meta name="theme-color" content="#f7f8f5">
-  <title>应用数值线性代数 · 课程门户</title>
-  <link rel="stylesheet" href="assets/css/course.css">
-  <script defer src="assets/js/course.js"></script>
-</head>
-<body class="home-page">
-  <a class="skip-link" href="#main">跳到主要内容</a>
-  <header class="topbar">
-    <a class="brand" href="./index.html" aria-label="应用数值线性代数首页">
-      <span class="brand-mark" aria-hidden="true">NLA</span>
-      <span><strong>应用数值线性代数</strong><small>APPLIED NUMERICAL LINEAR ALGEBRA</small></span>
-    </a>
-    <nav class="top-nav" aria-label="主导航">
-      <a href="#curriculum">课程地图</a>
-      <a href="#featured">重点模块</a>
-      <a href="./README.md">仓库说明</a>
-    </nav>
-  </header>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="应用数值线性代数：从问题建模、条件数和舍入误差，到矩阵分解、求解器与高性能计算。"><title>应用数值线性代数 · 可视化课程</title><link rel="stylesheet" href="assets/css/site.css"></head>
+<body><a class="skip-link" href="#main">跳转到课程内容</a>
+<header class="home-hero"><div class="hero-inner"><p class="kicker">NUMERICAL LINEAR ALGEBRA</p><h1>让数值算法的每一步<br><span>都能解释、计算与验证。</span></h1><p class="hero-copy">从矩阵问题的结构出发，理解条件数、舍入误差、稳定性和性能，再进入线性系统、最小二乘、特征值与迭代方法。</p><div class="hero-actions"><a class="primary-link" href="1_Introduction/00_1.1_Basic_Notation.html">从第一篇开始 <span>→</span></a><a class="secondary-link" href="#course-map">浏览完整课程</a></div><div class="hero-metrics"><div><strong>7</strong><span>课程章节</span></div><div><strong>16</strong><span>两批精细化文章</span></div><div><strong>3</strong><span>互相校验的视角：数学 / Python / MATLAB</span></div></div></div></header>
+<main id="main" class="home-main">
+<section class="section-block"><div class="section-heading"><div><p class="kicker">START HERE</p><h2>第一批 · 从基础到可计算的例子</h2><p>八篇独立文章。每篇都从问题本身开始，补足必要背景、推导、数值实验和适用边界。</p></div><label class="search-box"><span>查找文章</span><input type="search" data-search placeholder="输入关键词，例如 condition、QR、舍入"></label></div>
+<div class="lesson-grid" id="featured-lessons">
+<a class="lesson-card" data-filter-item href="1_Introduction/00_1.1_Basic_Notation.html"><span class="card-number">01</span><span class="card-title">数值线性代数的语言：向量、矩阵与记号</span><span class="card-subtitle">先读懂对象的形状，再讨论算法的正确性。</span><span class="card-arrow">阅读文章 →</span></a><a class="lesson-card" data-filter-item href="1_Introduction/01_1.2_Standard_Problems_of_Numerical_Linear_Algebra.html"><span class="card-number">02</span><span class="card-title">数值线性代数究竟要解决哪些问题</span><span class="card-subtitle">先辨认问题类型，才能选择正确的数值算法。</span><span class="card-arrow">阅读文章 →</span></a><a class="lesson-card" data-filter-item href="1_Introduction/1.3_General_Techniques/00_1.3.1_Matrix_Factorizations.html"><span class="card-number">03</span><span class="card-title">为什么要把矩阵分解成更简单的矩阵</span><span class="card-subtitle">分解不是改写符号，而是把难问题变成可计算的子问题。</span><span class="card-arrow">阅读文章 →</span></a><a class="lesson-card" data-filter-item href="1_Introduction/1.3_General_Techniques/01_1.3.2_Perturbation_Theory_and_Condition_Numbers.html"><span class="card-number">04</span><span class="card-title">输入误差如何放大：扰动理论与条件数</span><span class="card-subtitle">先判断问题是否敏感，再评价算法是否稳定。</span><span class="card-arrow">阅读文章 →</span></a><a class="lesson-card" data-filter-item href="1_Introduction/1.3_General_Techniques/02_1.3.3_Effects_of_Roundoff_Error_on_Algorithms.html"><span class="card-number">05</span><span class="card-title">计算机为什么会算错：舍入误差与稳定性</span><span class="card-subtitle">计算机执行的是有限精度运算，不是实数算术。</span><span class="card-arrow">阅读文章 →</span></a><a class="lesson-card" data-filter-item href="1_Introduction/1.3_General_Techniques/03_1.3.4_Analyzing_the_Speed_of_Algorithms.html"><span class="card-number">06</span><span class="card-title">为什么 FLOPs 少不一定跑得快</span><span class="card-subtitle">算术次数只是性能的一部分；数据移动也要付费。</span><span class="card-arrow">阅读文章 →</span></a><a class="lesson-card" data-filter-item href="1_Introduction/1.3_General_Techniques/04_1.3.5_Engineering_Numerical_Software.html"><span class="card-number">07</span><span class="card-title">如何构建可信的数值计算软件</span><span class="card-subtitle">把数学假设、软件接口、测试和性能放在同一张设计图里。</span><span class="card-arrow">阅读文章 →</span></a><a class="lesson-card" data-filter-item href="1_Introduction/03_1.4_Example:_Polynomial_Evaluation.html"><span class="card-number">08</span><span class="card-title">多项式求值：Horner 方法与数值稳定性</span><span class="card-subtitle">一个短小的计算任务，揭示运算次数、条件数与舍入误差之间的关系。</span><span class="card-arrow">阅读文章 →</span></a>
+</div></section>
 
-  <main id="main">
-    <section class="home-hero">
-      <div class="hero-copy">
-        <p class="eyebrow">NUMERICAL LINEAR ALGEBRA · STUDY COMPANION</p>
-        <h1>让矩阵算法的<br><span>每一步都有理由。</span></h1>
-        <p class="hero-lead">从一个线性系统出发，理解条件数、舍入误差、矩阵分解、特征值与迭代求解。用可视化解释算法，用可运行实验检查结论。</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html">从迭代方法开始 <span aria-hidden="true">→</span></a>
-          <a class="text-link" href="#curriculum">浏览七章课程</a>
-        </div>
-        <div class="hero-meta"><span>7 个知识章节</span><span>数学推导 · SVG 图解 · Python / MATLAB</span><span>离线优先</span></div>
-      </div>
-      <div class="hero-visual" aria-label="从矩阵结构到数值解的示意图">
-        <svg viewBox="0 0 520 360" role="img" aria-labelledby="hero-title hero-desc">
-          <title id="hero-title">数值线性代数的计算路径</title>
-          <desc id="hero-desc">矩阵 A 与向量 b 进入算法，经过误差与残差检查，得到可信的近似解 x。</desc>
-          <defs><marker id="hero-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#477c79" stroke-width="1.4"/></marker></defs>
-          <rect x="18" y="38" width="132" height="112" rx="15" fill="#e9efed" stroke="#9bb8b2"/>
-          <text x="84" y="65" text-anchor="middle" class="svg-kicker">INPUT</text>
-          <text x="84" y="100" text-anchor="middle" class="svg-math">A x = b</text>
-          <g fill="#477c79"><rect x="48" y="116" width="10" height="10" rx="2"/><rect x="62" y="116" width="10" height="10" rx="2"/><rect x="76" y="116" width="10" height="10" rx="2"/><rect x="90" y="116" width="10" height="10" rx="2"/><rect x="104" y="116" width="10" height="10" rx="2"/></g>
-          <path d="M152 94 H198" stroke="#477c79" stroke-width="2" marker-end="url(#hero-arrow)"/>
-          <rect x="205" y="38" width="132" height="112" rx="15" fill="#f4eee4" stroke="#d7b98a"/>
-          <text x="271" y="65" text-anchor="middle" class="svg-kicker">ALGORITHM</text>
-          <text x="271" y="99" text-anchor="middle" class="svg-label">factorization</text>
-          <text x="271" y="120" text-anchor="middle" class="svg-label">or iteration</text>
-          <path d="M339 94 H385" stroke="#477c79" stroke-width="2" marker-end="url(#hero-arrow)"/>
-          <rect x="392" y="38" width="110" height="112" rx="15" fill="#ece9f4" stroke="#b6acd1"/>
-          <text x="447" y="65" text-anchor="middle" class="svg-kicker">OUTPUT</text>
-          <text x="447" y="101" text-anchor="middle" class="svg-math">x̂</text>
-          <text x="447" y="124" text-anchor="middle" class="svg-small">approximation</text>
-          <path d="M447 152 V206 H271 V226" fill="none" stroke="#b86d51" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#hero-arrow)"/>
-          <rect x="160" y="232" width="222" height="88" rx="15" fill="#f5e8e4" stroke="#d7a596"/>
-          <text x="271" y="259" text-anchor="middle" class="svg-kicker">VERIFY</text>
-          <text x="271" y="286" text-anchor="middle" class="svg-math">r = b − A x̂</text>
-          <text x="271" y="306" text-anchor="middle" class="svg-small">residual · error · stability</text>
-        </svg>
-      </div>
-    </section>
-
-    <section class="principles" aria-label="课程学习原则">
-      <article><span class="principle-index">01</span><h2>先理解问题</h2><p>维度、边界条件、矩阵结构与精度目标先于算法名称。</p></article>
-      <article><span class="principle-index">02</span><h2>再看计算过程</h2><p>用图解和公式解释每一次消元、投影、迭代与数据更新。</p></article>
-      <article><span class="principle-index">03</span><h2>最后验证结果</h2><p>检查残差、收敛条件、误差来源与实现假设，而不只看输出数字。</p></article>
-    </section>
-
-    <section id="curriculum" class="section-block">
-      <div class="section-heading">
-        <div><p class="eyebrow">CURRICULUM</p><h2>七章课程地图</h2></div>
-        <p>按原书章节保留目录路径；未完成的主题会明确标记，不把占位页伪装成完整讲解。</p>
-      </div>
-      <div class="chapter-grid">
-        <article class="chapter-card">
-          <div class="chapter-number">01</div><div class="chapter-copy"><p class="eyebrow">FOUNDATIONS</p><h3>Introduction</h3><p>记号、浮点运算、范数、条件数与算法代价。</p><a href="1_Introduction/00_1.1_Basic_Notation.html">进入章节 <span>→</span></a></div><span class="status status-active">基础内容</span>
-        </article>
-        <article class="chapter-card">
-          <div class="chapter-number">02</div><div class="chapter-copy"><p class="eyebrow">LINEAR SYSTEMS</p><h3>Linear Equation Solving</h3><p>高斯消去、主元、误差界、稀疏与结构化系统。</p><a href="2_Linear_Equation_Solving/03_2.3_Gaussian_Elimination.html">进入章节 <span>→</span></a></div><span class="status status-active">部分完成</span>
-        </article>
-        <article class="chapter-card">
-          <div class="chapter-number">03</div><div class="chapter-copy"><p class="eyebrow">LEAST SQUARES</p><h3>Linear Least Squares</h3><p>正规方程、QR、SVD、秩亏与扰动分析。</p><a href="3_Linear_Least_Squares_Problems/00_3.1_Introduction.html">进入章节 <span>→</span></a></div><span class="status status-active">部分完成</span>
-        </article>
-        <article class="chapter-card">
-          <div class="chapter-number">04</div><div class="chapter-copy"><p class="eyebrow">EIGENVALUES</p><h3>Nonsymmetric Eigenproblems</h3><p>Schur 形式、扰动理论、Hessenberg 与 QR 迭代。</p><a href="4_Nonsymmetric_Eigenvalue_Problems/00_4.1_Introduction.html">进入章节 <span>→</span></a></div><span class="status status-active">部分完成</span>
-        </article>
-        <article class="chapter-card chapter-pending">
-          <div class="chapter-number">05</div><div class="chapter-copy"><p class="eyebrow">SYMMETRIC EIGENPROBLEMS</p><h3>Symmetric Eigenproblem &amp; SVD</h3><p>对称特征值、奇异值、相对精度与分治算法。</p><span class="pending-note">本章页面正在补写，暂不将目录占位页作为阅读入口。</span></div><span class="status status-pending">待完善</span>
-        </article>
-        <article class="chapter-card chapter-featured">
-          <div class="chapter-number">06</div><div class="chapter-copy"><p class="eyebrow">ITERATIVE LINEAR SOLVERS</p><h3>Iterative Methods for Linear Systems</h3><p>Poisson 方程、稀疏结构、停止准则、Jacobi 与 Gauss–Seidel。</p><a href="6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html">进入本批 8 个精讲模块 <span>→</span></a></div><span class="status status-new">8 个模块已精讲</span>
-        </article>
-        <article class="chapter-card chapter-pending">
-          <div class="chapter-number">07</div><div class="chapter-copy"><p class="eyebrow">ITERATIVE EIGENSOLVERS</p><h3>Iterative Eigenvalue Algorithms</h3><p>Rayleigh–Ritz、Lanczos、正交化与大型稀疏特征问题。</p><span class="pending-note">后续批次将从基础问题与 Rayleigh–Ritz 开始。</span></div><span class="status status-pending">待完善</span>
-        </article>
-      </div>
-    </section>
-
-    <section id="featured" class="section-block featured-block">
-      <div class="section-heading">
-        <div><p class="eyebrow">DEEP DIVES · CHAPTER 06</p><h2>从 Poisson 方程理解迭代方法</h2></div>
-        <p>这组内容形成一条完整学习链：连续问题 → 网格离散 → 稀疏矩阵 → 迭代算子 → 收敛判断。</p>
-      </div>
-      <label class="search-label" for="module-search">查找本批模块</label>
-      <input id="module-search" class="module-search" type="search" placeholder="搜索 Poisson、Jacobi、Kronecker、残差…" data-course-search>
-      <div class="module-list" data-course-list>
-        <a class="module-row" data-search="6.1 iterative introduction residual stopping tolerance" href="6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html"><span>6.1</span><strong>迭代法、残差与停止准则</strong><small>从近似解到可验证的停止条件</small><b>→</b></a>
-        <a class="module-row" data-search="6.2 scipy solver software cg gmres minres" href="6_Iterative_Methods_for_Linear_Systems/01_6.2_On_line_Help_for_Iterative_Methods.html"><span>6.2</span><strong>如何选择迭代求解器</strong><small>矩阵结构、软件接口与预条件器</small><b>→</b></a>
-        <a class="module-row" data-search="6.3.1 poisson one dimension finite difference tridiagonal" href="6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.html"><span>6.3.1</span><strong>一维 Poisson 方程</strong><small>中心差分如何形成三对角矩阵</small><b>→</b></a>
-        <a class="module-row" data-search="6.3.2 poisson two dimensions five point stencil" href="6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html"><span>6.3.2</span><strong>二维 Poisson 方程</strong><small>五点模板与稀疏网格算子</small><b>→</b></a>
-        <a class="module-row" data-search="6.3.3 kronecker product vectorization vec" href="6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html"><span>6.3.3</span><strong>Kronecker 积表示</strong><small>从二维网格到矩阵-向量系统</small><b>→</b></a>
-        <a class="module-row" data-search="6.4 summary comparison jacobi gauss seidel cg fft multigrid" href="6_Iterative_Methods_for_Linear_Systems/03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html"><span>6.4</span><strong>算法比较与适用边界</strong><small>复杂度、存储与模型假设</small><b>→</b></a>
-        <a class="module-row" data-search="6.5.1 jacobi method synchronous iteration spectral radius" href="6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html"><span>6.5.1</span><strong>Jacobi 方法</strong><small>双缓冲更新与谱半径</small><b>→</b></a>
-        <a class="module-row" data-search="6.5.2 gauss seidel red black ordering" href="6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html"><span>6.5.2</span><strong>Gauss–Seidel 方法</strong><small>新旧分量复用与红黑排序</small><b>→</b></a>
-      </div>
-      <p class="empty-search" data-search-empty hidden>没有匹配的模块。试试“Poisson”“残差”或“Jacobi”。</p>
-    </section>
-
-    <section class="closing-note">
-      <p class="eyebrow">A NUMERICAL HABIT</p>
-      <h2>不要只问“答案是多少”。</h2>
-      <p>还要问：这个问题是否适定？算法是否稳定？残差说明了什么？精度是否足够？换一个网格或数据尺度，结论还成立吗？</p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <a class="brand brand-footer" href="./index.html"><span class="brand-mark">NLA</span><span><strong>应用数值线性代数</strong><small>INDEPENDENT STUDY COMPANION</small></span></a>
-    <p>知识脉络参考 James W. Demmel, SIAM (1997)。解释、实验与图解独立编写。</p>
-    <a href="https://doi.org/10.1137/1.9781611971446">原书书目信息 ↗</a>
-  </footer>
-</body>
-</html>
+<section id="chapter6-deep-dives" class="section-block"><div class="section-heading"><div><p class="kicker">SECOND BATCH · CHAPTER 06</p><h2>第二批 · 从 Poisson 方程掌握迭代求解</h2><p>八篇独立精讲，沿连续模型 → 网格离散 → 稀疏算子 → 算法选择 → Jacobi / Gauss–Seidel 的路径展开。每篇有公式、原创 SVG、Python / MATLAB 实验与可核查来源。</p></div></div>
+<div class="lesson-grid">
+<a class="lesson-card" data-filter-item href="6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html"><span class="card-number">6.1</span><span class="card-title">迭代法、残差与停止准则</span><span class="card-subtitle">理解近似解、谱半径和实际停止条件。</span><span class="card-arrow">阅读文章 →</span></a>
+<a class="lesson-card" data-filter-item href="6_Iterative_Methods_for_Linear_Systems/01_6.2_On_line_Help_for_Iterative_Methods.html"><span class="card-number">6.2</span><span class="card-title">如何选择迭代求解器</span><span class="card-subtitle">CG、MINRES、GMRES 与 LSQR 的适用范围。</span><span class="card-arrow">阅读文章 →</span></a>
+<a class="lesson-card" data-filter-item href="6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.html"><span class="card-number">6.3.1</span><span class="card-title">一维 Poisson：三对角离散</span><span class="card-subtitle">从零边界条件推导正定稀疏系统。</span><span class="card-arrow">阅读文章 →</span></a>
+<a class="lesson-card" data-filter-item href="6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html"><span class="card-number">6.3.2</span><span class="card-title">二维 Poisson：五点模板</span><span class="card-subtitle">连接二维网格与局部离散算子。</span><span class="card-arrow">阅读文章 →</span></a>
+<a class="lesson-card" data-filter-item href="6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html"><span class="card-number">6.3.3</span><span class="card-title">Kronecker 积与向量化</span><span class="card-subtitle">让矩阵块结构与 vec 排列保持一致。</span><span class="card-arrow">阅读文章 →</span></a>
+<a class="lesson-card" data-filter-item href="6_Iterative_Methods_for_Linear_Systems/03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html"><span class="card-number">6.4</span><span class="card-title">Poisson 求解器的复杂度比较</span><span class="card-subtitle">明确固定精度目标与模型约束。</span><span class="card-arrow">阅读文章 →</span></a>
+<a class="lesson-card" data-filter-item href="6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html"><span class="card-number">6.5.1</span><span class="card-title">Jacobi：同步更新</span><span class="card-subtitle">双缓冲与慢模态的收敛规律。</span><span class="card-arrow">阅读文章 →</span></a>
+<a class="lesson-card" data-filter-item href="6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html"><span class="card-number">6.5.2</span><span class="card-title">Gauss–Seidel：新旧分量复用</span><span class="card-subtitle">自然顺序与红黑排序的差异。</span><span class="card-arrow">阅读文章 →</span></a>
+</div></section>
+<section id="course-map" class="section-block"><div class="section-heading"><div><p class="kicker">COURSE MAP</p><h2>七章课程路线</h2><p>第一批八篇聚焦第一章的基础工具；第二批八篇完善第六章的 Poisson 离散与迭代求解。其余章节继续按同一质量标准升级。</p></div></div>
+<div class="chapter-grid">
+<a class="chapter-card featured" href="1_Introduction/00_1.1_Basic_Notation.html"><span>01</span><h3>Introduction</h3><p>记号、标准问题、通用技术、浮点运算与多项式求值。</p><small>首批 8 篇正在深化</small></a>
+<a class="chapter-card" href="2_Linear_Equation_Solving/00_2.1_Introduction.html"><span>02</span><h3>Linear equation solving</h3><p>扰动理论、高斯消去、误差分析、迭代改进和结构化系统。</p><small>原有课程页面</small></a>
+<a class="chapter-card" href="3_Linear_Least_Squares_Problems/00_3.1_Introduction.html"><span>03</span><h3>Linear least squares</h3><p>正规方程、QR、SVD、正交矩阵与秩亏问题。</p><small>原有课程页面</small></a>
+<a class="chapter-card" href="4_Nonsymmetric_Eigenvalue_Problems/00_4.1_Introduction.html"><span>04</span><h3>Nonsymmetric eigenproblems</h3><p>Schur 形式、扰动理论、幂法、反迭代与 QR 迭代。</p><small>原有课程页面</small></a>
+<a class="chapter-card" href="5_The_Symmetric_Eigenproblem_and_Singular_Value_Decomposition/00_5.1_Introduction.html"><span>05</span><h3>Symmetric eigenproblem & SVD</h3><p>对称特征值问题、SVD 算法和扰动分析。</p><small>原有课程页面</small></a>
+<a class="chapter-card" href="6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html"><span>06</span><h3>Iterative methods</h3><p>Jacobi、Gauss–Seidel、SOR、Krylov、CG、多重网格。</p><small>新增 8 篇精细化文章</small></a>
+<a class="chapter-card" href="7_Iterative_Algorithms_for_Eigenvalue_Problems/00_7.1_Introduction.html"><span>07</span><h3>Iterative eigenvalue algorithms</h3><p>Rayleigh–Ritz、Lanczos 与非对称特征值迭代。</p><small>原有课程页面</small></a>
+</div></section>
+<section class="section-block learning-route"><p class="kicker">HOW TO THINK</p><h2>一套贯穿全课程的判断顺序</h2><div class="route-grid"><div><b>01 · 问题</b><p>目标是什么？求解、拟合、谱信息，还是近似？</p></div><div><b>02 · 条件</b><p>输入扰动会被放大多少？矩阵是否病态？</p></div><div><b>03 · 算法</b><p>算法是否稳定？是否利用了对称、稀疏或低秩结构？</p></div><div><b>04 · 验证</b><p>检查残差、后向误差、重构误差和运行成本。</p></div></div></section>
+<footer class="site-footer"><p>课程主线参考 James W. Demmel, <em>Applied Numerical Linear Algebra</em> (SIAM, 1997)。本项目的文字、示例与图示独立编写。</p><p><a href="README.md">README</a> · <a href="docs/ROADMAP.md">建设路线</a> · <a href="docs/LESSON_QA.md">质量验收记录</a></p></footer>
+</main><script src="assets/js/site.js" defer></script></body></html>

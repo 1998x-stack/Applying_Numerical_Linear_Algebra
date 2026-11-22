@@ -1,100 +1,24 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>1.2 Standard Problems of Numerical Linear Algebra</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../markdown.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="先辨认问题类型，才能选择正确的数值算法。">
+<title>数值线性代数究竟要解决哪些问题 · 应用数值线性代数</title>
+<link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
-  <div class="container">
-    <h1>01_1.2_Standard_Problems_of_Numerical_Linear_Algebra</h1>
-<pre><code>Lecture: /1_Introduction
-Content: 01_1.2_Standard_Problems_of_Numerical_Linear_Algebra
-</code></pre>
-<h3>01_1.2 数值线性代数的标准问题 (Standard Problems of Numerical Linear Algebra)</h3>
-<h4>引言</h4>
-<p>数值线性代数涉及许多标准问题，这些问题在工程和科学实践中经常出现。本章节将详细介绍几类标准问题，并探讨它们的重要性和实际应用。</p>
-<h4>线性方程组 (Linear Systems of Equations)</h4>
-<ul>
-<li><strong>定义</strong>：求解 $Ax = b$，其中 $A$ 是一个已知的 $n \times n$ 非奇异实矩阵或复矩阵，$b$ 是一个已知的具有 $n$ 个元素的列向量，$x$ 是我们希望计算的列向量。</li>
-<li><strong>应用</strong>：线性方程组在许多科学与工程问题中广泛应用，包括结构分析、电路设计、热传导等。</li>
-</ul>
-<h4>最小二乘问题 (Least Squares Problems)</h4>
-<ul>
-<li><strong>定义</strong>：计算使 $ |Ax - b|_2 $ 最小的 $x$。其中 $A$ 是 $m \times n$ 的矩阵，$b$ 是 $m \times 1$ 的向量，$x$ 是 $n \times 1$ 的向量。 $|y|_2$ 表示向量 $y$ 的二范数。
-<ul>
-<li><strong>过定系统</strong>：当 $m &gt; n$ 时，方程组称为过定系统，通常无法精确求解 $Ax = b$。</li>
-<li><strong>欠定系统</strong>：当 $m &lt; n$ 时，方程组称为欠定系统，通常有无限多解。</li>
-</ul>
-</li>
-<li><strong>应用</strong>：最小二乘问题在数据拟合、统计模型、地质建模等领域中非常重要。</li>
-</ul>
-<h4>特征值问题 (Eigenvalue Problems)</h4>
-<ul>
-<li><strong>定义</strong>：给定一个 $n \times n$ 矩阵 $A$，寻找一个 $n \times 1$ 的非零向量 $x$ 和标量 $\lambda$，使得 $Ax = \lambda x$。</li>
-<li><strong>应用</strong>：特征值问题在振动分析、稳定性分析、量子力学等领域有广泛应用。</li>
-</ul>
-<h4>奇异值问题 (Singular Value Problems)</h4>
-<ul>
-<li><strong>定义</strong>：给定一个 $m \times n$ 的矩阵 $A$，寻找一个 $n \times 1$ 的非零向量 $x$ 和标量 $\lambda$，使得 $A^TAx = \lambda x$。
-<ul>
-<li><strong>重要性</strong>：这是特征值问题的一个特例，并且在算法和应用上有独特的意义。</li>
-</ul>
-</li>
-<li><strong>应用</strong>：奇异值分解在数据压缩、信号处理和统计分析中起重要作用。</li>
-</ul>
-<h4>标准问题的变种</h4>
-<ul>
-<li><strong>广义特征值问题 (Generalized Eigenvalue Problems)</strong>：如 $Ax = \lambda Bx$，涉及两个矩阵 $A$ 和 $B$。</li>
-<li><strong>秩亏最小二乘问题 (Rank-Deficient Least Squares Problems)</strong>：如 $\min_x |Ax - b|_2$，由于 $A$ 的列向量线性相关，解可能不唯一。</li>
-</ul>
-<h4>特殊结构的利用</h4>
-<p>在求解上述标准问题时，充分利用问题的特殊结构可以大大提高计算效率。例如：</p>
-<ul>
-<li><strong>对称正定矩阵 (Symmetric Positive Definite Matrices)</strong>：使用Cholesky分解可以将计算工作量减半。</li>
-<li><strong>带状矩阵 (Band Matrices)</strong>：带状Cholesky分解可以将计算复杂度降低到 $O(n^2)$。</li>
-<li><strong>多重网格算法 (Multigrid Algorithms)</strong>：对于泊松方程，可以将计算复杂度降到接近 $O(n)$，几乎达到最优效率。</li>
-</ul>
-<h3>深入分析</h3>
-<h4>线性方程组</h4>
-<ul>
-<li><strong>高斯消去法 (Gaussian Elimination)</strong>：最常用的直接求解方法，通过逐步消元将矩阵转化为上三角矩阵，再通过回代求解。其计算复杂度为 $O(n^3)$。</li>
-<li><strong>Cholesky分解</strong>：适用于对称正定矩阵，将矩阵分解为 $LL^T$ 的形式，提高了计算效率和稳定性。</li>
-</ul>
-<h4>最小二乘问题</h4>
-<ul>
-<li><strong>正规方程 (Normal Equations)</strong>：通过求解 $A^TAx = A^Tb$ 得到最小二乘解，但在 $A$ 条件数较大时可能不稳定。</li>
-<li><strong>QR分解</strong>：通过正交变换将问题转化为易解形式，提供更稳定的解法。</li>
-<li><strong>奇异值分解 (SVD)</strong>：在 $A$ 秩亏时尤为有效，通过SVD可以处理条件数较大的问题。</li>
-</ul>
-<h4>特征值和奇异值问题</h4>
-<ul>
-<li><strong>幂法 (Power Method)</strong>：迭代方法，用于计算矩阵的最大特征值及其对应特征向量。</li>
-<li><strong>QR迭代</strong>：广泛用于计算所有特征值，通过逐步迭代将矩阵转化为上三角形式。</li>
-<li><strong>SVD计算</strong>：用于求解奇异值问题，通过将矩阵分解为三部分，提供了对矩阵性质的深刻理解。</li>
-</ul>
-<h3>结论</h3>
-<p>数值线性代数的标准问题涵盖了从基本的线性方程组到复杂的特征值和奇异值问题。这些问题在科学与工程计算中扮演着关键角色。通过利用矩阵的特殊结构和选择合适的算法，可以显著提高计算效率和结果的稳定性 。</p>
-
-    <h3>Python 文件</h3>
-    <pre><code># 01_1.2_Standard_Problems_of_Numerical_Linear_Algebra
-
-"""
-Lecture: /1_Introduction
-Content: 01_1.2_Standard_Problems_of_Numerical_Linear_Algebra
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<a class="skip-link" href="#content">跳转到正文</a>
+<header class="site-bar"><a class="brand" href="../index.html">应用数值线性代数</a><span>第一章 · 1.2 标准问题</span></header>
+<div class="article-layout">
+<aside class="toc"><a class="toc-home" href="../index.html">← 返回课程首页</a><p class="toc-label">本文目录</p><a href="#s1">1. 线性系统：找到让方程成立的 x</a><a href="#s2">2. 最小二乘：当方程无法同时精确满足</a><a href="#s3">3. 特征值与奇异值：矩阵如何改变方向和长度</a><a href="#s4">4. 结构与问题类型共同决定算法</a><a href="#references">参考资料</a></aside>
+<main id="content"><article>
+<header class="article-header"><p class="kicker">CHAPTER 1 · STANDARD PROBLEMS</p><h1>数值线性代数究竟要解决哪些问题</h1><p class="dek">先辨认问题类型，才能选择正确的数值算法。</p><p class="lead">同一组矩阵和向量，可以提出完全不同的计算问题：求精确解、拟合数据、找不变方向，或分离最重要的变化模式。它们的数学目标、误差标准和算法都不同。</p><div class="objective-list"><strong>读完你将能够</strong><ul><li>区分线性系统、最小二乘、特征值与奇异值问题。</li><li>理解过定、欠定、秩亏与广义特征值问题。</li><li>知道矩阵结构会改变算法选择。</li></ul></div></header>
+<figure class="hero-figure"><img src="../assets/diagrams/02-standard-problems.svg" alt="数值线性代数究竟要解决哪些问题示意图"><figcaption>四类核心任务共享矩阵表示，却优化不同的对象：线性系统找解，最小二乘找最佳拟合，特征值找不变方向，SVD 找正交坐标下的伸缩强度。</figcaption></figure>
+<section id="s1" class="lesson-section"><h2>1. 线性系统：找到让方程成立的 x</h2><p>线性系统 Ax=b 给定系数矩阵 A 和右端项 b，要求找到 x 使等式成立。若 A 是 n×n 非奇异矩阵，解唯一；若 A 奇异，可能无解，也可能有无穷多解。实际计算关注的不是显式构造 A⁻¹，而是用分解和三角求解得到 x。</p><p>线性系统来自电路方程、结构力学离散、网格 PDE、网络流和参数估计。模型规模可以从几十维增长到数百万维；矩阵可能稠密，也可能只有少量非零元素。矩阵结构决定存储与算法。</p><p class="citation">来源定位：<a href="https://doi.org/10.1137/1.9781611971446" target="_blank" rel="noopener noreferrer">Demmel, §1.2</a>。</p></section><section id="s2" class="lesson-section"><h2>2. 最小二乘：当方程无法同时精确满足</h2><p>当观测方程多于未知量时，Ax=b 通常没有精确解。最小二乘问题改为寻找 x，使残差 r=Ax−b 的 2-范数最小。几何上，Ax 落在 A 的列空间中；最小二乘解让 b 到这个列空间的距离最短。</p><p>当方程少于未知量时，系统通常有多个解。若需要唯一结果，还要增加最小范数、正则化或其他约束。若 A 列秩亏，最小二乘解也可能不唯一；SVD 或带列主元的 QR 能显式揭示有效秩。</p><div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="公式，可横向滚动"><math display="block" aria-label="在所有 x 中最小化 Ax 减 b 的二范数"><mrow><munder><mo>min</mo><mi>x</mi></munder><msub><mrow><mo>‖</mo><mi>Ax</mi><mo>−</mo><mi>b</mi><mo>‖</mo></mrow><mn>2</mn></msub></mrow></math></div></div></section><section id="s3" class="lesson-section"><h2>3. 特征值与奇异值：矩阵如何改变方向和长度</h2><p>特征值问题寻找非零向量 v，使 Av=λv。沿 v 方向，矩阵作用只改变尺度（可能也改变符号或相位），不改变方向。对非对称矩阵，特征值可能是复数，特征向量也可能高度敏感。</p><p>对任意 m×n 矩阵 A，奇异值是 A*A 的特征值的非负平方根。SVD 写作 A=UΣV*，把输入空间的正交方向、非负伸缩量和输出空间的正交方向分开。奇异值可用于秩、条件数、低秩近似和最小二乘分析。</p></section><section id="s4" class="lesson-section"><h2>4. 结构与问题类型共同决定算法</h2><p>对称正定矩阵适合 Cholesky；一般方阵可用带选主元的 LU；满列秩最小二乘常用 Householder QR；需要揭示秩或处理强病态问题时，SVD 更有信息。大型稀疏系统则可能使用预条件 Krylov 子空间方法。</p><p>一个可靠的求解流程先问：目标是精确解、最佳拟合还是谱信息？矩阵是否对称、正定、稀疏、带状或低秩？需要多高精度？这些问题比“哪个算法最快”更先决定方案。</p></section>
+<section class="demo-panel" data-demo="problems"><h2>交互检查：选择你真正要解的问题</h2><p>切换任务，观察同一矩阵记号背后的目标如何变化。</p><div class="demo-controls"><button type="button" class="demo-button" data-demo-control data-value="solve" data-message="线性系统：求 x，使 Ax=b；报告残差 ||Ax−b||。" aria-pressed="true">solve</button><button type="button" class="demo-button" data-demo-control data-value="least" data-message="最小二乘：求 x，使 ||Ax−b||₂ 最小；报告残差和拟合质量。" aria-pressed="false">least</button><button type="button" class="demo-button" data-demo-control data-value="eigen" data-message="特征值：求 Av=λv；报告特征残差 ||Av−λv||。" aria-pressed="false">eigen</button><button type="button" class="demo-button" data-demo-control data-value="svd" data-message="奇异值：求 A=UΣV*；检查重构误差 ||A−UΣV*||。" aria-pressed="false">svd</button></div><p class="demo-output" data-output aria-live="polite">当前任务：线性系统。不要把最小二乘和特征值问题混为一谈。</p></section>
+<section id="references" class="references"><h2>参考资料</h2><ol><li><a href="https://doi.org/10.1137/1.9781611971446" target="_blank" rel="noopener noreferrer">James W. Demmel, Applied Numerical Linear Algebra, Chapter 1 §1.2</a><span>problem taxonomy</span></li><li><a href="https://netlib.org/lapack/" target="_blank" rel="noopener noreferrer">LAPACK project overview</a><span>supported problem families</span></li></ol></section>
+<nav class="article-bottom"><a href="../index.html">返回课程地图</a><a href="../README.md">查看项目说明</a></nav>
+</article></main></div>
+<script src="../assets/js/site.js" defer></script>
+</body></html>

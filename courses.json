@@ -1,0 +1,150 @@
+{
+  "title": "应用数值线性代数",
+  "source": "James W. Demmel, Applied Numerical Linear Algebra (SIAM, 1997)",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Introduction",
+      "path": "1_Introduction/00_1.1_Basic_Notation.html",
+      "status": "in-progress",
+      "deepened": 8
+    },
+    {
+      "id": 2,
+      "title": "Linear Equation Solving",
+      "path": "2_Linear_Equation_Solving/00_2.1_Introduction.html",
+      "status": "legacy"
+    },
+    {
+      "id": 3,
+      "title": "Linear Least Squares Problems",
+      "path": "3_Linear_Least_Squares_Problems/00_3.1_Introduction.html",
+      "status": "legacy"
+    },
+    {
+      "id": 4,
+      "title": "Nonsymmetric Eigenvalue Problems",
+      "path": "4_Nonsymmetric_Eigenvalue_Problems/00_4.1_Introduction.html",
+      "status": "legacy"
+    },
+    {
+      "id": 5,
+      "title": "The Symmetric Eigenproblem and SVD",
+      "path": "5_The_Symmetric_Eigenproblem_and_Singular_Value_Decomposition/00_5.1_Introduction.html",
+      "status": "legacy"
+    },
+    {
+      "id": 6,
+      "title": "Iterative Methods for Linear Systems",
+      "path": "6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html",
+      "status": "in-progress",
+      "deepened": 8
+    },
+    {
+      "id": 7,
+      "title": "Iterative Algorithms for Eigenvalue Problems",
+      "path": "7_Iterative_Algorithms_for_Eigenvalue_Problems/00_7.1_Introduction.html",
+      "status": "legacy"
+    }
+  ],
+  "featured": [
+    {
+      "id": "01",
+      "title": "数值线性代数的语言：向量、矩阵与记号",
+      "path": "1_Introduction/00_1.1_Basic_Notation.html",
+      "figure": "assets/diagrams/01-notation.svg"
+    },
+    {
+      "id": "02",
+      "title": "数值线性代数究竟要解决哪些问题",
+      "path": "1_Introduction/01_1.2_Standard_Problems_of_Numerical_Linear_Algebra.html",
+      "figure": "assets/diagrams/02-standard-problems.svg"
+    },
+    {
+      "id": "03",
+      "title": "为什么要把矩阵分解成更简单的矩阵",
+      "path": "1_Introduction/1.3_General_Techniques/00_1.3.1_Matrix_Factorizations.html",
+      "figure": "assets/diagrams/03-factorizations.svg"
+    },
+    {
+      "id": "04",
+      "title": "输入误差如何放大：扰动理论与条件数",
+      "path": "1_Introduction/1.3_General_Techniques/01_1.3.2_Perturbation_Theory_and_Condition_Numbers.html",
+      "figure": "assets/diagrams/04-conditioning.svg"
+    },
+    {
+      "id": "05",
+      "title": "计算机为什么会算错：舍入误差与稳定性",
+      "path": "1_Introduction/1.3_General_Techniques/02_1.3.3_Effects_of_Roundoff_Error_on_Algorithms.html",
+      "figure": "assets/diagrams/05-roundoff.svg"
+    },
+    {
+      "id": "06",
+      "title": "为什么 FLOPs 少不一定跑得快",
+      "path": "1_Introduction/1.3_General_Techniques/03_1.3.4_Analyzing_the_Speed_of_Algorithms.html",
+      "figure": "assets/diagrams/06-performance.svg"
+    },
+    {
+      "id": "07",
+      "title": "如何构建可信的数值计算软件",
+      "path": "1_Introduction/1.3_General_Techniques/04_1.3.5_Engineering_Numerical_Software.html",
+      "figure": "assets/diagrams/07-software-stack.svg"
+    },
+    {
+      "id": "08",
+      "title": "多项式求值：Horner 方法与数值稳定性",
+      "path": "1_Introduction/03_1.4_Example:_Polynomial_Evaluation.html",
+      "figure": "assets/diagrams/08-horner.svg"
+    }
+  ],
+  "chapter6_modules": [
+    {
+      "id": "6.1",
+      "title": "迭代法、残差与停止准则",
+      "path": "6_Iterative_Methods_for_Linear_Systems/00_6.1_Introduction.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.2",
+      "title": "如何选择迭代求解器",
+      "path": "6_Iterative_Methods_for_Linear_Systems/01_6.2_On_line_Help_for_Iterative_Methods.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.3.1",
+      "title": "一维 Poisson：三对角离散",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/00_6.3.1_Poisson’s_Equation_in_One_Dimension.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.3.2",
+      "title": "二维 Poisson：五点模板",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/01_6.3.2_Poisson’s_Equation_in_Two_Dimensions.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.3.3",
+      "title": "Kronecker 积与向量化",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.3_Poisson’s_Equation/02_6.3.3_Expressing_Poisson’s_Equation_with_Kronecker_Products.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.4",
+      "title": "Poisson 求解器的复杂度比较",
+      "path": "6_Iterative_Methods_for_Linear_Systems/03_6.4_Summary_of_Methods_for_Solving_Poisson’s_Equation.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.5.1",
+      "title": "Jacobi：同步更新",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/00_6.5.1_Jacobi’s_Method.html",
+      "status": "enhanced"
+    },
+    {
+      "id": "6.5.2",
+      "title": "Gauss–Seidel：新旧分量复用",
+      "path": "6_Iterative_Methods_for_Linear_Systems/6.5_Basic_Iterative_Methods/01_6.5.2_Gauss–Seidel_Method.html",
+      "status": "enhanced"
+    }
+  ]
+}

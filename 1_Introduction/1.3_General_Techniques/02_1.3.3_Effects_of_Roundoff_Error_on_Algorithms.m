@@ -1,8 +1,8 @@
-% 02_1.3.3_Effects_of_Roundoff_Error_on_Algorithms
-
-%
-
-%Lecture: 1_Introduction/1.3_General_Techniques
-%Content: 02_1.3.3_Effects_of_Roundoff_Error_on_Algorithms
-
-%
+% Floating-point non-associativity and machine precision.
+u = eps('double')/2;
+large = 1e16;
+leftAssociated = (large + (-large)) + 1;
+rightAssociated = large + ((-large) + 1);
+fprintf('binary64 unit roundoff: %.17g\n', u);
+fprintf('(large-large)+1 = %.17g\n', leftAssociated);
+fprintf('large+(-large+1) = %.17g\n', rightAssociated);

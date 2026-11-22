@@ -1,133 +1,24 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
-  <title>1.1 Basic Notation</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
-  <link rel="stylesheet" href="../markdown.css">
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="../markdown.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="先读懂对象的形状，再讨论算法的正确性。">
+<title>数值线性代数的语言：向量、矩阵与记号 · 应用数值线性代数</title>
+<link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
-  <div class="container">
-    <h1>00_1.1_Basic_Notation</h1>
-<pre><code>Lecture: /1_Introduction
-Content: 00_1.1_Basic_Notation
-</code></pre>
-<h3>00_1.1 基本符号 (Basic Notation)</h3>
-<h4>引言</h4>
-<p>在数值线性代数的学习中，我们频繁使用矩阵、向量和标量。这些符号的定义和基本使用方法是理解更复杂概念的基础。</p>
-<h4>矩阵</h4>
-<ul>
-<li><strong>矩阵</strong>：用大写字母表示，例如 $A$。其第 $i$ 行第 $j$ 列的元素记作 $a_{ij}$。
-<ul>
-<li><strong>矩阵表示</strong>：例如，矩阵 $A$ 可以表示为 $A = \begin{pmatrix} a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \ a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \end{pmatrix}$。</li>
-<li><strong>子矩阵</strong>：使用 $A(i:j, k:l)$ 表示位于第 $i$ 行到第 $j$ 行和第 $k$ 列到第 $l$ 列之间的子矩阵。</li>
-</ul>
-</li>
-</ul>
-<h4>向量</h4>
-<ul>
-<li><strong>向量</strong>：用小写字母表示，例如 $x$。其第 $i$ 个元素记作 $x_i$。
-<ul>
-<li><strong>向量表示</strong>：例如，向量 $x$ 可以表示为 $x = \begin{pmatrix} x_1 \ x_2 \ \vdots \ x_n \end{pmatrix}$。</li>
-</ul>
-</li>
-</ul>
-<h4>标量</h4>
-<ul>
-<li><strong>标量</strong>：用希腊字母或小写字母表示，例如 $\alpha$ 或 $\beta$。</li>
-</ul>
-<h4>集合符号</h4>
-<ul>
-<li><strong>实数集</strong>：用 $ \mathbb{R} $ 表示。
-<ul>
-<li><strong>实数向量空间</strong>：用 $ \mathbb{R}^n $ 表示 $n$ 维实数向量空间。</li>
-<li><strong>实数矩阵空间</strong>：用 $ \mathbb{R}^{m \times n} $ 表示 $m \times n$ 维实数矩阵空间。</li>
-</ul>
-</li>
-<li><strong>复数集</strong>：用 $ \mathbb{C} $ 表示。
-<ul>
-<li><strong>复数向量空间</strong>：用 $ \mathbb{C}^n $ 表示 $n$ 维复数向量空间。</li>
-<li><strong>复数矩阵空间</strong>：用 $ \mathbb{C}^{m \times n} $ 表示 $m \times n$ 维复数矩阵空间。</li>
-</ul>
-</li>
-</ul>
-<h4>矩阵操作</h4>
-<ul>
-<li><strong>矩阵转置</strong>：矩阵 $A$ 的转置记作 $A^T$，其定义为 $ (A^T)<em ji="">{ij} = a</em> $。</li>
-<li><strong>共轭转置</strong>：复数矩阵 $A$ 的共轭转置记作 $A^<em>$，其定义为 $ (A^</em>)<em>{ij} = \overline{a</em>{ji}} $，其中 $\overline{a_{ji}}$ 表示 $a_{ji}$ 的复共轭。</li>
-</ul>
-<h4>矩阵和向量的绝对值</h4>
-<ul>
-<li><strong>矩阵绝对值</strong>：矩阵 $A$ 的绝对值记作 $ |A| $，其定义为 $ (|A|)<em ij="">{ij} = |a</em>| $。</li>
-<li><strong>向量绝对值</strong>：向量 $x$ 的绝对值记作 $ |x| $，其定义为 $ (|x|)_i = |x_i| $。</li>
-</ul>
-<h4>矩阵不等式</h4>
-<ul>
-<li><strong>矩阵不等式</strong>：例如， $ |A| \leq |B| $ 表示 $ |a_{ij}| \leq |b_{ij}| $ 对所有的 $i$ 和 $j$ 成立。</li>
-</ul>
-<h4>矩阵与向量的常见操作</h4>
-<ul>
-<li><strong>矩阵加法</strong>：例如 $C = A + B$，其定义为 $ c_{ij} = a_{ij} + b_{ij} $。</li>
-<li><strong>矩阵乘法</strong>：例如 $C = A \times B$，其定义为 $ c_{ij} = \sum_{k} a_{ik} b_{kj} $。</li>
-<li><strong>向量内积</strong>：例如 $y = x^T \times z$，其定义为 $ y = \sum_{i} x_i z_i $。</li>
-</ul>
-<h4>数学证明中的符号</h4>
-<ul>
-<li><strong>证明结束符号</strong>：用 $ \Box $ 或 $ \blacksquare $ 表示。</li>
-<li><strong>例子结束符号</strong>：用 $ \diamond $ 表示。</li>
-</ul>
-<h3>深入分析</h3>
-<p>在数值线性代数中，基本符号和定义是理解整个领域的基石。通过定义清晰的符号和操作，数学家和工程师可以有效地交流和解决复杂的数值问题。以下是几个深入探讨的关键点：</p>
-<ol>
-<li>
-<p><strong>符号统一性的重要性</strong>：</p>
-<ul>
-<li>符号的统一性在数学研究中至关重要。它不仅简化了表达方式，还避免了歧义。</li>
-<li>在多学科合作中，统一的符号系统能使不同背景的研究人员快速理解和应用数值线性代数的方法。</li>
-</ul>
-</li>
-<li>
-<p><strong>矩阵和向量操作的基础性</strong>：</p>
-<ul>
-<li>矩阵和向量是数值线性代数的核心构件。对这些基本操作的熟练掌握是进行更复杂分析和算法设计的前提。</li>
-<li>例如，矩阵乘法在解决线性方程组、特征值问题和最小二乘问题中起着关键作用。</li>
-</ul>
-</li>
-<li>
-<p><strong>矩阵分解在计算中的应用</strong>：</p>
-<ul>
-<li>矩阵分解（如LU分解、QR分解和特征值分解）是数值线性代数中的重要工具。这些分解方法不仅提高了计算效率，还提供了深入理解矩阵结构的途径。</li>
-<li>通过矩阵分解，可以将复杂问题转化为更易处理的形式，从而简化计算过程并提高结果的稳定性。</li>
-</ul>
-</li>
-<li>
-<p><strong>数值稳定性与误差分析</strong>：</p>
-<ul>
-<li>在实际计算中，数值稳定性和误差分析是确保结果准确性的关键。理解舍入误差和条件数的影响，可以帮助设计更稳健的算法。</li>
-<li>例如，在求解线性方程组时，选择合适的算法和预处理方法可以显著减少舍入误差带来的影响。</li>
-</ul>
-</li>
-</ol>
-<p>通过以上深入分析，可以看出基本符号和操作不仅仅是数值线性代数的入门知识，它们贯穿于整个领域的各个方面，奠定了理论研究和实际应用的基础。</p>
-
-    <h3>Python 文件</h3>
-    <pre><code># 00_1.1_Basic_Notation
-
-"""
-Lecture: /1_Introduction
-Content: 00_1.1_Basic_Notation
-"""
-
-</code></pre>
-  </div>
-</body>
-</html>
-  
+<a class="skip-link" href="#content">跳转到正文</a>
+<header class="site-bar"><a class="brand" href="../index.html">应用数值线性代数</a><span>第一章 · 1.1 基本记号</span></header>
+<div class="article-layout">
+<aside class="toc"><a class="toc-home" href="../index.html">← 返回课程首页</a><p class="toc-label">本文目录</p><a href="#s1">1. 先看维度：每个乘法都要对上形状</a><a href="#s2">2. 转置、共轭转置与逐元素运算</a><a href="#s3">3. 范数回答的是“误差有多大”</a><a href="#s4">4. 用一个维度检查完成第一次推导</a><a href="#references">参考资料</a></aside>
+<main id="content"><article>
+<header class="article-header"><p class="kicker">CHAPTER 1 · BASIC NOTATION</p><h1>数值线性代数的语言：向量、矩阵与记号</h1><p class="dek">先读懂对象的形状，再讨论算法的正确性。</p><p class="lead">一个矩阵算法出错，常常不是因为公式太难，而是因为输入、输出和运算对象的形状没有说清楚。本篇建立后续课程共用的记号：标量、向量、矩阵、维度、转置、共轭转置、逐元素运算与范数。</p><div class="objective-list"><strong>读完你将能够</strong><ul><li>能从 A∈F^{m×n} 判断矩阵乘法的输入和输出维度。</li><li>区分转置、共轭转置、逐元素绝对值与向量/矩阵范数。</li><li>理解实数域与复数域下记号的差异。</li></ul></div></header>
+<figure class="hero-figure"><img src="../assets/diagrams/01-notation.svg" alt="数值线性代数的语言：向量、矩阵与记号示意图"><figcaption>矩阵 A 的 m 行 n 列结构决定了它能作用于 n 维列向量，并产生 m 维结果。行、列和元素索引不是装饰，而是运算契约。</figcaption></figure>
+<section id="s1" class="lesson-section"><h2>1. 先看维度：每个乘法都要对上形状</h2><p>在数值线性代数中，矩阵不是一张装数字的表，而是一个把输入向量映射为输出向量的线性变换。若 A 有 m 行、n 列，写作 A∈F^{m×n}；这里 F 通常是实数域 R 或复数域 C。列向量 x∈F^n 经过 A 作用后得到 Ax∈F^m。</p><p>维度检查可以在计算之前排除一类错误：A∈R^{m×n} 不能直接右乘一个长度不是 n 的列向量；若要计算 A B，则 A 的列数必须等于 B 的行数。矩阵乘法的输出形状由外侧维度决定。</p><p>数值程序里常见的形状约定是：向量默认按列向量理解；一个矩阵的第 i 行、第 j 列元素写作 aᵢⱼ；A(i:j,k:l) 表示从第 i 到 j 行、第 k 到 l 列截取的子矩阵。实际 Python 切片通常从 0 开始，而数学索引通常从 1 开始，二者必须明确区分。</p><div class="math-equation"><div class="math-scroll" tabindex="0" role="region" aria-label="公式，可横向滚动"><math display="block" aria-label="A 属于 F 的 m 乘 n 矩阵，x 属于 F 的 n 维向量，Ax 属于 F 的 m 维向量"><mrow><mi>A</mi><mo>∈</mo><msup><mi>F</mi><mrow><mi>m</mi><mo>×</mo><mi>n</mi></mrow></msup><mo>,</mo><mspace width="0.7em"/><mi>x</mi><mo>∈</mo><msup><mi>F</mi><mi>n</mi></msup><mo>,</mo><mspace width="0.7em"/><mi>Ax</mi><mo>∈</mo><msup><mi>F</mi><mi>m</mi></msup></mrow></math></div></div><p class="citation">来源定位：<a href="https://doi.org/10.1137/1.9781611971446" target="_blank" rel="noopener noreferrer">Demmel, §1.1</a>。</p></section><section id="s2" class="lesson-section"><h2>2. 转置、共轭转置与逐元素运算</h2><p>实矩阵的转置 Aᵀ 交换行和列，满足 (Aᵀ)ᵢⱼ=aⱼᵢ。复矩阵还需要共轭转置 A*=\overline{A}ᵀ：先转置，再对每个元素取复共轭。对实矩阵，A*=Aᵀ；对复矩阵，两者通常不同。</p><p>逐元素绝对值 |A| 的第 i,j 个元素是 |aᵢⱼ|。它不是矩阵范数。类似地，|x| 是逐元素取绝对值后的向量。若写 |A|≤|B|，这里表示每个对应元素都满足不等式，而不是比较两个矩阵的大小。</p><p>单位矩阵 I 满足 Ix=x；共轭转置还定义了复向量的内积 x*y。复数场景下，若把转置误写成共轭转置，或者反过来，可能改变正交性、能量和投影的含义。</p></section><section id="s3" class="lesson-section"><h2>3. 范数回答的是“误差有多大”</h2><p>向量范数把向量映射为非负长度。常见的 1-范数、2-范数和无穷范数分别衡量绝对值之和、欧几里得长度和最大分量。矩阵范数衡量矩阵整体大小；诱导范数则描述矩阵对向量长度的最大放大倍数。</p><p>Frobenius 范数是所有矩阵元素平方和的平方根，便于计算；它与谱范数不同。谱范数等于最大奇异值，描述矩阵对 2-范数的最大放大。后续讨论条件数时，必须说清使用哪一种范数，因为条件数的数值依赖范数选择。</p><p>不要把逐元素绝对值、向量范数和矩阵范数混为一谈：|A|仍然是一个矩阵；||x|| 是一个标量；||A|| 也是一个标量，但其定义取决于选定的矩阵范数。</p></section><section id="s4" class="lesson-section"><h2>4. 用一个维度检查完成第一次推导</h2><p>设 A 是 2×3 矩阵，x 是 3 维列向量。Ax 的两个分量分别是 A 每一行与 x 的内积，所以结果是 2 维向量。若把 x 写成 2 维，乘法在定义层面就不成立，不需要运行程序才知道错误。</p><p>在复数计算中，若 A 是 2×3 复矩阵，A* 的形状是 3×2；x*y 是标量，而 xᵀy 不一定是复内积。这个小例子把维度和共轭约定同时固定下来。</p></section>
+<section class="demo-panel" data-demo="notation"><h2>交互检查：一个矩阵元素究竟在哪里？</h2><p>选择矩阵 A 的元素，观察行索引、列索引和子矩阵记号。</p><div class="demo-controls"><button type="button" class="demo-button" data-demo-control data-value="a12" data-message="a₁₂ 位于第 1 行、第 2 列；A(1:2, 2:3) 会包含它。" aria-pressed="true">a12</button><button type="button" class="demo-button" data-demo-control data-value="a23" data-message="a₂₃ 位于第 2 行、第 3 列；它只在列数至少为 3 时存在。" aria-pressed="false">a23</button><button type="button" class="demo-button" data-demo-control data-value="a31" data-message="a₃₁ 位于第 3 行、第 1 列；若 A 只有 2 行，这个索引无效。" aria-pressed="false">a31</button></div><p class="demo-output" data-output aria-live="polite">当前选择 a₁₂：先读行索引，再读列索引。</p></section>
+<section id="references" class="references"><h2>参考资料</h2><ol><li><a href="https://doi.org/10.1137/1.9781611971446" target="_blank" rel="noopener noreferrer">James W. Demmel, Applied Numerical Linear Algebra, Chapter 1 §1.1</a><span>notation</span></li></ol></section>
+<nav class="article-bottom"><a href="../index.html">返回课程地图</a><a href="../README.md">查看项目说明</a></nav>
+</article></main></div>
+<script src="../assets/js/site.js" defer></script>
+</body></html>

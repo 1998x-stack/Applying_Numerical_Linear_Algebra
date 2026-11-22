@@ -1,0 +1,10 @@
+{
+  "01-notation.svg": "矩阵形状与向量映射",
+  "02-standard-problems.svg": "线性系统、最小二乘、特征值和 SVD",
+  "03-factorizations.svg": "LU、QR、Cholesky、Schur 和 SVD",
+  "04-conditioning.svg": "输入扰动经问题映射后的敏感性",
+  "05-roundoff.svg": "精确实数结果与有限浮点集合",
+  "06-performance.svg": "算术强度与 Roofline 上界",
+  "07-software-stack.svg": "数值软件验证闭环",
+  "08-horner.svg": "Horner 多项式嵌套求值"
+}
