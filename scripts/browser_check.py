@@ -9,6 +9,7 @@ from __future__ import annotations
 import http.server
 import socket
 import threading
+from urllib.parse import quote
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -83,7 +84,7 @@ def main() -> int:
                 bad_responses: list[str] = []
                 page.on("pageerror", lambda error: page_errors.append(str(error)))
                 page.on("response", lambda response: bad_responses.append(f"{response.status} {response.url}") if response.status >= 400 else None)
-                url = f"http://127.0.0.1:{server.server_port}/{article}"
+                url = f"http://127.0.0.1:{server.server_port}/{quote(article, safe='/')}"
                 response = page.goto(url, wait_until="networkidle")
                 if response is None or not response.ok:
                     errors.append(f"{article}: failed to load ({response.status if response else 'no response'})")

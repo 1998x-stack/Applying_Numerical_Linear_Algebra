@@ -109,6 +109,6 @@ class EighthBatchTests(unittest.TestCase):
         self.assertEqual([d[i] for i in (1,2,3,6)],[8,19,10,27])
         self.assertEqual(sum(d.values()),64)
         html=(ROOT/"index.html").read_text("utf-8")
-        for stem in STEMS:self.assertIn(stem+".html",html)
+        for stem in STEMS:self.assertIn((stem+".html").replace("?","%3F"),html)
         self.assertIn("<strong>64</strong>",html)
 if __name__=="__main__":unittest.main()
